@@ -1,25 +1,28 @@
 package nazarrod.adventgem.advgem;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Rectangle2D;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import static java.lang.Math.log;
 import static java.lang.Math.min;
 
 public class App extends Application {
 
     private Stage stage;
-    private final double winWidth = Screen.getPrimary().getBounds().getWidth()*0.7;
-    private final double winHeight = Screen.getPrimary().getBounds().getHeight()*0.7;
+    private final double screenWidth = Screen.getPrimary().getBounds().getWidth();
+    private final double screenHeight = Screen.getPrimary().getBounds().getHeight();
 
     @Override
     public void start(Stage stage) {
@@ -30,19 +33,48 @@ public class App extends Application {
     private void loginWindow(){
         Button newProfileButton = new Button();
         newProfileButton.setText("New profile");
-        newProfileButton.setOnAction(actionEvent -> createNewProfile());
-        GridPane root = new GridPane();
-        root.addRow(0,newProfileButton);
+        newProfileButton.setPrefWidth(200);
+        newProfileButton.setOnAction(actionEvent -> createNewProfileWindow());
+
+        Button existProfileButton = new Button();
+        existProfileButton.setText("Existing profile");
+        existProfileButton.setPrefWidth(200);
+        existProfileButton.setOnAction(actionEvent -> createNewProfileWindow());
+
+        VBox loginMenu = new VBox();
+        loginMenu.getChildren().addAll(existProfileButton);
+        loginMenu.getChildren().addAll(newProfileButton);
+        loginMenu.setSpacing(8);
+        loginMenu.setAlignment(Pos.CENTER);
         stage.setTitle("Adventurous GEM");
-        stage.setScene(new Scene(root,winWidth,winHeight));
+        stage.setScene(new Scene(loginMenu,screenWidth*0.25,screenHeight*0.6));
         stage.show();
     }
 
-    private void createNewProfile(){
-        System.out.println("New profile button pressed");
-        TextField profileName = new TextField();
-        HBox hbox = new HBox(1,profileName);
-        stage.setScene(new Scene(hbox));
+    private void createNewProfileWindow(){
+        System.err.println("New profile button pressed");
+        Label profileNameLabel = new Label("Create new nickname: ");
+        TextField profileNameField = new TextField();
+        Label passwordLabel = new Label("Create new password: ");
+        TextField passwordField = new TextField();
+        Button okButton = new Button();
+        okButton.setText("OK");
+        okButton.setPrefWidth(50);
+        okButton.setOnAction(actionEvent -> {
+            ProfileManager profileManager = new ProfileManager();
+            profileManager.createNewProfile(profileNameField.getCharacters().toString(),passwordField.getCharacters().toString());
+            loginWindow();
+        });
+
+        GridPane grid = new GridPane();
+
+        grid.add(profileNameLabel,0,0);
+        grid.add(profileNameField,1,0);
+        grid.add(passwordLabel,0,1);
+        grid.add(passwordField,1,1);
+        grid.add(okButton,0,2);
+
+        stage.setScene(new Scene(grid,screenWidth*0.25,screenHeight*0.6));
         stage.show();
     }
 
