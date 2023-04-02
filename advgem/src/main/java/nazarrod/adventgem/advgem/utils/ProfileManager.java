@@ -1,12 +1,18 @@
-package nazarrod.adventgem.advgem;
+package nazarrod.adventgem.advgem.utils;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedList;
 
 public class ProfileManager {
-    public void createNewProfile(String nickname,String password){
+    /*
+    * Profile Manager class is used to manage users' profiles
+     */
+    public boolean createNewProfile(String nickname,String password){
+        /*
+        * Create new profile in ./UserProfiles directory.
+        * Function creates user directory and config filegit
+        * */
         System.err.printf("Try to create new profile %s %s\n",nickname,password);
         try {
             boolean dirCreated = new File("./UserProfiles/"+nickname).mkdirs();
@@ -21,15 +27,18 @@ public class ProfileManager {
             myWriter.write(password);
             myWriter.close();
             System.err.println("Your account was successfully created, your login is:"+nickname);
+            return true;
         }
         catch (IOException e){
             System.out.println("An error occurred.");
             e.printStackTrace();
+            return false;
         }
     }
 
     /**
      * TO-DO
+     * Implement error messages (profile already exists for expamle)
      * add:
      * getProfiles function that returns list of created profiles
      * deleteProfile (self-explanatory)
