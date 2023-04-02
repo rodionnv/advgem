@@ -9,8 +9,5 @@
         <module name="advgem" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="advgem" target="19" />
-    </bytecodeTargetLevel>
   </component>
 </project>
