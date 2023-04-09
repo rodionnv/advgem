@@ -37,12 +37,13 @@ public class Editor extends Application {
         * Function builds simple level
         * */
         GameData gameData = new GameData();
-        gameData.addPlatform(5,5,15,2);
-        List<Platform2D> platforms = gameData.getPlatforms();
-        for(int i = 0;i < platforms.size();i++){
-            Platform2D curPlat = platforms.get(i);
+//        gameData.addPlatform(5,5,15,2);
+//        List<Platform2D> platforms = gameData.getPlatforms();
+//        for(int i = 0;i < platforms.size();i++){
+//            Platform2D curPlat = platforms.get(i);
 //            System.out.println(curPlat.getWpos()+" "+curPlat.getHpos()+" "+curPlat.getWidth()+" "+curPlat.getHeight());
-        }
+//        }
+
     }
 
     public static void main(String[] args) {

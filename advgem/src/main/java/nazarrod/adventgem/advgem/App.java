@@ -1,5 +1,6 @@
 package nazarrod.adventgem.advgem;
 
+import nazarrod.adventgem.advgem.editor.Editor;
 import nazarrod.adventgem.advgem.utils.ProfileManager;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -12,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class App extends Application {
 
@@ -27,14 +30,17 @@ public class App extends Application {
 
     private void loginWindow(){
         Button newProfileButton = new Button();
-        newProfileButton.setText("New profile");
+        newProfileButton.setText("Levels");
         newProfileButton.setPrefWidth(200);
         newProfileButton.setOnAction(actionEvent -> createNewProfileWindow());
 
         Button existProfileButton = new Button();
-        existProfileButton.setText("Existing profile");
+        existProfileButton.setText("Create new Level");
         existProfileButton.setPrefWidth(200);
-        existProfileButton.setOnAction(actionEvent -> chooseProfileWindow());
+        existProfileButton.setOnAction(actionEvent -> {
+            Editor editor = new Editor();
+            editor.start(stage);
+        });
 
         VBox loginMenu = new VBox();
         loginMenu.getChildren().addAll(existProfileButton);
@@ -90,12 +96,12 @@ public class App extends Application {
         stage.show();
     }
 
-    private void chooseProfileWindow(){
+//    private void chooseProfileWindow(){
 //        File[] directories = new File("./UserProfiles/").listFiles(File::isDirectory);
 //        for(int i = 0;i < directories.length;i++){
 //            System.out.println(directories[i].getName());
 //        }
-    }
+//    }
 
     public static void main(String[] args) {
         launch(args);
