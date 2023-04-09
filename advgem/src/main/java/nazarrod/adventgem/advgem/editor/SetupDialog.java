@@ -8,8 +8,9 @@ import nazarrod.adventgem.advgem.GameData;
 
 public class SetupDialog extends Dialog<Void> {
 
-    private final TextField tfPlaygroundWidth = new TextField();
-    private final TextField tfPlaygroundHeight = new TextField();
+    private final TextField levelName = new TextField();
+    private final TextField playgroundWidth = new TextField();
+    private final TextField playgroundHeight = new TextField();
     public SetupDialog(GameData gameData) {
 
         setTitle("Tower Defense Setup");
@@ -23,15 +24,19 @@ public class SetupDialog extends Dialog<Void> {
         grid.setVgap(10);
         grid.setPadding(new Insets(10));
 
-        tfPlaygroundWidth.setText(String.valueOf(gameData.getPlaygroundWidth()));
-        tfPlaygroundWidth.setPrefWidth(160);
-        tfPlaygroundHeight.setText(String.valueOf(gameData.getPlaygroundHeight()));
-        tfPlaygroundHeight.setPrefWidth(160);
+        levelName.setText(String.valueOf(gameData.getLevelname()));
+        levelName.setPrefWidth(160);
+        playgroundWidth.setText(String.valueOf(gameData.getPlaygroundWidth()));
+        playgroundWidth.setPrefWidth(160);
+        playgroundHeight.setText(String.valueOf(gameData.getPlaygroundHeight()));
+        playgroundHeight.setPrefWidth(160);
 
-        grid.add(new Label("Playground Width"), 0, 0);
-        grid.add(tfPlaygroundWidth, 1, 0);
-        grid.add(new Label("Playground Height"), 0, 1);
-        grid.add(tfPlaygroundHeight, 1, 1);
+        grid.add(new Label("Level Name"), 0, 0);
+        grid.add(levelName, 1, 0);
+        grid.add(new Label("Playground Width"), 0, 1);
+        grid.add(playgroundWidth, 1, 1);
+        grid.add(new Label("Playground Height"), 0, 2);
+        grid.add(playgroundHeight, 1, 2);
 
         dialogPane.setContent(grid);
 
@@ -44,14 +49,15 @@ public class SetupDialog extends Dialog<Void> {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                tfPlaygroundWidth.requestFocus();
+                playgroundWidth.requestFocus();
             }
         });
     }
 
     private void okButtonPressed(GameData gameData) {
-        gameData.setPlaygroundWidth(parseUnsignedIntDefault(tfPlaygroundWidth.getText(), gameData.getPlaygroundWidth()));
-        gameData.setPlaygroundHeight(parseUnsignedIntDefault(tfPlaygroundHeight.getText(), gameData.getPlaygroundHeight()));
+        gameData.setLevelname(levelName.getText());
+        gameData.setPlaygroundWidth(parseUnsignedIntDefault(playgroundWidth.getText(), gameData.getPlaygroundWidth()));
+        gameData.setPlaygroundHeight(parseUnsignedIntDefault(playgroundHeight.getText(), gameData.getPlaygroundHeight()));
     }
 
     private int parseUnsignedIntDefault(String str, int defaultValue) {

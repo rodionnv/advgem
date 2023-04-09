@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.geometry.Platform2D;
+import nazarrod.adventgem.advgem.utils.LevelManager;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Editor extends Application {
     /*
     *  Level Editor Class that allows to create simple levels,boss levels and chest(?) levels
     * */
+    private final LevelManager levelManager = new LevelManager();
     @Override
     public void start(Stage stage){
         Button simpleLevelButton = new Button();
@@ -39,6 +41,10 @@ public class Editor extends Application {
         GameData gameData = new GameData();
         SetupDialog setupDialog = new SetupDialog(gameData);
         setupDialog.showAndWait();
+//        System.out.println(gameData.getLevelname());
+//        System.out.println(gameData.getPlaygroundWidth());
+//        System.out.println(gameData.getPlaygroundHeight());
+        levelManager.createNewLevel(gameData);
 //        gameData.addPlatform(5,5,15,2);
 //        List<Platform2D> platforms = gameData.getPlatforms();
 //        for(int i = 0;i < platforms.size();i++){

@@ -3,11 +3,22 @@ package nazarrod.adventgem.advgem;
 import nazarrod.adventgem.advgem.geometry.Platform2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameData {
+    private final Random rnd = new Random();
+    private String levelname = "NewLevel" + rnd.nextInt(1000000007); // Add random string to avoid name duplication
     private int playgroundWidth = 800;
     private int PlaygroundHeight = 600;
     private List<Platform2D> platforms = new ArrayList<>();
+
+    public String getLevelname() {
+        return levelname;
+    }
+
+    public void setLevelname(String levelname) {
+        this.levelname = levelname;
+    }
 
     public int getPlaygroundWidth() {
         return playgroundWidth;
