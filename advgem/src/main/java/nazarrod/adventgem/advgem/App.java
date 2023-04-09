@@ -1,7 +1,6 @@
 package nazarrod.adventgem.advgem;
 
 import nazarrod.adventgem.advgem.editor.Editor;
-import nazarrod.adventgem.advgem.utils.ProfileManager;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -32,7 +31,7 @@ public class App extends Application {
         Button newProfileButton = new Button();
         newProfileButton.setText("Levels");
         newProfileButton.setPrefWidth(200);
-        newProfileButton.setOnAction(actionEvent -> createNewProfileWindow());
+//        newProfileButton.setOnAction(actionEvent -> createNewProfileWindow());
 
         Button existProfileButton = new Button();
         existProfileButton.setText("Create new Level");
@@ -52,49 +51,49 @@ public class App extends Application {
         stage.show();
     }
 
-    private void createNewProfileWindow(){
-        System.err.println("New profile button pressed");
-        Label profileNameLabel = new Label("Create new nickname: ");
-        TextField profileNameField = new TextField();
-        Label passwordLabel = new Label("Create new password: ");
-        TextField passwordField = new TextField();
-        Button okButton = new Button();
-        okButton.setText("OK");
-        okButton.setPrefWidth(50);
-        okButton.setOnAction(actionEvent -> {
-            ProfileManager profileManager = new ProfileManager();
-            boolean prCreated = profileManager.createNewProfile(profileNameField.getCharacters().toString(),passwordField.getCharacters().toString());
-            System.out.println(prCreated);
-            if(!prCreated){
-                Alert prCreationError = new Alert(Alert.AlertType.ERROR,"This login name may be already taken");
-                prCreationError.setHeaderText("Error creating profile");
-                prCreationError.show();
-                createNewProfileWindow();
-            }
-            else{
-                Alert prCreationSuccess = new Alert(Alert.AlertType.INFORMATION,"New profile "+profileNameField.getCharacters().toString()+" has been created");
-                prCreationSuccess.show();
-                loginWindow();
-            }
-        });
-
-        Button backButton = new Button();
-        backButton.setText("Back");
-        backButton.setPrefWidth(50);
-        backButton.setOnAction(actionEvent -> loginWindow());
-
-        GridPane grid = new GridPane();
-
-        grid.add(profileNameLabel,0,0);
-        grid.add(profileNameField,1,0);
-        grid.add(passwordLabel,0,1);
-        grid.add(passwordField,1,1);
-        grid.add(okButton,0,2);
-        grid.add(backButton,0,3);
-
-        stage.setScene(new Scene(grid,screenWidth*0.25,screenHeight*0.6));
-        stage.show();
-    }
+//    private void createNewProfileWindow(){
+//        System.err.println("New profile button pressed");
+//        Label profileNameLabel = new Label("Create new nickname: ");
+//        TextField profileNameField = new TextField();
+//        Label passwordLabel = new Label("Create new password: ");
+//        TextField passwordField = new TextField();
+//        Button okButton = new Button();
+//        okButton.setText("OK");
+//        okButton.setPrefWidth(50);
+//        okButton.setOnAction(actionEvent -> {
+//            ProfileManager profileManager = new ProfileManager();
+//            boolean prCreated = profileManager.createNewProfile(profileNameField.getCharacters().toString(),passwordField.getCharacters().toString());
+//            System.out.println(prCreated);
+//            if(!prCreated){
+//                Alert prCreationError = new Alert(Alert.AlertType.ERROR,"This login name may be already taken");
+//                prCreationError.setHeaderText("Error creating profile");
+//                prCreationError.show();
+//                createNewProfileWindow();
+//            }
+//            else{
+//                Alert prCreationSuccess = new Alert(Alert.AlertType.INFORMATION,"New profile "+profileNameField.getCharacters().toString()+" has been created");
+//                prCreationSuccess.show();
+//                loginWindow();
+//            }
+//        });
+//
+//        Button backButton = new Button();
+//        backButton.setText("Back");
+//        backButton.setPrefWidth(50);
+//        backButton.setOnAction(actionEvent -> loginWindow());
+//
+//        GridPane grid = new GridPane();
+//
+//        grid.add(profileNameLabel,0,0);
+//        grid.add(profileNameField,1,0);
+//        grid.add(passwordLabel,0,1);
+//        grid.add(passwordField,1,1);
+//        grid.add(okButton,0,2);
+//        grid.add(backButton,0,3);
+//
+//        stage.setScene(new Scene(grid,screenWidth*0.25,screenHeight*0.6));
+//        stage.show();
+//    }
 
 //    private void chooseProfileWindow(){
 //        File[] directories = new File("./UserProfiles/").listFiles(File::isDirectory);

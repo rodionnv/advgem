@@ -37,6 +37,8 @@ public class Editor extends Application {
         * Function builds simple level
         * */
         GameData gameData = new GameData();
+        SetupDialog setupDialog = new SetupDialog(gameData);
+        setupDialog.showAndWait();
 //        gameData.addPlatform(5,5,15,2);
 //        List<Platform2D> platforms = gameData.getPlatforms();
 //        for(int i = 0;i < platforms.size();i++){
