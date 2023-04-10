@@ -13,7 +13,7 @@ public class SetupDialog extends Dialog<Void> {
     private final TextField playgroundHeight = new TextField();
     public SetupDialog(GameData gameData) {
 
-        setTitle("Tower Defense Setup");
+        setTitle("Platformer level setup");
         setHeaderText(null); // if this text is set, the dialog looks really ugly!
 
         DialogPane dialogPane = getDialogPane();
@@ -49,7 +49,7 @@ public class SetupDialog extends Dialog<Void> {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                playgroundWidth.requestFocus();
+                levelName.requestFocus();
             }
         });
     }

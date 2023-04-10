@@ -3,11 +3,12 @@ package nazarrod.adventgem.advgem.editor;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
-import nazarrod.adventgem.advgem.geometry.Platform2D;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class Editor extends Application {
     @Override
     public void start(Stage stage){
         Button simpleLevelButton = new Button();
-        simpleLevelButton.setText("Create simple level");
+        simpleLevelButton.setText("Create platformer level");
         simpleLevelButton.setPrefWidth(200);
-        simpleLevelButton.setOnAction(actionEvent -> buildSimpleLevel());
+        simpleLevelButton.setOnAction(actionEvent -> buildPlatformerLevel(stage));
 
 
         VBox chooseLevel = new VBox();
@@ -34,24 +35,25 @@ public class Editor extends Application {
         stage.show();
     }
 
-    private void buildSimpleLevel(){
+    private void buildPlatformerLevel(Stage stage){
         /*
         * Function builds simple level
         * */
         GameData gameData = new GameData();
         SetupDialog setupDialog = new SetupDialog(gameData);
         setupDialog.showAndWait();
-//        System.out.println(gameData.getLevelname());
-//        System.out.println(gameData.getPlaygroundWidth());
-//        System.out.println(gameData.getPlaygroundHeight());
-        levelManager.createNewLevel(gameData);
-//        gameData.addPlatform(5,5,15,2);
-//        List<Platform2D> platforms = gameData.getPlatforms();
-//        for(int i = 0;i < platforms.size();i++){
-//            Platform2D curPlat = platforms.get(i);
-//            System.out.println(curPlat.getWpos()+" "+curPlat.getHpos()+" "+curPlat.getWidth()+" "+curPlat.getHeight());
-//        }
 
+        GridPane gridPane = new GridPane();
+        Canvas canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
+        gridPane.getChildren().add(canvas);
+        gridPane.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(gridPane);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+
+        levelManager.createNewLevel(gameData);
     }
 
     public static void main(String[] args) {

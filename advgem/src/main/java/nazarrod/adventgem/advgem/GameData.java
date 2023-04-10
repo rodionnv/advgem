@@ -1,6 +1,6 @@
 package nazarrod.adventgem.advgem;
 
-import nazarrod.adventgem.advgem.geometry.Platform2D;
+import nazarrod.adventgem.advgem.model.Platform2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

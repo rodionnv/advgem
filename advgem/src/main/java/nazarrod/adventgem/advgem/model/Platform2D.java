@@ -1,4 +1,4 @@
-package nazarrod.adventgem.advgem.geometry;
+package nazarrod.adventgem.advgem.model;
 
 public class Platform2D {
     /*

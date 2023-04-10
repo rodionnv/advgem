@@ -5,7 +5,7 @@ import nazarrod.adventgem.advgem.GameData;
 import java.io.*;
 
 public class LevelManager {
-    /*
+    /**
     * Level Manager class is used to manage Level
      */
     public boolean createNewLevel(GameData gameData){
