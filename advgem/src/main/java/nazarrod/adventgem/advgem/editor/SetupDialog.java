@@ -19,10 +19,10 @@ public class SetupDialog extends Dialog<Void> {
         DialogPane dialogPane = getDialogPane();
         dialogPane.getButtonTypes().add(ButtonType.OK);
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(10));
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(10));
 
         levelName.setText(String.valueOf(gameData.getLevelname()));
         levelName.setPrefWidth(160);
@@ -31,14 +31,14 @@ public class SetupDialog extends Dialog<Void> {
         playgroundHeight.setText(String.valueOf(gameData.getPlaygroundHeight()));
         playgroundHeight.setPrefWidth(160);
 
-        grid.add(new Label("Level Name"), 0, 0);
-        grid.add(levelName, 1, 0);
-        grid.add(new Label("Playground Width"), 0, 1);
-        grid.add(playgroundWidth, 1, 1);
-        grid.add(new Label("Playground Height"), 0, 2);
-        grid.add(playgroundHeight, 1, 2);
+        gridPane.add(new Label("Level Name"), 0, 0);
+        gridPane.add(levelName, 1, 0);
+        gridPane.add(new Label("Playground Width"), 0, 1);
+        gridPane.add(playgroundWidth, 1, 1);
+        gridPane.add(new Label("Playground Height"), 0, 2);
+        gridPane.add(playgroundHeight, 1, 2);
 
-        dialogPane.setContent(grid);
+        dialogPane.setContent(gridPane);
 
         Button okButton = (Button)dialogPane.lookupButton(ButtonType.OK);
         okButton.setOnAction(event -> {

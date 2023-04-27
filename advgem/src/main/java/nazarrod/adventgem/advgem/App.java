@@ -4,11 +4,7 @@ import nazarrod.adventgem.advgem.editor.Editor;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -48,6 +44,7 @@ public class App extends Application {
         loginMenu.setAlignment(Pos.CENTER);
         stage.setTitle("Adventurous GEM");
         stage.setScene(new Scene(loginMenu,screenWidth*0.25,screenHeight*0.6));
+        stage.centerOnScreen();
         stage.show();
     }
 
