@@ -1,6 +1,8 @@
 package nazarrod.adventgem.advgem.model;
 
-public class Platform2D {
+import java.io.Serializable;
+
+public class Platform2D implements Serializable {
     /*
     * 2D Platform
     * wpos,hpos - coords of the bottom left corner

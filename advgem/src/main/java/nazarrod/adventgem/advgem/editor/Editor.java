@@ -3,7 +3,6 @@ package nazarrod.adventgem.advgem.editor;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -28,7 +27,6 @@ public class Editor extends Application {
     *  Level Editor Class that allows to create platformer levels
     * */
     GameData gameData = new GameData();
-    private final LevelManager levelManager = new LevelManager();
     private int prevX = -1;
     private int prevY = -1;
 
@@ -85,7 +83,7 @@ public class Editor extends Application {
         Button saveButton = new Button("Save");
         saveButton.setPrefWidth(150);
         saveButton.setOnAction(actionEvent -> {
-            levelManager.createNewLevel(gameData);
+            LevelManager.createNewLevel(gameData);
             start(stage);
         });
         Button exitButton = new Button("Exit");

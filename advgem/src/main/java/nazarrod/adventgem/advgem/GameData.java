@@ -1,11 +1,13 @@
 package nazarrod.adventgem.advgem;
 
 import nazarrod.adventgem.advgem.model.Platform2D;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GameData {
+public class GameData implements Serializable {
     private final Random rnd = new Random();
     private String levelname = "NewLevel" + rnd.nextInt(1000000007); // Add random string to avoid name duplication
     private int playgroundWidth = 800;
