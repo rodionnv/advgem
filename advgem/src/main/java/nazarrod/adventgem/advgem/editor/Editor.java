@@ -52,10 +52,10 @@ public class Editor extends Application {
         stage.show();
     }
 
+    /**
+     * Function builds Platform level
+     * */
     private void buildPlatformerLevel(Stage stage){
-        /**
-        * Function builds Platform level
-        * */
         SetupDialog setupDialog = new SetupDialog(gameData);
         setupDialog.showAndWait();
 
@@ -68,10 +68,8 @@ public class Editor extends Application {
         //Add canvas
         Canvas canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        graphicsController = new GraphicController(stage,canvas,gc);
-        gc.setFill(Color.GRAY);
-        gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
-
+        graphicsController = new GraphicController(stage,canvas,gc,gameData);
+        graphicsController.setBackground(Color.DARKCYAN);
         //Add control buttons
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll("Platform","Hero","Enemy","Finish");

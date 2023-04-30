@@ -3,9 +3,14 @@ package nazarrod.adventgem.advgem.view;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.model.Platform2D;
+
+import java.util.List;
 
 /**
  * GraphicController - class that is responsible for visual part
@@ -15,11 +20,28 @@ public class GraphicController {
     Stage stage;
     Canvas canvas;
     GraphicsContext gc;
+    GameData gameData;
 
-    public GraphicController(Stage stage, Canvas canvas, GraphicsContext graphicsContext) {
+    public GraphicController(Stage stage, Canvas canvas, GraphicsContext graphicsContext,GameData gameData) {
         this.stage = stage;
         this.canvas = canvas;
         this.gc = graphicsContext;
+        this.gameData = gameData;
+    }
+
+    public void loadLevel(){
+        // Draws only platforms, must load whole level (with heroes and enemies)
+        setBackground(Color.DARKCYAN);
+        List<Platform2D> platforms = gameData.getPlatforms();
+        for(Platform2D platform2D : platforms){
+            System.out.println(platform2D);
+            drawPlatform(platform2D);
+        }
+    }
+
+    public void setBackground(Color color){
+        gc.setFill(color);
+        gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
     }
 
     public void drawPlatform(int x,int y,int w,int h){
@@ -32,5 +54,9 @@ public class GraphicController {
         gc.setFill(rectangle.getFill());
         gc.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
         gc.restore();
+    }
+
+    public void drawPlatform(Platform2D platform){
+        drawPlatform(platform.getWpos(),platform.getHpos(),platform.getWidth(),platform.getHeight());
     }
 }
