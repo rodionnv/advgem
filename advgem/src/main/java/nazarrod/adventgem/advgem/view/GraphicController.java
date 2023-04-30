@@ -1,4 +1,4 @@
-package nazarrod.adventgem.advgem.View;
+package nazarrod.adventgem.advgem.view;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
