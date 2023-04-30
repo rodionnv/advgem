@@ -1,7 +1,6 @@
 package nazarrod.adventgem.advgem.editor;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -10,12 +9,16 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.View.GraphicController;
 import nazarrod.adventgem.advgem.model.Platform2D;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 import nazarrod.adventgem.advgem.App;
@@ -29,6 +32,7 @@ public class Editor extends Application {
     GameData gameData = new GameData();
     private int prevX = -1;
     private int prevY = -1;
+    private GraphicController graphicsController = null;
 
     @Override
     public void start(Stage stage){
@@ -67,6 +71,7 @@ public class Editor extends Application {
         //Add canvas
         Canvas canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        graphicsController = new GraphicController(stage,canvas,gc);
         gc.setFill(Color.GRAY);
         gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
 
@@ -128,7 +133,6 @@ public class Editor extends Application {
             prevY = y;
         }
         else{
-            gc.setFill(Color.YELLOW);
             if(prevX > x){
                 int t = prevX;
                 prevX = x;
@@ -139,7 +143,7 @@ public class Editor extends Application {
                 prevY = y;
                 y = t;
             }
-            gc.fillRect(prevX,prevY,x-prevX,y-prevY);
+            graphicsController.drawPlatform(prevX,prevY,x-prevX,y-prevY);
             gameData.addPlatform(prevX,prevY,x-prevX,y-prevY);
             List<Platform2D> platforms = gameData.getPlatforms();
             for(Platform2D platform2D : platforms){
