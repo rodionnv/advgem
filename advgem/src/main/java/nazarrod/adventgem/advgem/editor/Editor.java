@@ -1,6 +1,7 @@
 package nazarrod.adventgem.advgem.editor;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -8,15 +9,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.model.Platform2D;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 import nazarrod.adventgem.advgem.App;
 
@@ -75,6 +75,10 @@ public class Editor extends Application {
         choiceBox.getItems().addAll("Platform","Hero","Enemy","Finish");
         choiceBox.setValue("Platform");
         Button specButton = new Button("Set manually");
+        specButton.setOnAction(actionEvent -> {
+            PlatformSetupDialog platformSetupDialog = new PlatformSetupDialog(gameData);
+            platformSetupDialog.showAndWait();
+        });
         specButton.setPrefWidth(150);
         specButton.setDisable(false);
         choiceBox.setPrefWidth(150);
@@ -137,7 +141,10 @@ public class Editor extends Application {
             }
             gc.fillRect(prevX,prevY,x-prevX,y-prevY);
             gameData.addPlatform(prevX,prevY,x-prevX,y-prevY);
-            System.out.println(gameData.getPlatforms());
+            List<Platform2D> platforms = gameData.getPlatforms();
+            for(Platform2D platform2D : platforms){
+                System.out.println(platform2D.getWpos() + " " + platform2D.getHpos() + " " + platform2D.getWidth() + " " + platform2D.getHeight() + " ");
+            }
             prevX = -1;
         }
     }

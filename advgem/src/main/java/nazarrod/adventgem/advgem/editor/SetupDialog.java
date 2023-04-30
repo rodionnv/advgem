@@ -14,7 +14,7 @@ public class SetupDialog extends Dialog<Void> {
     public SetupDialog(GameData gameData) {
 
         setTitle("Platformer level setup");
-        setHeaderText(null); // if this text is set, the dialog looks really ugly!
+        setHeaderText(null);
 
         DialogPane dialogPane = getDialogPane();
         dialogPane.getButtonTypes().add(ButtonType.OK);
@@ -46,24 +46,19 @@ public class SetupDialog extends Dialog<Void> {
             event.consume();
         });
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                levelName.requestFocus();
-            }
-        });
+        Platform.runLater(() -> levelName.requestFocus());
     }
 
     private void okButtonPressed(GameData gameData) {
         gameData.setLevelname(levelName.getText());
-        gameData.setPlaygroundWidth(parseUnsignedIntDefault(playgroundWidth.getText(), gameData.getPlaygroundWidth()));
-        gameData.setPlaygroundHeight(parseUnsignedIntDefault(playgroundHeight.getText(), gameData.getPlaygroundHeight()));
+        gameData.setPlaygroundWidth(parseIntDefault(playgroundWidth.getText(), gameData.getPlaygroundWidth()));
+        gameData.setPlaygroundHeight(parseIntDefault(playgroundHeight.getText(), gameData.getPlaygroundHeight()));
     }
 
-    private int parseUnsignedIntDefault(String str, int defaultValue) {
+    private int parseIntDefault(String str, int defaultValue) {
         int result;
         try {
-            result = Integer.parseUnsignedInt(str);
+            result = Integer.parseInt(str);
         } catch (NumberFormatException e) {
             result = defaultValue;
         }
