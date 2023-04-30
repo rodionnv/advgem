@@ -3,11 +3,14 @@ package nazarrod.adventgem.advgem.View;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+/**
+ * GraphicController - class that is responsible for visual part
+ * contains methods for loading the whole graphic context from GameData and methods for drawing individual components
+ */
 public class GraphicController {
     Stage stage;
     Canvas canvas;
