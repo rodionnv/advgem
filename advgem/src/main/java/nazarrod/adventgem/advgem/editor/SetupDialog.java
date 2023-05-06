@@ -24,7 +24,7 @@ public class SetupDialog extends Dialog<Void> {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(10));
 
-        levelName.setText(String.valueOf(gameData.getLevelname()));
+        levelName.setText(String.valueOf(gameData.getLevelName()));
         levelName.setPrefWidth(160);
         playgroundWidth.setText(String.valueOf(gameData.getPlaygroundWidth()));
         playgroundWidth.setPrefWidth(160);
@@ -50,7 +50,7 @@ public class SetupDialog extends Dialog<Void> {
     }
 
     private void okButtonPressed(GameData gameData) {
-        gameData.setLevelname(levelName.getText());
+        gameData.setLevelName(levelName.getText());
         gameData.setPlaygroundWidth(parseIntDefault(playgroundWidth.getText(), gameData.getPlaygroundWidth()));
         gameData.setPlaygroundHeight(parseIntDefault(playgroundHeight.getText(), gameData.getPlaygroundHeight()));
     }

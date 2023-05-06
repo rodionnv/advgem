@@ -9,17 +9,17 @@ import java.util.Random;
 
 public class GameData implements Serializable {
     private final Random rnd = new Random();
-    private String levelname = "NewLevel" + rnd.nextInt(1000000007); // Add random string to avoid name duplication
-    private int playgroundWidth = 800;
-    private int PlaygroundHeight = 600;
+    private String levelName = "NewLevel" + rnd.nextInt(1000000007); // Add random string to avoid name duplication
+    private int playgroundWidth = 1920;
+    private int PlaygroundHeight = 1080;
     private List<Platform2D> platforms = new ArrayList<>();
 
-    public String getLevelname() {
-        return levelname;
+    public String getLevelName() {
+        return levelName;
     }
 
-    public void setLevelname(String levelname) {
-        this.levelname = levelname;
+    public void setLevelName(String levelName) {
+        this.levelName = levelname;
     }
 
     public int getPlaygroundWidth() {

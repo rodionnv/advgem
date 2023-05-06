@@ -11,14 +11,14 @@ public class LevelManager {
     public static void createNewLevel(GameData gameData){
         /*
         * Create new profile in ./UserProfiles directory.
-        * Function creates user directory and config filegit
+        * Function creates user directory and config file
         * */
-        System.err.printf("Try to save new leve level file %s\n",gameData.getLevelname());
+        System.err.printf("Try to save new leve level file %s\n",gameData.getLevelName());
         try {
-            boolean dirCreated = new File("./Levels/"+gameData.getLevelname()).mkdirs();
+            boolean dirCreated = new File("./Levels/"+gameData.getLevelName()).mkdirs();
             if(!dirCreated)throw new IOException("Directory can't be created");
 
-            String filePath = "./Levels/"+gameData.getLevelname()+"/gamedata.dat";
+            String filePath = "./Levels/"+gameData.getLevelName()+"/gamedata.dat";
             File myObj = new File(filePath);
             boolean fileCreated = myObj.createNewFile();
             if(!fileCreated)throw new IOException("Level file can't be created");
@@ -27,9 +27,9 @@ public class LevelManager {
             try (OutputStream outputStream = new FileOutputStream(filePath);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)){
                 objectOutputStream.writeObject(gameData);
-                System.err.printf("Your level was saved, Level name: %s\n",gameData.getLevelname());
+                System.err.printf("Your level was saved, Level name: %s\n",gameData.getLevelName());
             } catch (IOException e){
-                System.err.printf("Error occurred while saving %s Level Data.\n",gameData.getLevelname());
+                System.err.printf("Error occurred while saving %s Level Data.\n",gameData.getLevelName());
                 e.printStackTrace();
             }
 
