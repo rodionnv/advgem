@@ -25,11 +25,11 @@ public class PlatformSetupDialog extends Dialog<Void> {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(10));
 
-        xpos.setText("X");
+        xpos.setText("400");
         xpos.setPrefWidth(160);
-        ypos.setText("Y");
+        ypos.setText("400");
         ypos.setPrefWidth(160);
-        width.setText("300");
+        width.setText("100");
         width.setPrefWidth(160);
         height.setText("40");
         height.setPrefWidth(160);

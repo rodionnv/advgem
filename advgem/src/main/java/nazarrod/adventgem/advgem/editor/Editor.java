@@ -78,7 +78,7 @@ public class Editor extends Application {
         specButton.setOnAction(actionEvent -> {
             PlatformSetupDialog platformSetupDialog = new PlatformSetupDialog(gameData);
             platformSetupDialog.showAndWait();
-            // ТУТ НАДО ДОБАВИТ ПЕРЕРИСОВКУ
+            graphicsController.loadLevel();
         });
         specButton.setPrefWidth(150);
         specButton.setDisable(false);
