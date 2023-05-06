@@ -29,7 +29,7 @@ public class GraphicController {
         this.gameData = gameData;
     }
 
-    public void loadLevel(){
+    public void drawLevel(){
         // Draws only platforms, must load whole level (with heroes and enemies)
         setBackground(Color.DARKCYAN);
         List<Platform2D> platforms = gameData.getPlatforms();
