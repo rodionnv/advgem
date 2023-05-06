@@ -34,7 +34,6 @@ public class GraphicController {
         setBackground(Color.DARKCYAN);
         List<Platform2D> platforms = gameData.getPlatforms();
         for(Platform2D platform2D : platforms){
-            System.out.println(platform2D);
             drawPlatform(platform2D);
         }
     }
