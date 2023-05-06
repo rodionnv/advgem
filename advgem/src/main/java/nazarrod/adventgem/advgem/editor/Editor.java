@@ -29,13 +29,15 @@ public class Editor extends Application {
     GameData gameData = new GameData();
     private int prevX = -1;
     private int prevY = -1;
+    private Stage stage = null;
     private GraphicController graphicsController = null;
 
     @Override
     public void start(Stage stage){
+        this.stage = stage;
         Button simpleLevelButton = new Button("Create platformer level");
         simpleLevelButton.setPrefWidth(200);
-        simpleLevelButton.setOnAction(actionEvent -> buildPlatformerLevel(stage));
+        simpleLevelButton.setOnAction(actionEvent -> buildPlatformerLevel());
 
         Button mainMenuButton = new Button("Main menu");
         mainMenuButton.setPrefWidth(200);
@@ -55,7 +57,7 @@ public class Editor extends Application {
     /**
      * Function builds Platform level
      * */
-    private void buildPlatformerLevel(Stage stage){
+    private void buildPlatformerLevel(){
         SetupDialog setupDialog = new SetupDialog(gameData);
         setupDialog.showAndWait();
 
@@ -78,7 +80,7 @@ public class Editor extends Application {
         specButton.setOnAction(actionEvent -> {
             PlatformSetupDialog platformSetupDialog = new PlatformSetupDialog(gameData);
             platformSetupDialog.showAndWait();
-            graphicsController.loadLevel();
+            graphicsController.drawLevel();
         });
         specButton.setPrefWidth(150);
         specButton.setDisable(false);
@@ -147,9 +149,5 @@ public class Editor extends Application {
             }
             prevX = -1;
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
