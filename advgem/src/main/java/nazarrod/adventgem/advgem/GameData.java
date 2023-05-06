@@ -19,7 +19,7 @@ public class GameData implements Serializable {
     }
 
     public void setLevelName(String levelName) {
-        this.levelName = levelname;
+        this.levelName = levelName;
     }
 
     public int getPlaygroundWidth() {
