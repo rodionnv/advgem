@@ -65,7 +65,6 @@ public class Editor extends Application {
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(10));
-        gridPane.setAlignment(Pos.CENTER);
 
         //Add canvas
         Canvas canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
