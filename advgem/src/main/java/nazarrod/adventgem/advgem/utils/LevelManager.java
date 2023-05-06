@@ -3,6 +3,8 @@ package nazarrod.adventgem.advgem.utils;
 import nazarrod.adventgem.advgem.GameData;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class LevelManager {
     /**
@@ -40,13 +42,12 @@ public class LevelManager {
         }
     }
 
-    public static GameData readLevel(String fileName){
+    public static GameData loadLevel(String filePath){
         GameData gameData = null;
-        String filePath = "./Levels/"+fileName+"/gamedata.dat";
         try (InputStream inputStream = new FileInputStream(filePath);
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)){
             gameData = (GameData) objectInputStream.readObject();
-            System.err.println("Level was successfully read");
+            System.err.printf("Level %s was successfully read\n",filePath);
         } catch (IOException | ClassNotFoundException e){
             System.err.printf("Error occurred while reading %s LevelData\n",filePath);
             e.printStackTrace();
@@ -54,4 +55,11 @@ public class LevelManager {
         return gameData;
     }
 
+    public static List<String> getLevels(){
+        String dirPath = "./Levels/";
+        File directory = new File(dirPath);
+        String[] levelList = directory.list();
+        assert levelList != null; //TODO handle this error properly
+        return Arrays.stream(levelList).toList();
+    }
 }
