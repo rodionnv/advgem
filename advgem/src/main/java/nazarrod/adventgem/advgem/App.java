@@ -8,8 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import nazarrod.adventgem.advgem.levelPlayer.ChooseLevelWindow;
+import nazarrod.adventgem.advgem.levelPlayer.GameWindow;
+import nazarrod.adventgem.advgem.utils.LevelManager;
 
 import java.io.File;
+import java.util.List;
 
 public class App extends Application {
 
@@ -24,10 +28,13 @@ public class App extends Application {
     }
 
     private void loginWindow(){
-        Button newProfileButton = new Button();
-        newProfileButton.setText("Levels");
-        newProfileButton.setPrefWidth(200);
-//        newProfileButton.setOnAction(actionEvent -> createNewProfileWindow());
+        Button levelButton = new Button();
+        levelButton.setText("Levels");
+        levelButton.setPrefWidth(200);
+        levelButton.setOnAction(actionEvent -> {
+            ChooseLevelWindow chooseLevelWindow = new ChooseLevelWindow(stage);
+            chooseLevelWindow.start();
+        });
 
         Button existProfileButton = new Button();
         existProfileButton.setText("Create new Level");
@@ -38,8 +45,7 @@ public class App extends Application {
         });
 
         VBox loginMenu = new VBox();
-        loginMenu.getChildren().addAll(existProfileButton);
-        loginMenu.getChildren().addAll(newProfileButton);
+        loginMenu.getChildren().addAll(levelButton,existProfileButton);
         loginMenu.setSpacing(8);
         loginMenu.setAlignment(Pos.CENTER);
         stage.setTitle("Adventurous GEM");
@@ -47,57 +53,6 @@ public class App extends Application {
         stage.centerOnScreen();
         stage.show();
     }
-
-//    private void createNewProfileWindow(){
-//        System.err.println("New profile button pressed");
-//        Label profileNameLabel = new Label("Create new nickname: ");
-//        TextField profileNameField = new TextField();
-//        Label passwordLabel = new Label("Create new password: ");
-//        TextField passwordField = new TextField();
-//        Button okButton = new Button();
-//        okButton.setText("OK");
-//        okButton.setPrefWidth(50);
-//        okButton.setOnAction(actionEvent -> {
-//            ProfileManager profileManager = new ProfileManager();
-//            boolean prCreated = profileManager.createNewProfile(profileNameField.getCharacters().toString(),passwordField.getCharacters().toString());
-//            System.out.println(prCreated);
-//            if(!prCreated){
-//                Alert prCreationError = new Alert(Alert.AlertType.ERROR,"This login name may be already taken");
-//                prCreationError.setHeaderText("Error creating profile");
-//                prCreationError.show();
-//                createNewProfileWindow();
-//            }
-//            else{
-//                Alert prCreationSuccess = new Alert(Alert.AlertType.INFORMATION,"New profile "+profileNameField.getCharacters().toString()+" has been created");
-//                prCreationSuccess.show();
-//                loginWindow();
-//            }
-//        });
-//
-//        Button backButton = new Button();
-//        backButton.setText("Back");
-//        backButton.setPrefWidth(50);
-//        backButton.setOnAction(actionEvent -> loginWindow());
-//
-//        GridPane grid = new GridPane();
-//
-//        grid.add(profileNameLabel,0,0);
-//        grid.add(profileNameField,1,0);
-//        grid.add(passwordLabel,0,1);
-//        grid.add(passwordField,1,1);
-//        grid.add(okButton,0,2);
-//        grid.add(backButton,0,3);
-//
-//        stage.setScene(new Scene(grid,screenWidth*0.25,screenHeight*0.6));
-//        stage.show();
-//    }
-
-//    private void chooseProfileWindow(){
-//        File[] directories = new File("./UserProfiles/").listFiles(File::isDirectory);
-//        for(int i = 0;i < directories.length;i++){
-//            System.out.println(directories[i].getName());
-//        }
-//    }
 
     public static void main(String[] args) {
         launch(args);
