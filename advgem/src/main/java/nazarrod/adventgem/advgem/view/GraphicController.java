@@ -37,6 +37,7 @@ public class GraphicController {
         for(Platform2D platform2D : platforms){
             drawPlatform(platform2D);
         }
+        drawHero(gameData.getHero());
     }
 
     public void setBackground(Color color){
@@ -49,7 +50,6 @@ public class GraphicController {
         Image image = new Image("platform.png");
         ImagePattern imagePattern = new ImagePattern(image);
         rectangle.setFill(imagePattern);
-//        rectangle.setFill(Color.YELLOW);
         gc.save();
         gc.setFill(rectangle.getFill());
         gc.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
