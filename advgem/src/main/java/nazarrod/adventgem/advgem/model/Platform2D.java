@@ -7,32 +7,32 @@ public class Platform2D implements Serializable {
     * 2D Platform
     * wpos,hpos - coords of the bottom left corner
      */
-    private int wpos;
-    private int hpos;
+    private int xPos;
+    private int yPos;
     private int width;
     private int height;
 
-    public Platform2D(int wpos, int hpos, int width, int height) {
-        this.wpos = wpos;
-        this.hpos = hpos;
+    public Platform2D(int xPos, int yPos, int width, int height) {
+        this.xPos = xPos;
+        this.yPos = yPos;
         this.width = width;
         this.height = height;
     }
 
     public int getX() {
-        return wpos;
+        return xPos;
     }
 
     public void setX(int wpos) {
-        this.wpos = wpos;
+        this.xPos = wpos;
     }
 
     public int getY() {
-        return hpos;
+        return yPos;
     }
 
     public void setY(int hpos) {
-        this.hpos = hpos;
+        this.yPos = hpos;
     }
 
     public int getWidth() {

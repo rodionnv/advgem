@@ -8,6 +8,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.model.Platform2D;
 
 import java.util.List;
@@ -49,6 +50,18 @@ public class GraphicController {
         ImagePattern imagePattern = new ImagePattern(image);
         rectangle.setFill(imagePattern);
 //        rectangle.setFill(Color.YELLOW);
+        gc.save();
+        gc.setFill(rectangle.getFill());
+        gc.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+        gc.restore();
+    }
+
+    public void drawHero(Hero hero) {
+        Rectangle rectangle = new Rectangle(hero.getxPos(),hero.getyPos(),hero.getWidth(),hero.getHeight());
+//        Image image = new Image("platform.png");
+//        ImagePattern imagePattern = new ImagePattern(image);
+//        rectangle.setFill(imagePattern);
+        rectangle.setFill(Color.RED);
         gc.save();
         gc.setFill(rectangle.getFill());
         gc.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());

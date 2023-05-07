@@ -8,7 +8,7 @@ public class Enemy implements Serializable {
     private int ypos = 0;
     private final int xspeed = 0; //SHOULDN'T BE ZERO
     private final int yspeed = 0; //SHOULDN'T BE ZERO
-    private final int width = 40;
+    private final int width = 50;
     private final int height = 60;
     private int hp = 100;
 

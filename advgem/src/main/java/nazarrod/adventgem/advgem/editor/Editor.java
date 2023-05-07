@@ -113,6 +113,8 @@ public class Editor extends Application {
         canvas.setOnMouseClicked(mouseEvent -> {
             if(choiceBox.getValue().equals("Platform"))
                 platformMouseClick(gc, mouseEvent);
+            if(choiceBox.getValue().equals("Hero"))
+                heroMouseClick(gc,mouseEvent);
         });
         gridPane.add(canvas,0,0);
         gridPane.add(buttonBox,1,0);
@@ -145,9 +147,28 @@ public class Editor extends Application {
                 System.err.println("Platform added");
             }
             else{
-                System.out.println("Collision I guess");
+                System.err.println("Collision");
+                //TODO Pop-up collision warning
             }
             prevX = -1;
+        }
+    }
+
+    private void heroMouseClick(GraphicsContext gc,MouseEvent mouseEvent){
+
+        int x = (int)mouseEvent.getX();
+        int y = (int)mouseEvent.getY()-60;
+        int f = gameData.addHero(x,y);
+        if(f == 2){
+            System.err.println("Hero already exists");
+        }
+        if(f == 1){
+            System.err.println("Hero added");
+            graphicsController.drawHero(gameData.getHero());
+        }
+        if(f == 0){
+            System.err.println("Probably collision");
+            //TODO Pop-up collision warning
         }
     }
 }

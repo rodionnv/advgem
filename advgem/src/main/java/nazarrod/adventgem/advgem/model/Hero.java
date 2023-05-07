@@ -4,28 +4,33 @@ import java.io.Serializable;
 
 public class Hero implements Serializable {
 
-    private int xpos = 0;
-    private int ypos = 0;
-    private final int xspeed = 0; //SHOULDN'T BE ZERO
-    private final int yspeed = 0; //SHOULDN'T BE ZERO
-    private final int width = 40;
+    private int xPos = 0;
+    private int yPos = 0;
+    private final int xSpeed = 5;
+    private final int ySpeed = 5;
+    private final int width = 50;
     private final int height = 60;
     private int hp = 100;
 
-    public int getXpos() {
-        return xpos;
+    public Hero(int xPos, int yPos, int hp) {
+        this.xPos = xPos;
+        this.yPos = yPos;
     }
 
-    public void setXpos(int xpos) {
-        this.xpos = xpos;
+    public int getxPos() {
+        return xPos;
     }
 
-    public int getYpos() {
-        return ypos;
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
     }
 
-    public void setYpos(int ypos) {
-        this.ypos = ypos;
+    public int getyPos() {
+        return yPos;
+    }
+
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
     }
 
     public int getHp() {
@@ -40,8 +45,24 @@ public class Hero implements Serializable {
         setHp(getHp() + x);
     }
 
-    public void changePos(int x,int y){
-        setXpos(x);
-        setYpos(y);
+    public int getxSpeed() {
+        return xSpeed;
+    }
+
+    public int getySpeed() {
+        return ySpeed;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void changePos(int x, int y){
+        setxPos(x);
+        setyPos(y);
     }
 }
