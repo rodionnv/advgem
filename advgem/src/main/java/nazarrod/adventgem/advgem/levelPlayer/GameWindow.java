@@ -1,13 +1,20 @@
 package nazarrod.adventgem.advgem.levelPlayer;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.view.GraphicController;
 
 public class GameWindow{
@@ -16,6 +23,8 @@ public class GameWindow{
     private GraphicsContext graphicsContext = null;
     private GraphicController graphicsController = null;
     private GameData gameData = null;
+
+    private AnimationTimer gameLoopTimer;
 
     public GameWindow(Stage stage, GameData gameData) {
         this.stage = stage;
@@ -33,5 +42,48 @@ public class GameWindow{
         stage.setScene(new Scene(gridPane));
         stage.centerOnScreen();
         stage.show();
+        Hero hero = gameData.getHero();
+
+        gameLoopTimer = new AnimationTimer() {
+            private long lastUpdate = 0;
+            @Override
+            public void handle(long now) { // in nanoseconds
+                if (now - lastUpdate >= 10_000_000) { // I dont know what value to put here yet
+                    graphicsController.drawLevel();
+                    lastUpdate = now;
+                }
+            }
+        };
+        gameLoopTimer.start();
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                KeyCode code = keyEvent.getCode();
+                switch (code) {
+                    case W -> {
+                        System.out.println("W pressed");
+                        hero.changePos(hero.getxPos(), hero.getyPos() - 5);
+                    }
+                    case A -> {
+                        System.out.println("A pressed");
+                        hero.changePos(hero.getxPos() - 5, hero.getyPos());
+                    }
+                    case S -> {
+                        System.out.println("S pressed");
+                        hero.changePos(hero.getxPos(), hero.getyPos() + 5);
+                    }
+                    case D -> {
+                        System.out.println("D pressed");
+                        hero.changePos(hero.getxPos() + 5, hero.getyPos());
+                    }
+                    case SPACE -> {
+                        System.out.println("Fire!");
+                    }
+                    case E -> {
+                        System.out.println("Invertory");
+                    }
+                }
+            }
+        });
     }
 }

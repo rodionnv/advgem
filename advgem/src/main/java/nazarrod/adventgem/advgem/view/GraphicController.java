@@ -28,6 +28,7 @@ public class GraphicController {
         this.canvas = canvas;
         this.gc = graphicsContext;
         this.gameData = gameData;
+        setBackground(Color.DARKCYAN);
     }
 
     public void drawLevel(){
@@ -38,6 +39,7 @@ public class GraphicController {
             drawPlatform(platform2D);
         }
         drawHero(gameData.getHero());
+        gc.restore();
     }
 
     public void setBackground(Color color){
@@ -47,9 +49,10 @@ public class GraphicController {
 
     public void drawPlatform(int x,int y,int w,int h){
         Rectangle rectangle = new Rectangle(x,y,w,h);
-        Image image = new Image("platform.png");
-        ImagePattern imagePattern = new ImagePattern(image);
-        rectangle.setFill(imagePattern);
+//        Image image = new Image("platform.png");
+//        ImagePattern imagePattern = new ImagePattern(image);
+//        rectangle.setFill(imagePattern);
+        rectangle.setFill(Color.GRAY);
         gc.save();
         gc.setFill(rectangle.getFill());
         gc.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
