@@ -111,7 +111,6 @@ public class Editor extends Application {
             }
         });
         canvas.setOnMouseClicked(mouseEvent -> {
-            System.err.println("Mouse pressed on " + (int)mouseEvent.getX() + " " + (int)mouseEvent.getY());
             if(choiceBox.getValue().equals("Platform"))
                 platformMouseClick(gc, mouseEvent);
         });
@@ -140,11 +139,13 @@ public class Editor extends Application {
                 prevY = y;
                 y = t;
             }
-            graphicsController.drawPlatform(prevX,prevY,x-prevX,y-prevY);
-            gameData.addPlatform(prevX,prevY,x-prevX,y-prevY);
-            List<Platform2D> platforms = gameData.getPlatforms();
-            for(Platform2D platform2D : platforms){
-                System.out.println(platform2D.getWpos() + " " + platform2D.getHpos() + " " + platform2D.getWidth() + " " + platform2D.getHeight() + " ");
+            boolean f = gameData.addPlatform(prevX,prevY,x-prevX,y-prevY);
+            if(f){
+                graphicsController.drawPlatform(prevX, prevY, x - prevX, y - prevY);
+                System.err.println("Platform added");
+            }
+            else{
+                System.out.println("Collision I guess");
             }
             prevX = -1;
         }

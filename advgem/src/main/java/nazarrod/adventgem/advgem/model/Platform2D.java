@@ -19,19 +19,19 @@ public class Platform2D implements Serializable {
         this.height = height;
     }
 
-    public int getWpos() {
+    public int getX() {
         return wpos;
     }
 
-    public void setWpos(int wpos) {
+    public void setX(int wpos) {
         this.wpos = wpos;
     }
 
-    public int getHpos() {
+    public int getY() {
         return hpos;
     }
 
-    public void setHpos(int hpos) {
+    public void setY(int hpos) {
         this.hpos = hpos;
     }
 

@@ -56,6 +56,6 @@ public class GraphicController {
     }
 
     public void drawPlatform(Platform2D platform){
-        drawPlatform(platform.getWpos(),platform.getHpos(),platform.getWidth(),platform.getHeight());
+        drawPlatform(platform.getX(),platform.getY(),platform.getWidth(),platform.getHeight());
     }
 }
