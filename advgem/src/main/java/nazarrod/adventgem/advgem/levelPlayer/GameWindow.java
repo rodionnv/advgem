@@ -43,13 +43,15 @@ public class GameWindow{
         stage.centerOnScreen();
         stage.show();
         Hero hero = gameData.getHero();
-
         gameLoopTimer = new AnimationTimer() {
             private long lastUpdate = 0;
             @Override
             public void handle(long now) { // in nanoseconds
                 if (now - lastUpdate >= 10_000_000) { // I dont know what value to put here yet
                     graphicsController.drawLevel();
+//                    System.out.println(hero.getxSpeed()+" "+hero.getySpeed());
+                    hero.updateFallingState(gameData.getPlatforms());
+                    hero.changePos(hero.getxPos()+hero.getxSpeed(), hero.getyPos()+hero.getySpeed());
                     lastUpdate = now;
                 }
             }
@@ -61,26 +63,51 @@ public class GameWindow{
                 KeyCode code = keyEvent.getCode();
                 switch (code) {
                     case W -> {
-                        System.out.println("W pressed");
-                        hero.changePos(hero.getxPos(), hero.getyPos() - 5);
+                        System.out.println("W pressed"+" "+hero.isStanding(gameData.getPlatforms()));
+                        hero.jump();
                     }
                     case A -> {
-                        System.out.println("A pressed");
-                        hero.changePos(hero.getxPos() - 5, hero.getyPos());
+                        System.out.println("A pressed"+" "+hero.isStanding(gameData.getPlatforms()));
+                        hero.setxSpeed(-1);
                     }
                     case S -> {
-                        System.out.println("S pressed");
-                        hero.changePos(hero.getxPos(), hero.getyPos() + 5);
+                        System.out.println("S pressed"+" "+hero.isStanding(gameData.getPlatforms()));
+//                        hero.setySpeed(hero.getySpeed()+1);
                     }
                     case D -> {
-                        System.out.println("D pressed");
-                        hero.changePos(hero.getxPos() + 5, hero.getyPos());
+                        System.out.println("D pressed"+" "+hero.isStanding(gameData.getPlatforms()));
+                        hero.setxSpeed(+1);
                     }
                     case SPACE -> {
                         System.out.println("Fire!");
                     }
                     case E -> {
-                        System.out.println("Invertory");
+                        System.out.println("Inventory");
+                    }
+                }
+            }
+        });
+
+        stage.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                KeyCode code = keyEvent.getCode();
+                switch (code) {
+                    case W -> {
+                        System.out.println("W relesed"+" "+hero.isStanding(gameData.getPlatforms()));
+//                        hero.setySpeed(hero.getySpeed()+1);
+                    }
+                    case A -> {
+                        System.out.println("A relesed"+" "+hero.isStanding(gameData.getPlatforms()));
+                        hero.setxSpeed(0);
+                    }
+                    case S -> {
+                        System.out.println("S relesed"+" "+hero.isStanding(gameData.getPlatforms()));
+//                        hero.setySpeed(hero.getySpeed()-1);
+                    }
+                    case D -> {
+                        System.out.println("D relesed"+" "+hero.isStanding(gameData.getPlatforms()));
+                        hero.setxSpeed(0);
                     }
                 }
             }
