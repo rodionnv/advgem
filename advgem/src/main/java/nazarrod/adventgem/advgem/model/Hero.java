@@ -14,11 +14,13 @@ public class Hero implements Serializable {
     private int yPos = 0;
     private int xSpeed = 0;
     private int ySpeed = 0;
+    private int xAcc = 3;
+    private int yAcc = 4;
+    private int jumpSpeed = 8;
     private final int width = 50;
     private final int height = 60;
     private int hp = 100;
     private int current_jumps = 0;
-
     private boolean falling = false;
 
     public Hero(int xPos, int yPos, int hp) {
@@ -70,6 +72,30 @@ public class Hero implements Serializable {
         this.ySpeed = ySpeed;
     }
 
+    public int getxAcc() {
+        return xAcc;
+    }
+
+    public void setxAcc(int xAcc) {
+        this.xAcc = xAcc;
+    }
+
+    public int getyAcc() {
+        return yAcc;
+    }
+
+    public void setyAcc(int yAcc) {
+        this.yAcc = yAcc;
+    }
+
+    public int getJumpSpeed() {
+        return jumpSpeed;
+    }
+
+    public void setJumpSpeed(int jumpSpeed) {
+        this.jumpSpeed = jumpSpeed;
+    }
+
     public int getWidth() {
         return width;
     }
@@ -94,19 +120,31 @@ public class Hero implements Serializable {
 
     public void updateFallingState(List<Platform2D> platforms){
         if(isStanding(platforms)){
-            if(falling)setySpeed(getySpeed()-3);
+            if(falling)setySpeed(getySpeed()- yAcc);
             falling = false;
         }
         else{
-            if(!falling)setySpeed(getySpeed()+3);
+            if(!falling)setySpeed(getySpeed()+ yAcc);
             falling = true;
         }
+    }
+
+    public void tryMove(){
+        Platform2D newBox = new Platform2D(xPos+getxSpeed(),yPos+getySpeed(),width,height);
+        changePos(getxPos()+getxSpeed(), getyPos()+getySpeed());
+    }
+
+    public void moveRight(){
+        setxSpeed(getxAcc());
+    }
+    public void moveLeft(){
+        setxSpeed(-getxAcc());
     }
 
     public void jump() {
         System.out.println(current_jumps);
         current_jumps++;
-        if(current_jumps < 2)push(0,-8,true);
+        if(current_jumps < 2)push(0,-jumpSpeed,true);
     }
 
     public void push(int xDelta,int yDelta,boolean isJump){

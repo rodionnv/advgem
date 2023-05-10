@@ -1,16 +1,12 @@
 package nazarrod.adventgem.advgem.levelPlayer;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
@@ -47,11 +43,11 @@ public class GameWindow{
             private long lastUpdate = 0;
             @Override
             public void handle(long now) { // in nanoseconds
-                if (now - lastUpdate >= 10_000_000) { // I dont know what value to put here yet
+                if (now - lastUpdate >= 10_000_000) {
                     graphicsController.drawLevel();
 //                    System.out.println(hero.getxSpeed()+" "+hero.getySpeed());
                     hero.updateFallingState(gameData.getPlatforms());
-                    hero.changePos(hero.getxPos()+hero.getxSpeed(), hero.getyPos()+hero.getySpeed());
+                    hero.tryMove();
                     lastUpdate = now;
                 }
             }
@@ -63,26 +59,22 @@ public class GameWindow{
                 KeyCode code = keyEvent.getCode();
                 switch (code) {
                     case W -> {
-                        System.out.println("W pressed"+" "+hero.isStanding(gameData.getPlatforms()));
                         hero.jump();
                     }
                     case A -> {
-                        System.out.println("A pressed"+" "+hero.isStanding(gameData.getPlatforms()));
-                        hero.setxSpeed(-1);
-                    }
-                    case S -> {
-                        System.out.println("S pressed"+" "+hero.isStanding(gameData.getPlatforms()));
-//                        hero.setySpeed(hero.getySpeed()+1);
+                        hero.moveLeft();
                     }
                     case D -> {
-                        System.out.println("D pressed"+" "+hero.isStanding(gameData.getPlatforms()));
-                        hero.setxSpeed(+1);
+                        hero.moveRight();
                     }
                     case SPACE -> {
                         System.out.println("Fire!");
                     }
                     case E -> {
                         System.out.println("Inventory");
+                    }
+                    case SHIFT -> {
+                        System.out.println("Block!");
                     }
                 }
             }
@@ -93,20 +85,7 @@ public class GameWindow{
             public void handle(KeyEvent keyEvent) {
                 KeyCode code = keyEvent.getCode();
                 switch (code) {
-                    case W -> {
-                        System.out.println("W relesed"+" "+hero.isStanding(gameData.getPlatforms()));
-//                        hero.setySpeed(hero.getySpeed()+1);
-                    }
-                    case A -> {
-                        System.out.println("A relesed"+" "+hero.isStanding(gameData.getPlatforms()));
-                        hero.setxSpeed(0);
-                    }
-                    case S -> {
-                        System.out.println("S relesed"+" "+hero.isStanding(gameData.getPlatforms()));
-//                        hero.setySpeed(hero.getySpeed()-1);
-                    }
-                    case D -> {
-                        System.out.println("D relesed"+" "+hero.isStanding(gameData.getPlatforms()));
+                    case A,D -> {
                         hero.setxSpeed(0);
                     }
                 }
