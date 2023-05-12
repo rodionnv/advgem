@@ -4,14 +4,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.model.Platform2D;
 
 import java.util.List;
+import java.util.Queue;
 
 /**
  * GraphicController - class that is responsible for visual part
@@ -39,6 +40,7 @@ public class GraphicController {
             drawPlatform(platform2D);
         }
         drawHero(gameData.getHero());
+        drawBullets(gameData.getBullets());
         gc.restore();
     }
 
@@ -49,9 +51,6 @@ public class GraphicController {
 
     public void drawPlatform(int x,int y,int w,int h){
         Rectangle rectangle = new Rectangle(x,y,w,h);
-//        Image image = new Image("platform.png");
-//        ImagePattern imagePattern = new ImagePattern(image);
-//        rectangle.setFill(imagePattern);
         rectangle.setFill(Color.GRAY);
         gc.save();
         gc.setFill(rectangle.getFill());
@@ -60,18 +59,19 @@ public class GraphicController {
     }
 
     public void drawHero(Hero hero) {
-        Rectangle rectangle = new Rectangle(hero.getxPos(),hero.getyPos(),hero.getWidth(),hero.getHeight());
-//        Image image = new Image("platform.png");
-//        ImagePattern imagePattern = new ImagePattern(image);
-//        rectangle.setFill(imagePattern);
-        rectangle.setFill(Color.RED);
-        gc.save();
-        gc.setFill(rectangle.getFill());
-        gc.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
-        gc.restore();
+        //All should be like this
+        Image image = new Image("plsm.png");
+        gc.drawImage(image,hero.getxPos(),hero.getyPos(),hero.getWidth(),hero.getHeight());
     }
 
     public void drawPlatform(Platform2D platform){
         drawPlatform(platform.getX(),platform.getY(),platform.getWidth(),platform.getHeight());
+    }
+
+    public void drawBullets(Queue<Bullet>bullets){
+        for(Bullet bullet : bullets){
+            Image image = new Image("bullet.png");
+            gc.drawImage(image,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+        }
     }
 }

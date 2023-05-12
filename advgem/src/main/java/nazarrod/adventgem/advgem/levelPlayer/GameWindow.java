@@ -10,16 +10,19 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.view.GraphicController;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class GameWindow{
-    private Stage stage;
+    private final Stage stage;
     private Canvas canvas = null;
     private GraphicsContext graphicsContext = null;
     private GraphicController graphicsController = null;
     private GameData gameData = null;
-
     private AnimationTimer gameLoopTimer;
 
     public GameWindow(Stage stage, GameData gameData) {
@@ -68,7 +71,8 @@ public class GameWindow{
                         hero.moveRight();
                     }
                     case SPACE -> {
-                        System.out.println("Fire!");
+                        Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos(),hero.getOrientation());
+                        gameData.addBullet(bullet);
                     }
                     case E -> {
                         System.out.println("Inventory");

@@ -124,6 +124,7 @@ public class Editor extends Application {
         stage.show();
     }
     private void platformMouseClick(GraphicsContext gc,MouseEvent mouseEvent) {
+        //TILING
         int x = (int)mouseEvent.getX();
         int y = (int)mouseEvent.getY();
         if(prevX == -1){

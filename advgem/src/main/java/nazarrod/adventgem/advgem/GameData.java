@@ -1,12 +1,11 @@
 package nazarrod.adventgem.advgem;
 
+import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.model.Platform2D;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GameData implements Serializable {
     private final Random rnd = new Random();
@@ -15,6 +14,7 @@ public class GameData implements Serializable {
     private int PlaygroundHeight = 1080;
     private List<Platform2D> platforms = new ArrayList<>();
     private Hero hero = null;
+    private Queue<Bullet> bullets = new LinkedList<Bullet>();
 
     public String getLevelName() {
         return levelName;
@@ -55,8 +55,20 @@ public class GameData implements Serializable {
         return true;
     }
 
+    public Queue<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public void setBullets(Queue<Bullet> bullets) {
+        this.bullets = bullets;
+    }
+
     public Hero getHero() {
         return hero;
+    }
+
+    public void addBullet(Bullet bullet){
+        bullets.add(bullet);
     }
 
     public int addHero(int x, int y){

@@ -22,6 +22,7 @@ public class Hero implements Serializable {
     private int hp = 100;
     private int current_jumps = 0;
     private boolean falling = false;
+    private boolean orientation = true; //True - faced to the right, False - to the left
 
     public Hero(int xPos, int yPos, int hp) {
         this.xPos = xPos;
@@ -104,6 +105,14 @@ public class Hero implements Serializable {
         return height;
     }
 
+    public boolean getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(boolean orientation) {
+        this.orientation = orientation;
+    }
+
     public void changePos(int x, int y){
         setxPos(x);
         setyPos(y);
@@ -136,13 +145,15 @@ public class Hero implements Serializable {
 
     public void moveRight(){
         setxSpeed(getxAcc());
+        orientation = true;
     }
     public void moveLeft(){
         setxSpeed(-getxAcc());
+        orientation = false;
     }
 
     public void jump() {
-        System.out.println(current_jumps);
+//        System.out.println(current_jumps);
         current_jumps++;
         if(current_jumps < 2)push(0,-jumpSpeed,true);
     }
