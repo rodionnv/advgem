@@ -1,12 +1,18 @@
 package nazarrod.adventgem.advgem.levelPlayer;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import nazarrod.adventgem.advgem.App;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Hero;
@@ -62,11 +68,7 @@ public class GameWindow{
                 case E -> {
                     System.out.println("Inventory");
                 }
-                case R -> {
-//                    hero.reincarnate();
-                    gameLoopTimer.stop();
-                    new ChooseLevelWindow(stage).start();
-                }
+                case P -> pauseLevel(gameLoopTimer);
                 case SHIFT -> {
                     System.out.println("Block!");
                 }
@@ -79,5 +81,36 @@ public class GameWindow{
                 case A,D -> hero.setxSpeed(0);
             }
         });
+    }
+
+    public void pauseLevel(AnimationTimer gameLoopTimer){
+        gameLoopTimer.stop();
+        Stage pauseStage = new Stage();
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
+        Button continueButton = new Button("Continue");
+        continueButton.setPrefWidth(200);
+        continueButton.setOnAction(actionEvent -> {
+            pauseStage.close();
+            gameLoopTimer.start();
+        });
+        Button restartButton = new Button("Restart");
+        restartButton.setPrefWidth(200);
+        restartButton.setOnAction(actionEvent -> {
+            pauseStage.close();
+            new ChooseLevelWindow(stage).startLevel(gameData.getLevelName());
+        });
+        Button exitButton = new Button("Exit game");
+        exitButton.setPrefWidth(200);
+        exitButton.setOnAction(actionEvent -> {
+            Platform.exit();
+        });
+        vBox.getChildren().addAll(continueButton,restartButton,exitButton);
+        pauseStage.setScene(new Scene(vBox));
+        pauseStage.centerOnScreen();
+        pauseStage.initModality(Modality.APPLICATION_MODAL);
+        pauseStage.setOnCloseRequest(windowEvent -> gameLoopTimer.start());
+        pauseStage.show();
     }
 }

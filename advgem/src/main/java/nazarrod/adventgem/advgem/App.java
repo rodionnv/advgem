@@ -1,5 +1,6 @@
 package nazarrod.adventgem.advgem;
 
+import javafx.application.Platform;
 import nazarrod.adventgem.advgem.editor.Editor;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -36,16 +37,22 @@ public class App extends Application {
             chooseLevelWindow.start();
         });
 
-        Button existProfileButton = new Button();
-        existProfileButton.setText("Create new Level");
-        existProfileButton.setPrefWidth(200);
-        existProfileButton.setOnAction(actionEvent -> {
+        Button NewLevelButton = new Button();
+        NewLevelButton.setText("Create new Level");
+        NewLevelButton.setPrefWidth(200);
+        NewLevelButton.setOnAction(actionEvent -> {
             Editor editor = new Editor();
             editor.start(stage);
         });
 
+        Button exitButton = new Button("Exit");
+        exitButton.setPrefWidth(200);
+        exitButton.setOnAction(actionEvent -> {
+            Platform.exit();
+        });
+
         VBox loginMenu = new VBox();
-        loginMenu.getChildren().addAll(levelButton,existProfileButton);
+        loginMenu.getChildren().addAll(levelButton,NewLevelButton,exitButton);
         loginMenu.setSpacing(8);
         loginMenu.setAlignment(Pos.CENTER);
         stage.setTitle("Adventurous GEM");
