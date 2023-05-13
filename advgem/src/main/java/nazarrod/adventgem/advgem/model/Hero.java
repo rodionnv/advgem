@@ -1,5 +1,7 @@
 package nazarrod.adventgem.advgem.model;
 
+import nazarrod.adventgem.advgem.utils.Geometry;
+
 import java.time.Duration;
 
 import java.io.Serializable;
@@ -121,7 +123,7 @@ public class Hero implements Serializable {
     public boolean isStanding(List<Platform2D> platforms){
         for(int i = xPos;i <= xPos+width;i++){
             for(Platform2D platform : platforms){
-                if(checkBelongs(i,yPos+height+1,platform)){current_jumps = 0;return true;}
+                if(Geometry.checkBelongs(i,yPos+height+1,platform)){current_jumps = 0;return true;}
             }
         }
         return false;
@@ -175,13 +177,5 @@ public class Hero implements Serializable {
                 }
             }
         },0,16);
-    }
-
-    private boolean checkBelongs(int x,int y,Platform2D p){
-        int xp1 = p.getX();
-        int yp1 = p.getY();
-        int xp2 = xp1+p.getWidth();
-        int yp2 = yp1+p.getHeight();
-        return xp1 <= x && x <= xp2 && yp1 <= y && y <= yp2;
     }
 }

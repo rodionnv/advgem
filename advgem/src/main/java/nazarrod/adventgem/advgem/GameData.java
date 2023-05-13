@@ -3,6 +3,7 @@ package nazarrod.adventgem.advgem;
 import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.model.Platform2D;
+import nazarrod.adventgem.advgem.utils.Geometry;
 
 import java.io.Serializable;
 import java.util.*;
@@ -91,50 +92,7 @@ public class GameData implements Serializable {
 
     private boolean checkIfCollidesWithAnything(Platform2D platform2D){
         for(Platform2D platform : platforms)
-            if(checkCollision(platform2D,platform) || checkCollision(platform,platform2D))return true;
-        return false;
-    }
-
-    private boolean checkBelongs(int x,int y,Platform2D p){
-        int xp1 = p.getX();
-        int yp1 = p.getY();
-        int xp2 = xp1+p.getWidth();
-        int yp2 = yp1+p.getHeight();
-        return xp1 <= x && x <= xp2 && yp1 <= y && y <= yp2;
-    }
-
-    public boolean checkCollision(Platform2D p,Platform2D o){
-        int x,y;
-        x = p.getX();
-        y = p.getY();
-        if(checkBelongs(x,y,o))return true;
-
-        x = p.getX();
-        y = p.getY()+p.getHeight();
-        if(checkBelongs(x,y,o))return true;
-
-        x = p.getX()+p.getWidth();
-        y = p.getY();
-        if(checkBelongs(x,y,o))return true;
-
-        x = p.getX()+p.getWidth();
-        y = p.getY()+p.getHeight();
-        if(checkBelongs(x,y,o))return true;
-
-        if( (p.getX() <= o.getX() && o.getX()+o.getWidth() <= p.getX()+p.getWidth()) &&
-                (p.getY() <= o.getY() && o.getY()+o.getHeight() <= p.getY()+p.getHeight()) )return true;
-
-        if( (o.getX() <= p.getX() && p.getX()+p.getWidth() <= o.getX()+o.getWidth()) &&
-                (o.getY() <= p.getY() && p.getY()+p.getHeight() <= o.getY()+o.getHeight()) )return true;
-
-        if( (p.getX() <= o.getX() && o.getX()+o.getWidth() <= p.getX()+p.getWidth()) &&
-                (o.getY() <= p.getY() && p.getY()+p.getHeight() <= o.getY()+o.getHeight()) )return true;
-
-        if( (o.getX() <= p.getX() && p.getX()+p.getWidth() <= o.getX()+o.getWidth()) &&
-                (p.getY() <= o.getY() && o.getY()+o.getHeight() <= p.getY()+p.getHeight()) )return true;
-
-
-        //TODO It is not complete
+            if(Geometry.checkCollision(platform2D,platform) || Geometry.checkCollision(platform,platform2D))return true;
         return false;
     }
 }
