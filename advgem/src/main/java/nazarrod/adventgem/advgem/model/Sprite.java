@@ -17,17 +17,19 @@ public class Sprite implements Serializable {
     protected int xAcc = 0;
     protected int yAcc = 0;
     protected int jumpSpeed = 0;
-    protected int hp;
+    protected int HP;
+    protected int startHP;
     protected int current_jumps = 0;
     protected boolean falling = false;
     private boolean orientation = true; //True - faced to the right, False - to the left
 
-    public Sprite(int xPos, int yPos, int hp) {
+    public Sprite(int xPos, int yPos, int HP) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.startXPos = xPos;
         this.startYPos = yPos;
-        this.hp = hp;
+        this.HP = HP;
+        this.startHP = HP;
     }
 
     public int getxPos() {
@@ -46,16 +48,16 @@ public class Sprite implements Serializable {
         this.yPos = yPos;
     }
 
-    public int getHp() {
-        return hp;
+    public int getHP() {
+        return HP;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
+    public void setHP(int HP) {
+        this.HP = HP;
     }
 
     public void changeHP(int x){
-        setHp(getHp() + x);
+        setHP(getHP() + x);
     }
 
     public int getxSpeed() {
@@ -117,7 +119,7 @@ public class Sprite implements Serializable {
         setyPos(y);
     }
 
-    public void moveRight(){
+    public void moveRight(){ //TODO Make it better so sprite doesn't stop when A&D pressed at the same time
         setxSpeed(getxAcc());
         setOrientation(true);
     }
@@ -129,6 +131,7 @@ public class Sprite implements Serializable {
     public void reincarnate(){
         setxPos(startXPos);
         setyPos(startYPos);
+        setHP(startHP);
     }
 
     public Platform2D getPlatform() {

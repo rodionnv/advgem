@@ -29,10 +29,6 @@ public class Bullet implements Serializable {
         return yPos;
     }
 
-    public void setyPos(int yPos) {
-        this.yPos = yPos;
-    }
-
     public int getxSpeed() {
         return xSpeed;
     }
@@ -51,6 +47,5 @@ public class Bullet implements Serializable {
 
     public void move(){
         setxPos(getxPos()+getxSpeed());
-//        System.out.println(this+" "+xPos);
     }
 }

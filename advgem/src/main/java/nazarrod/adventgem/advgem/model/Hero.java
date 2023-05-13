@@ -1,12 +1,9 @@
 package nazarrod.adventgem.advgem.model;
 
-import nazarrod.adventgem.advgem.utils.Geometry;
-
 import java.time.Duration;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 

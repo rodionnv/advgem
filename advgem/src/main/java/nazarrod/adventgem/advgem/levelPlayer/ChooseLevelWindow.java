@@ -39,7 +39,7 @@ public class ChooseLevelWindow {
         stage.centerOnScreen();
     }
 
-    private void startLevel(String levelName){
+    public void startLevel(String levelName){
         String levelPath = "./Levels/"+levelName+"/gamedata.dat";
         GameData gameData = LevelManager.loadLevel(levelPath);
         GameWindow gameWindow = new GameWindow(stage,gameData);

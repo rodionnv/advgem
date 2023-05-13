@@ -8,6 +8,6 @@ public class Enemy extends Sprite implements Serializable {
     public Enemy(int xPos, int yPos, int hp) {
         super(xPos, yPos, hp);
         this.xAcc = 3;
+        this.yAcc = 4;
     }
-
 }

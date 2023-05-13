@@ -63,7 +63,9 @@ public class GameWindow{
                     System.out.println("Inventory");
                 }
                 case R -> {
-                    hero.reincarnate();
+//                    hero.reincarnate();
+                    gameLoopTimer.stop();
+                    new ChooseLevelWindow(stage).start();
                 }
                 case SHIFT -> {
                     System.out.println("Block!");

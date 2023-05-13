@@ -106,19 +106,27 @@ public class GameData implements Serializable {
         hero.tryMove();
         Iterator<Bullet> bulletIteratort = bullets.iterator();
         Bullet bullet;
+        Enemy enemy;
+        for (Enemy value : enemies) {
+            enemy = value;
+            enemy.updateFallingState(getPlatforms());
+            enemy.tryMove();
+        }
         while (bulletIteratort.hasNext()){
             bullet = bulletIteratort.next();
             bullet.move();
             if(Geometry.outOfBounds(bullet.getPlatform(),playgroundWidth,getPlaygroundHeight()))
                 bulletIteratort.remove();
-        }
-        Iterator<Enemy> enemyIterator = enemies.iterator();
-        Enemy enemy;
-        while (enemyIterator.hasNext()){
-            enemy = enemyIterator.next();
-            enemy.tryMove();
-            if(Geometry.outOfBounds(enemy.getPlatform(),playgroundWidth,getPlaygroundHeight()))
-                enemyIterator.remove();
+
+            Iterator<Enemy> enemyIterator = enemies.iterator();
+            while (enemyIterator.hasNext()){
+                enemy = enemyIterator.next();
+                if(Geometry.checkCollision(bullet.getPlatform(),enemy.getPlatform())) {
+                    enemy.changeHP(-20);
+                    bulletIteratort.remove();
+                    if (enemy.getHP() <= 0)enemyIterator.remove();
+                }
+            }
         }
     }
 
