@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import nazarrod.adventgem.advgem.App;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 
@@ -30,7 +31,12 @@ public class ChooseLevelWindow {
             levelButton = createButton(filename);
             gridPane.add(levelButton,0,++button_num);
         }
+        Button backButton = new Button("Back");
+        backButton.setPrefWidth(200);
+        backButton.setOnAction(actionEvent -> new App().start(stage));
+        gridPane.add(backButton,0,++button_num);
         stage.setScene(new Scene(gridPane));
+        stage.centerOnScreen();
     }
 
     private void startLevel(String levelName){

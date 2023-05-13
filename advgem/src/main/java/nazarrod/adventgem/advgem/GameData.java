@@ -81,6 +81,14 @@ public class GameData implements Serializable {
         return 1;
     }
 
+    public void refreshAll(){
+        hero.updateFallingState(getPlatforms());
+        hero.tryMove();
+        for(Bullet bullet : bullets){
+            bullet.move();
+        }
+    }
+
     private boolean checkIfCollidesWithAnything(Platform2D platform2D){
         for(Platform2D platform : platforms)
             if(checkCollision(platform2D,platform) || checkCollision(platform,platform2D))return true;

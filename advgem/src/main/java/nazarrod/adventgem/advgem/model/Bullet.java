@@ -31,11 +31,20 @@ public class Bullet implements Serializable {
         this.yPos = yPos;
     }
 
+    public int getxSpeed() {
+        return xSpeed;
+    }
+
     public int getWidth() {
         return width;
     }
 
     public int getHeight() {
         return height;
+    }
+
+    public void move(){
+        setxPos(getxPos()+getxSpeed());
+        System.out.println(this+" "+xPos);
     }
 }

@@ -49,8 +49,7 @@ public class GameWindow{
                 if (now - lastUpdate >= 10_000_000) {
                     graphicsController.drawLevel();
 //                    System.out.println(hero.getxSpeed()+" "+hero.getySpeed());
-                    hero.updateFallingState(gameData.getPlatforms());
-                    hero.tryMove();
+                    gameData.refreshAll();
                     lastUpdate = now;
                 }
             }
