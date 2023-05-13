@@ -10,70 +10,16 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Hero implements Serializable {
-
-    private int xPos = 0;
-    private int yPos = 0;
-    private int xSpeed = 0;
-    private int ySpeed = 0;
+public class Hero extends Sprite implements Serializable{
     private int xAcc = 3;
     private int yAcc = 4;
     private int jumpSpeed = 8;
-    private final int width = 50;
-    private final int height = 60;
-    private int hp = 100;
     private int current_jumps = 0;
     private boolean falling = false;
     private boolean orientation = true; //True - faced to the right, False - to the left
 
     public Hero(int xPos, int yPos, int hp) {
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.hp = hp;
-    }
-
-    public int getxPos() {
-        return xPos;
-    }
-
-    public void setxPos(int xPos) {
-        this.xPos = xPos;
-    }
-
-    public int getyPos() {
-        return yPos;
-    }
-
-    public void setyPos(int yPos) {
-        this.yPos = yPos;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public void increaseHP(int x){
-        setHp(getHp() + x);
-    }
-
-    public int getxSpeed() {
-        return xSpeed;
-    }
-
-    public void setxSpeed(int xSpeed) {
-        this.xSpeed = xSpeed;
-    }
-
-    public int getySpeed() {
-        return ySpeed;
-    }
-
-    public void setySpeed(int ySpeed) {
-        this.ySpeed = ySpeed;
+        super(xPos, yPos, hp);
     }
 
     public int getxAcc() {
@@ -100,14 +46,6 @@ public class Hero implements Serializable {
         this.jumpSpeed = jumpSpeed;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     public boolean getOrientation() {
         return orientation;
     }
@@ -118,11 +56,6 @@ public class Hero implements Serializable {
 
     public void setOrientation(boolean orientation) {
         this.orientation = orientation;
-    }
-
-    public void changePos(int x, int y){
-        setxPos(x);
-        setyPos(y);
     }
 
     public boolean isStanding(List<Platform2D> platforms){

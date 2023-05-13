@@ -56,11 +56,14 @@ public class GameWindow{
                 case A -> hero.moveLeft();
                 case D -> hero.moveRight();
                 case SPACE -> {
-                    Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos(),hero.getOrientation());
+                    Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos()+20,hero.getOrientation());
                     gameData.addBullet(bullet);
                 }
                 case E -> {
                     System.out.println("Inventory");
+                }
+                case R -> {
+                    hero.reincarnate();
                 }
                 case SHIFT -> {
                     System.out.println("Block!");
