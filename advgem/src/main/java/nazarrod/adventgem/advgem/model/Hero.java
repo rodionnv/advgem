@@ -29,6 +29,7 @@ public class Hero implements Serializable {
     public Hero(int xPos, int yPos, int hp) {
         this.xPos = xPos;
         this.yPos = yPos;
+        this.hp = hp;
     }
 
     public int getxPos() {
@@ -109,6 +110,10 @@ public class Hero implements Serializable {
 
     public boolean getOrientation() {
         return orientation;
+    }
+
+    public Platform2D getPlatform() {
+        return new Platform2D(getxPos(),getyPos(),getWidth(),getHeight());
     }
 
     public void setOrientation(boolean orientation) {

@@ -8,6 +8,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.model.Bullet;
+import nazarrod.adventgem.advgem.model.Enemy;
 import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.model.Platform2D;
 
@@ -41,6 +42,7 @@ public class GraphicController {
         }
         drawHero(gameData.getHero());
         drawBullets(gameData.getBullets());
+        drawEnemies(gameData.getEnemies());
         gc.restore();
     }
 
@@ -72,6 +74,13 @@ public class GraphicController {
         for(Bullet bullet : bullets){
             Image image = new Image("bullet.png");
             gc.drawImage(image,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+        }
+    }
+
+    public void drawEnemies(List<Enemy>enemies){
+        for(Enemy enemy : enemies){
+            Image image = new Image("enemy.png");
+            gc.drawImage(image,enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
         }
     }
 }

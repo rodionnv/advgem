@@ -1,8 +1,6 @@
 package nazarrod.adventgem.advgem.editor;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,11 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.view.GraphicController;
-import nazarrod.adventgem.advgem.model.Platform2D;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 import nazarrod.adventgem.advgem.App;
-
-import java.util.List;
 
 public class Editor extends Application {
     /**
@@ -94,27 +89,24 @@ public class Editor extends Application {
         });
         Button exitButton = new Button("Exit");
         exitButton.setPrefWidth(150);
-        exitButton.setOnAction(actionEvent -> {
-            start(stage);
-        });
+        exitButton.setOnAction(actionEvent -> start(stage));
 
         VBox buttonBox = new VBox();
         buttonBox.setSpacing(4);
         buttonBox.getChildren().addAll(new Label("Add new element"),choiceBox,specButton,new Label("Configure inventory"),
                 invButton,new Label("Save Level"),saveButton,exitButton);
 
-        choiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String chosen) {
-                System.out.println(choiceBox.getValue());
-                specButton.setDisable(!choiceBox.getValue().equals("Platform"));
-            }
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, s, chosen) -> {
+            System.out.println(choiceBox.getValue());
+            specButton.setDisable(!choiceBox.getValue().equals("Platform"));
         });
         canvas.setOnMouseClicked(mouseEvent -> {
             if(choiceBox.getValue().equals("Platform"))
-                platformMouseClick(gc, mouseEvent);
+                platformMouseClick(mouseEvent);
             if(choiceBox.getValue().equals("Hero"))
-                heroMouseClick(gc,mouseEvent);
+                heroMouseClick(mouseEvent);
+            if(choiceBox.getValue().equals("Enemy"))
+                enemyMouseClick(mouseEvent);
         });
         gridPane.add(canvas,0,0);
         gridPane.add(buttonBox,1,0);
@@ -123,7 +115,7 @@ public class Editor extends Application {
         stage.centerOnScreen();
         stage.show();
     }
-    private void platformMouseClick(GraphicsContext gc,MouseEvent mouseEvent) {
+    private void platformMouseClick(MouseEvent mouseEvent) {
         //TILING
         int x = (int)mouseEvent.getX();
         int y = (int)mouseEvent.getY();
@@ -155,7 +147,7 @@ public class Editor extends Application {
         }
     }
 
-    private void heroMouseClick(GraphicsContext gc,MouseEvent mouseEvent){
+    private void heroMouseClick(MouseEvent mouseEvent){
 
         int x = (int)mouseEvent.getX();
         int y = (int)mouseEvent.getY()-60;
@@ -166,6 +158,21 @@ public class Editor extends Application {
         if(f == 1){
             System.err.println("Hero added");
             graphicsController.drawHero(gameData.getHero());
+        }
+        if(f == 0){
+            System.err.println("Probably collision");
+            //TODO Pop-up collision warning
+        }
+    }
+
+    private void enemyMouseClick(MouseEvent mouseEvent){
+
+        int x = (int)mouseEvent.getX();
+        int y = (int)mouseEvent.getY()-60;
+        int f = gameData.addEnemy(x,y);
+        if(f == 1){
+            System.err.println("Enemy added");
+            graphicsController.drawEnemies(gameData.getEnemies());
         }
         if(f == 0){
             System.err.println("Probably collision");

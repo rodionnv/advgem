@@ -1,6 +1,7 @@
 package nazarrod.adventgem.advgem;
 
 import nazarrod.adventgem.advgem.model.Bullet;
+import nazarrod.adventgem.advgem.model.Enemy;
 import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.model.Platform2D;
 import nazarrod.adventgem.advgem.utils.Geometry;
@@ -15,7 +16,8 @@ public class GameData implements Serializable {
     private int PlaygroundHeight = 1080;
     private List<Platform2D> platforms = new ArrayList<>();
     private Hero hero = null;
-    private Queue<Bullet> bullets = new LinkedList<Bullet>();
+    private Queue<Bullet> bullets = new LinkedList<>();
+    private List<Enemy> enemies = new ArrayList<>();
 
     public String getLevelName() {
         return levelName;
@@ -56,6 +58,14 @@ public class GameData implements Serializable {
         return true;
     }
 
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
     public Queue<Bullet> getBullets() {
         return bullets;
     }
@@ -82,17 +92,43 @@ public class GameData implements Serializable {
         return 1;
     }
 
+    public int addEnemy(int x, int y){
+        if(y < 0)return 0;
+        Enemy enemy = new Enemy(x,y,100);
+        Platform2D enemyPlatform = new Platform2D(enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
+        if(checkIfCollidesWithAnything(enemyPlatform))return 0;
+        enemies.add(enemy);
+        return 1;
+    }
+
     public void refreshAll(){
         hero.updateFallingState(getPlatforms());
         hero.tryMove();
-        for(Bullet bullet : bullets){
+//        for(Bullet bullet : bullets){
+//            bullet.move();
+//            if(Geometry.outOfBounds(bullet.getPlatform(),playgroundWidth,getPlaygroundHeight())){
+//                bullets.remove(bullet);
+//            }
+//        }
+        Iterator<Bullet> it = bullets.iterator();
+        Bullet bullet;
+        while (it.hasNext()){
+            bullet = it.next();
             bullet.move();
+            if(Geometry.outOfBounds(bullet.getPlatform(),playgroundWidth,getPlaygroundHeight()))
+                it.remove();
         }
     }
 
     private boolean checkIfCollidesWithAnything(Platform2D platform2D){
         for(Platform2D platform : platforms)
-            if(Geometry.checkCollision(platform2D,platform) || Geometry.checkCollision(platform,platform2D))return true;
+            if(Geometry.checkCollision(platform2D,platform))return true;
+
+        if( (hero != null) && Geometry.checkCollision(platform2D,hero.getPlatform()) )return true;
+
+        for(Enemy enemy : enemies)
+            if(Geometry.checkCollision(platform2D,enemy.getPlatform()))return true;
         return false;
     }
+
 }

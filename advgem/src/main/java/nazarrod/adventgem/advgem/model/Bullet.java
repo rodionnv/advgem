@@ -1,5 +1,7 @@
 package nazarrod.adventgem.advgem.model;
 
+import nazarrod.adventgem.advgem.utils.Geometry;
+
 import java.io.Serializable;
 
 public class Bullet implements Serializable {
@@ -43,8 +45,12 @@ public class Bullet implements Serializable {
         return height;
     }
 
+    public Platform2D getPlatform() {
+        return new Platform2D(getxPos(),getyPos(),getWidth(),getHeight());
+    }
+
     public void move(){
         setxPos(getxPos()+getxSpeed());
-        System.out.println(this+" "+xPos);
+//        System.out.println(this+" "+xPos);
     }
 }

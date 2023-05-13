@@ -11,7 +11,16 @@ public class Geometry {
         return xp1 <= x && x <= xp2 && yp1 <= y && y <= yp2;
     }
 
+    public static boolean outOfBounds(Platform2D p,int x,int y){
+        Platform2D o = new Platform2D(0,0,x,y);
+        return !(checkIndCollision(p,o) || checkIndCollision(o,p));
+    }
+
     public static boolean checkCollision(Platform2D p,Platform2D o){
+        return (checkIndCollision(p,o) || checkIndCollision(o,p) );
+    }
+
+    private static boolean checkIndCollision(Platform2D p,Platform2D o){
         int x,y;
         x = p.getX();
         y = p.getY();
