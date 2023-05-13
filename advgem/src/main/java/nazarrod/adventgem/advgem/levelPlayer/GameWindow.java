@@ -18,8 +18,8 @@ public class GameWindow{
     private final GraphicController graphicsController;
     private final GameData gameData;
 
-    public GameWindow(Stage stage, GameData gameData) {
-        this.stage = stage;
+    public GameWindow(GameData gameData) {
+        this.stage = new Stage();
         this.gameData = gameData;
         canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
         graphicsController = new GraphicController(stage,canvas,canvas.getGraphicsContext2D(),gameData);
