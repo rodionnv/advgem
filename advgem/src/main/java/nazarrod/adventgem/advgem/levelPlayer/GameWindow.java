@@ -62,7 +62,7 @@ public class GameWindow{
                 case A -> hero.moveLeft();
                 case D -> hero.moveRight();
                 case SPACE -> {
-                    Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos()+20,hero.getOrientation());
+                    Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos()+20,hero.getOrientation(),"bullet_hero.png");
                     gameData.addBullet(bullet);
                 }
                 case E -> {

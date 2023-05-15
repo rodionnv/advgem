@@ -10,7 +10,7 @@ import java.util.TimerTask;
 public class Hero extends Sprite implements Serializable{
 
     public Hero(int xPos, int yPos, int hp) {
-        super(xPos, yPos, hp);
+        super(xPos, yPos, hp,"plsm.png");
         this.xAcc = 3;
         this.yAcc = 4;
         this.jumpSpeed = 8;

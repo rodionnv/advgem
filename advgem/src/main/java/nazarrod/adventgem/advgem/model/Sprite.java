@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Sprite implements Serializable {
+    protected final String gfName;
     protected int xPos;
     protected int yPos;
     protected final int startXPos;
@@ -23,13 +24,18 @@ public class Sprite implements Serializable {
     protected boolean falling = false;
     private boolean orientation = true; //True - faced to the right, False - to the left
 
-    public Sprite(int xPos, int yPos, int HP) {
+    public Sprite(int xPos, int yPos, int HP,String gfName) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.startXPos = xPos;
         this.startYPos = yPos;
         this.HP = HP;
         this.startHP = HP;
+        this.gfName = gfName;
+    }
+
+    public String getGfName() {
+        return gfName;
     }
 
     public int getxPos() {

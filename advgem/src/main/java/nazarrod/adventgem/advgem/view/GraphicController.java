@@ -62,7 +62,7 @@ public class GraphicController {
 
     public void drawHero(Hero hero) {
         //All should be like this
-        Image image = new Image("plsm.png");
+        Image image = new Image(hero.getGfName());
         gc.drawImage(image,hero.getxPos(),hero.getyPos(),hero.getWidth(),hero.getHeight());
     }
 
@@ -72,14 +72,14 @@ public class GraphicController {
 
     public void drawBullets(Queue<Bullet>bullets){
         for(Bullet bullet : bullets){
-            Image image = new Image("bullet.png");
+            Image image = new Image("bullet_hero.png");
             gc.drawImage(image,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
         }
     }
 
     public void drawEnemies(List<Enemy>enemies){
         for(Enemy enemy : enemies){
-            Image image = new Image("enemy.png");
+            Image image = new Image(enemy.getGfName());
             gc.drawImage(image,enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
         }
     }
