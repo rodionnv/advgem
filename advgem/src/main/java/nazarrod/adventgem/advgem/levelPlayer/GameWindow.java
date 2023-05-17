@@ -22,6 +22,8 @@ public class GameWindow{
     private final Canvas canvas;
     private final GraphicController graphicsController;
     private final GameData gameData;
+    boolean aKeyPressed = false;
+    boolean dKeyPressed = false;
 
     public GameWindow(GameData gameData) {
         this.stage = new Stage();
@@ -58,8 +60,18 @@ public class GameWindow{
             KeyCode code = keyEvent.getCode();
             switch (code) {
                 case W -> hero.jump();
-                case A -> hero.moveLeft();
-                case D -> hero.moveRight();
+                case A -> {
+                    hero.moveLeft();
+                    aKeyPressed = true;
+                    if(!dKeyPressed)
+                        hero.moveLeft();
+                }
+                case D -> {
+                    hero.moveRight();
+                    dKeyPressed = true;
+                    if(!aKeyPressed)
+                        hero.moveRight();
+                }
                 case SPACE -> {
                     Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos()+20,hero.getOrientation(), "bullet_blue.png",true);
                     gameData.addBullet(bullet);
@@ -77,7 +89,16 @@ public class GameWindow{
         stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> {
             KeyCode code = keyEvent.getCode();
             switch (code) {
-                case A,D -> hero.setxSpeed(0);
+                case A -> {
+                    aKeyPressed = false;
+                    if(!dKeyPressed)hero.setxSpeed(0);
+                    else hero.moveRight();
+                }
+                case D -> {
+                    dKeyPressed = false;
+                    if(!aKeyPressed)hero.setxSpeed(0);
+                    else hero.moveLeft();
+                }
             }
         });
     }
