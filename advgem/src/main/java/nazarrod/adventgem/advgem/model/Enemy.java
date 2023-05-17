@@ -1,5 +1,7 @@
 package nazarrod.adventgem.advgem.model;
 
+import nazarrod.adventgem.advgem.utils.Geometry;
+
 import java.io.Serializable;
 
 public class Enemy extends Sprite implements Serializable {
@@ -10,4 +12,10 @@ public class Enemy extends Sprite implements Serializable {
         this.xAcc = 3;
         this.yAcc = 4;
     }
+
+//    public void updateOrientation(){
+//        if(getOrientation()){
+//            if(!Geometry.checkCollision())
+//        }
+//    }
 }

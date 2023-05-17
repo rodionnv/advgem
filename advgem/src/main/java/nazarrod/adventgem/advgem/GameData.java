@@ -116,7 +116,7 @@ public class GameData implements Serializable {
             enemy.updateStates(getPlatforms());
             enemy.tryMove(getPlatforms());
             if(enemies_shoot_now){
-                Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,enemy.getOrientation(), "bullet_red.png",0);
+                Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,enemy.getOrientation(), "bullet_red.png",false);
                 addBullet(new_bullet);
             }
         }
@@ -128,7 +128,7 @@ public class GameData implements Serializable {
             if(Geometry.outOfBounds(bullet.getPlatform(),playgroundWidth,getPlaygroundHeight()))
                 bulletIterator.remove();
 
-            if(bullet.getShotBy() == 1) {
+            if(bullet.getShotBy()) {
                 Iterator<Enemy> enemyIterator = enemies.iterator();
                 while (enemyIterator.hasNext()) {
                     enemy = enemyIterator.next();

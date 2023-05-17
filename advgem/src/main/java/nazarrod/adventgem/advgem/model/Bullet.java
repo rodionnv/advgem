@@ -8,11 +8,11 @@ public class Bullet implements Serializable {
     private int xPos = 0;
     private int yPos = 0;
     private int xSpeed = 8;
-    private final int shotBy;
+    private final boolean shotBy;
     private final int width = 24;
     private final int height = 24;
 
-    public Bullet(int xPos, int yPos,boolean orientation,String gfName,int shotBy) {
+    public Bullet(int xPos, int yPos,boolean orientation,String gfName,boolean shotBy) {
         //shot_by = 1? - hero's shot; shot_by = 0? enemy
         this.xPos = xPos;
         this.yPos = yPos;
@@ -49,7 +49,7 @@ public class Bullet implements Serializable {
         return gfName;
     }
 
-    public int getShotBy() {
+    public boolean getShotBy() {
         return shotBy;
     }
 
