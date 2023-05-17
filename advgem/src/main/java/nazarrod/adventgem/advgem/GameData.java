@@ -51,8 +51,8 @@ public class GameData implements Serializable {
         this.platforms = platforms;
     }
 
-    public boolean addPlatform(int wpos, int hpos, int width, int height){
-        Platform2D platform2D = new Platform2D(wpos,hpos,width,height);
+    public boolean addPlatform(int wpos, int hpos){
+        Platform2D platform2D = new Platform2D(wpos,hpos,79,79);
         if(checkIfCollidesWithAnything(platform2D))return false;
         platforms.add(platform2D);
         return true;

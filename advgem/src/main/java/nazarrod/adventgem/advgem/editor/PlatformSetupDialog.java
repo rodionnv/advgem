@@ -49,9 +49,7 @@ public class PlatformSetupDialog extends Dialog<Void> {
         Button okButton = (Button)dialogPane.lookupButton(ButtonType.OK);
         okButton.setOnAction(event -> {
             gameData.addPlatform(parseIntDefault(xpos.getText(),0),
-                    parseIntDefault(ypos.getText(),0),
-                    parseIntDefault(width.getText(),300),
-                    parseIntDefault(height.getText(),40));
+                    parseIntDefault(ypos.getText(),0));
             event.consume();
         });
 

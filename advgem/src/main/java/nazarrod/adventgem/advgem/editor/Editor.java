@@ -22,8 +22,6 @@ public class Editor extends Application {
     *  Level Editor Class that allows to create platformer levels
     * */
     GameData gameData = new GameData();
-    private int prevX = -1;
-    private int prevY = -1;
     private Stage stage = null;
     private GraphicController graphicsController = null;
 
@@ -116,34 +114,13 @@ public class Editor extends Application {
         stage.show();
     }
     private void platformMouseClick(MouseEvent mouseEvent) {
-        //TILING
-        int x = (int)mouseEvent.getX();
-        int y = (int)mouseEvent.getY();
-        if(prevX == -1){
-            prevX = x;
-            prevY = y;
-        }
-        else{
-            if(prevX > x){
-                int t = prevX;
-                prevX = x;
-                x = t;
-            }
-            if(prevY > y){
-                int t = prevY;
-                prevY = y;
-                y = t;
-            }
-            boolean f = gameData.addPlatform(prevX,prevY,x-prevX,y-prevY);
-            if(f){
-                graphicsController.drawPlatform(prevX, prevY, x - prevX, y - prevY);
-                System.err.println("Platform added");
-            }
-            else{
-                System.err.println("Collision");
-                //TODO Pop-up collision warning
-            }
-            prevX = -1;
+        int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80;
+        int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;
+        System.out.println("Mouse pressed on area belonging to" + " " + x +  " " + y);
+        boolean f = gameData.addPlatform(x,y);
+        if(f){
+            graphicsController.drawPlatform(x, y);
+            System.err.println("Platform added");
         }
     }
 

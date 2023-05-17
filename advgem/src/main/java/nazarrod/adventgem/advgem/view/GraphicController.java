@@ -20,10 +20,15 @@ import java.util.Queue;
  * contains methods for loading the whole graphic context from GameData and methods for drawing individual components
  */
 public class GraphicController {
-    Stage stage;
-    Canvas canvas;
-    GraphicsContext gc;
-    GameData gameData;
+    private Stage stage;
+    private Canvas canvas;
+    private GraphicsContext gc;
+    private GameData gameData;
+    private final Image platformImage = new Image("platform.png");
+    private final Image heroImage = new Image("hero.png");
+    private final Image enemyImage = new Image("enemy.png");
+    private final Image redBulletImage = new Image("bullet_red.png");
+    private final Image blueBulletImage = new Image("bullet_blue.png");
 
     public GraphicController(Stage stage, Canvas canvas, GraphicsContext graphicsContext,GameData gameData) {
         this.stage = stage;
@@ -51,36 +56,27 @@ public class GraphicController {
         gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
     }
 
-    public void drawPlatform(int x,int y,int w,int h){
-        Rectangle rectangle = new Rectangle(x,y,w,h);
-        rectangle.setFill(Color.GRAY);
-        gc.save();
-        gc.setFill(rectangle.getFill());
-        gc.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
-        gc.restore();
+    public void drawPlatform(Platform2D platform){
+        drawPlatform(platform.getX(),platform.getY());
+    }
+    public void drawPlatform(int x,int y){
+        gc.drawImage(platformImage,x,y,80,80);
     }
 
     public void drawHero(Hero hero) {
-        //All should be like this
-        Image image = new Image(hero.getGfName());
-        gc.drawImage(image,hero.getxPos(),hero.getyPos(),hero.getWidth(),hero.getHeight());
-    }
-
-    public void drawPlatform(Platform2D platform){
-        drawPlatform(platform.getX(),platform.getY(),platform.getWidth(),platform.getHeight());
+        gc.drawImage(heroImage,hero.getxPos(),hero.getyPos(),hero.getWidth(),hero.getHeight());
     }
 
     public void drawBullets(Queue<Bullet>bullets){
         for(Bullet bullet : bullets){
-            Image image = new Image(bullet.getGfName());
-            gc.drawImage(image,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+            if(bullet.getShotBy() == 1)gc.drawImage(blueBulletImage,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+            else gc.drawImage(redBulletImage,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
         }
     }
 
     public void drawEnemies(List<Enemy>enemies){
         for(Enemy enemy : enemies){
-            Image image = new Image(enemy.getGfName());
-            gc.drawImage(image,enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
+            gc.drawImage(enemyImage,enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
         }
     }
 }
