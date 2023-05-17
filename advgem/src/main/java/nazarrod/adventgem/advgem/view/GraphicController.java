@@ -72,7 +72,7 @@ public class GraphicController {
 
     public void drawBullets(Queue<Bullet>bullets){
         for(Bullet bullet : bullets){
-            Image image = new Image("bullet_hero.png");
+            Image image = new Image(bullet.getGfName());
             gc.drawImage(image,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
         }
     }

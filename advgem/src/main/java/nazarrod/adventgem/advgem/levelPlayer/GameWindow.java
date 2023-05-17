@@ -12,7 +12,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import nazarrod.adventgem.advgem.App;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Hero;
@@ -48,7 +47,7 @@ public class GameWindow{
             @Override
             public void handle(long now) { // in nanoseconds
                 if (now - lastUpdate >= 10_000_000) {
-                    gameData.refreshAll();
+                    gameData.refreshAll(now);
                     graphicsController.drawLevel();
                     lastUpdate = now;
                 }
@@ -62,7 +61,7 @@ public class GameWindow{
                 case A -> hero.moveLeft();
                 case D -> hero.moveRight();
                 case SPACE -> {
-                    Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos()+20,hero.getOrientation(),"bullet_hero.png");
+                    Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos()+20,hero.getOrientation(), "bullet_blue.png",1);
                     gameData.addBullet(bullet);
                 }
                 case E -> {

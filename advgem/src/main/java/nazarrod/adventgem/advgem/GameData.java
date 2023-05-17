@@ -101,30 +101,52 @@ public class GameData implements Serializable {
         return 1;
     }
 
-    public void refreshAll(){
+    private long last_enemy_shot = 0;
+    public void refreshAll(long now){
         hero.updateFallingState(getPlatforms());
         hero.tryMove();
-        Iterator<Bullet> bulletIteratort = bullets.iterator();
-        Bullet bullet;
+        boolean enemies_shoot_now = false;
+        if(now - last_enemy_shot >= 1000000000) {
+            last_enemy_shot = now;
+            enemies_shoot_now = true;
+        }
         Enemy enemy;
         for (Enemy value : enemies) {
             enemy = value;
             enemy.updateFallingState(getPlatforms());
             enemy.tryMove();
+            if(enemies_shoot_now){
+                Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,enemy.getOrientation(), "bullet_red.png",0);
+                addBullet(new_bullet);
+            }
         }
-        while (bulletIteratort.hasNext()){
-            bullet = bulletIteratort.next();
+        Iterator<Bullet> bulletIterator = bullets.iterator();
+        Bullet bullet;
+        while (bulletIterator.hasNext()){
+            bullet = bulletIterator.next();
             bullet.move();
             if(Geometry.outOfBounds(bullet.getPlatform(),playgroundWidth,getPlaygroundHeight()))
-                bulletIteratort.remove();
+                bulletIterator.remove();
 
-            Iterator<Enemy> enemyIterator = enemies.iterator();
-            while (enemyIterator.hasNext()){
-                enemy = enemyIterator.next();
-                if(Geometry.checkCollision(bullet.getPlatform(),enemy.getPlatform())) {
-                    enemy.changeHP(-20);
-                    bulletIteratort.remove();
-                    if (enemy.getHP() <= 0)enemyIterator.remove();
+            if(bullet.getShotBy() == 1) {
+                Iterator<Enemy> enemyIterator = enemies.iterator();
+                while (enemyIterator.hasNext()) {
+                    enemy = enemyIterator.next();
+                    if (Geometry.checkCollision(bullet.getPlatform(), enemy.getPlatform())) {
+                        enemy.changeHP(-20);
+                        bulletIterator.remove();
+                        if (enemy.getHP() <= 0) enemyIterator.remove();
+                    }
+                }
+            }
+            else{
+                if (Geometry.checkCollision(bullet.getPlatform(), hero.getPlatform())) {
+                    hero.changeHP(-20);
+                    bulletIterator.remove();
+                    System.out.println("hero hp" + " " + hero.getHP());
+                    if (hero.getHP() <= 0){
+                        System.out.println("U died");
+                    }
                 }
             }
         }
