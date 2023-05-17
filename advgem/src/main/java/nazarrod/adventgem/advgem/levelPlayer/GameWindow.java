@@ -67,7 +67,7 @@ public class GameWindow{
                 case E -> {
                     System.out.println("Inventory");
                 }
-                case P -> pauseLevel(gameLoopTimer);
+                case P,ESCAPE -> pauseLevel(gameLoopTimer);
                 case SHIFT -> {
                     System.out.println("Block!");
                 }
@@ -100,12 +100,18 @@ public class GameWindow{
             pauseStage.close();
             new ChooseLevelWindow(stage).startLevel(gameData.getLevelName());
         });
+        Button exitLevelButton = new Button("Exit level");
+        exitLevelButton.setPrefWidth(200);
+        exitLevelButton.setOnAction(actionEvent -> {
+            pauseStage.close();
+            new ChooseLevelWindow(stage).start();
+        });
         Button exitButton = new Button("Exit game");
         exitButton.setPrefWidth(200);
         exitButton.setOnAction(actionEvent -> {
             Platform.exit();
         });
-        vBox.getChildren().addAll(continueButton,restartButton,exitButton);
+        vBox.getChildren().addAll(continueButton,restartButton,exitLevelButton,exitButton);
         pauseStage.setScene(new Scene(vBox));
         pauseStage.centerOnScreen();
         pauseStage.initModality(Modality.APPLICATION_MODAL);
