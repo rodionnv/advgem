@@ -103,8 +103,8 @@ public class GameData implements Serializable {
 
     private long last_enemy_shot = 0;
     public void refreshAll(long now){
-        hero.updateFallingState(getPlatforms());
-        hero.tryMove();
+        hero.updateStates(getPlatforms());
+        hero.tryMove(getPlatforms());
         boolean enemies_shoot_now = false;
         if(now - last_enemy_shot >= 1000000000) {
             last_enemy_shot = now;
@@ -113,8 +113,8 @@ public class GameData implements Serializable {
         Enemy enemy;
         for (Enemy value : enemies) {
             enemy = value;
-            enemy.updateFallingState(getPlatforms());
-            enemy.tryMove();
+            enemy.updateStates(getPlatforms());
+            enemy.tryMove(getPlatforms());
             if(enemies_shoot_now){
                 Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,enemy.getOrientation(), "bullet_red.png",0);
                 addBullet(new_bullet);

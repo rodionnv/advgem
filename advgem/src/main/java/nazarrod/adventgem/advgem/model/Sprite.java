@@ -5,6 +5,10 @@ import nazarrod.adventgem.advgem.utils.Geometry;
 import java.io.Serializable;
 import java.util.List;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class Sprite implements Serializable {
     protected final String gfName;
     protected int xPos;
@@ -22,6 +26,9 @@ public class Sprite implements Serializable {
     protected int startHP;
     protected int current_jumps = 0;
     protected boolean falling = false;
+    protected boolean hittingHead = false;
+    protected boolean hittingRight = false;
+    protected boolean hittingLetf = false;
     private boolean orientation = true; //True - faced to the right, False - to the left
 
     public Sprite(int xPos, int yPos, int HP,String gfName) {
@@ -144,9 +151,20 @@ public class Sprite implements Serializable {
         return new Platform2D(getxPos(),getyPos(),getWidth(),getHeight());
     }
 
-    public void tryMove(){
-        Platform2D newBox = new Platform2D(xPos+getxSpeed(),yPos+getySpeed(),width,height);
-        changePos(getxPos()+getxSpeed(), getyPos()+getySpeed());
+    public void tryMove(List<Platform2D> platforms) {
+        Platform2D newBox = new Platform2D(xPos + getxSpeed(), yPos + getySpeed(), width, height);
+        int dX = getxSpeed();
+        int dY = getySpeed();
+        if (!falling) dY = min(0, getySpeed()); //TODO analodue with other states
+
+        changePos(getxPos() + getxSpeed(), getyPos() + getySpeed());
+    }
+
+    public void updateStates(List<Platform2D> platforms) {
+        updateFallingState(platforms);
+        //updateHittingHeadState(platforms); //TODO !!!
+        //updateHittingRightState(platforms);
+        //updateHittingLeftState(platforms);
     }
 
     public boolean isStanding(List<Platform2D> platforms){
@@ -158,14 +176,16 @@ public class Sprite implements Serializable {
         return false;
     }
 
-    public void updateFallingState(List<Platform2D> platforms){
+    private void updateFallingState(List<Platform2D> platforms){
         if(isStanding(platforms)){
-            if(falling)setySpeed(getySpeed()- yAcc);
+            if(falling)setySpeed(getySpeed() - yAcc);
             falling = false;
         }
         else{
-            if(!falling)setySpeed(getySpeed()+ yAcc);
+            if(!falling)setySpeed(getySpeed() + yAcc);
             falling = true;
         }
     }
+
+
 }
