@@ -22,6 +22,7 @@ public class GameWindow{
     private final Canvas canvas;
     private final GraphicController graphicsController;
     private final GameData gameData;
+    private final Hero hero;
     boolean aKeyPressed = false;
     boolean dKeyPressed = false;
 
@@ -30,6 +31,7 @@ public class GameWindow{
         this.gameData = gameData;
         canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
         graphicsController = new GraphicController(stage,canvas,canvas.getGraphicsContext2D(),gameData);
+        this.hero = gameData.getHero();
     }
 
     public void start(){
@@ -40,7 +42,6 @@ public class GameWindow{
         stage.setScene(new Scene(gridPane));
         stage.centerOnScreen();
         stage.show();
-        Hero hero = gameData.getHero();
 
         // in nanoseconds
         AnimationTimer gameLoopTimer = new AnimationTimer() {
@@ -52,6 +53,10 @@ public class GameWindow{
                     gameData.refreshAll(now);
                     graphicsController.drawLevel();
                     lastUpdate = now;
+                    if(gameData.isLoose()){
+                        stop();
+                        looseLevel();
+                    }
                 }
             }
         };
@@ -77,7 +82,7 @@ public class GameWindow{
                     gameData.addBullet(bullet);
                 }
                 case E -> {
-                    System.out.println("Inventory");
+                    openInventory(gameLoopTimer);
                 }
                 case P,ESCAPE -> pauseLevel(gameLoopTimer);
                 case SHIFT -> {
@@ -101,6 +106,42 @@ public class GameWindow{
                 }
             }
         });
+    }
+
+    public void openInventory(AnimationTimer gameLoopTimer) {
+        gameLoopTimer.stop();
+        Stage invStage = new Stage();
+
+        invStage.centerOnScreen();
+        invStage.initModality(Modality.APPLICATION_MODAL);
+        invStage.setOnCloseRequest(windowEvent -> gameLoopTimer.start());
+        invStage.show();
+    }
+
+    public void looseLevel(){
+        Stage looseStage = new Stage();
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
+        Button restartButton = new Button("Restart");
+        restartButton.setPrefWidth(200);
+        restartButton.setOnAction(actionEvent -> {
+            looseStage.close();
+            new ChooseLevelWindow(stage).startLevel(gameData.getLevelName());
+        });
+        Button exitLevelButton = new Button("Exit level");
+        exitLevelButton.setPrefWidth(200);
+        exitLevelButton.setOnAction(actionEvent -> {
+            looseStage.close();
+            new ChooseLevelWindow(stage).start();
+        });
+
+        vBox.getChildren().addAll(restartButton,exitLevelButton);
+        looseStage.setScene(new Scene(vBox));
+        looseStage.centerOnScreen();
+        looseStage.initModality(Modality.APPLICATION_MODAL);
+        looseStage.setOnCloseRequest(windowEvent -> {});
+        looseStage.show();
     }
 
     public void pauseLevel(AnimationTimer gameLoopTimer){

@@ -25,6 +25,7 @@ public class GraphicController {
     private GraphicsContext gc;
     private GameData gameData;
     private final Image platformImage = new Image("platform.png");
+    private final Image finishImage = new Image("finish.png");
     private final Image heroImage = new Image("hero.png");
     private final Image enemyImage = new Image("enemy.png");
     private final Image redBulletImage = new Image("bullet_red.png");
@@ -59,8 +60,13 @@ public class GraphicController {
     public void drawPlatform(Platform2D platform){
         drawPlatform(platform.getX(),platform.getY());
     }
+
     public void drawPlatform(int x,int y){
         gc.drawImage(platformImage,x,y,80,80);
+    }
+
+    public void drawFinish(int x,int y){
+        gc.drawImage(finishImage,x,y,80,80);
     }
 
     public void drawHero(Hero hero) {

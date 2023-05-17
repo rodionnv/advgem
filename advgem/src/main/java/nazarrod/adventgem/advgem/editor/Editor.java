@@ -105,6 +105,8 @@ public class Editor extends Application {
                 heroMouseClick(mouseEvent);
             if(choiceBox.getValue().equals("Enemy"))
                 enemyMouseClick(mouseEvent);
+            if(choiceBox.getValue().equals("Finish"))
+                finishMouseClick(mouseEvent);
         });
         gridPane.add(canvas,0,0);
         gridPane.add(buttonBox,1,0);
@@ -116,7 +118,6 @@ public class Editor extends Application {
     private void platformMouseClick(MouseEvent mouseEvent) {
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;
-        System.out.println("Mouse pressed on area belonging to" + " " + x +  " " + y);
         boolean f = gameData.addPlatform(x,y);
         if(f){
             graphicsController.drawPlatform(x, y);
@@ -125,9 +126,8 @@ public class Editor extends Application {
     }
 
     private void heroMouseClick(MouseEvent mouseEvent){
-
-        int x = (int)mouseEvent.getX();
-        int y = (int)mouseEvent.getY()-60;
+        int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80 + 15;
+        int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80 + 19;
         int f = gameData.addHero(x,y);
         if(f == 2){
             System.err.println("Hero already exists");
@@ -143,9 +143,8 @@ public class Editor extends Application {
     }
 
     private void enemyMouseClick(MouseEvent mouseEvent){
-
-        int x = (int)mouseEvent.getX();
-        int y = (int)mouseEvent.getY()-60;
+        int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80 + 15;
+        int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80 + 19;
         int f = gameData.addEnemy(x,y);
         if(f == 1){
             System.err.println("Enemy added");
@@ -154,6 +153,17 @@ public class Editor extends Application {
         if(f == 0){
             System.err.println("Probably collision");
             //TODO Pop-up collision warning
+        }
+    }
+
+    private void finishMouseClick(MouseEvent mouseEvent) {
+        int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80;
+        int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;
+//        boolean f = gameData.addPlatform(x,y);
+        boolean f = true;
+        if(f){
+            graphicsController.drawFinish(x, y);
+            System.err.println("Finish added");
         }
     }
 }

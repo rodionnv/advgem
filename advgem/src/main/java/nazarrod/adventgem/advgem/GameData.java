@@ -16,6 +16,8 @@ public class GameData implements Serializable {
     private int PlaygroundHeight = 1080;
     private List<Platform2D> platforms = new ArrayList<>();
     private Hero hero = null;
+    private int lives = 3;
+    private boolean loose = false;
     private Queue<Bullet> bullets = new LinkedList<>();
     private List<Enemy> enemies = new ArrayList<>();
 
@@ -92,6 +94,18 @@ public class GameData implements Serializable {
         return 1;
     }
 
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public boolean isLoose() {
+        return loose;
+    }
+
     public int addEnemy(int x, int y){
         if(y < 0)return 0;
         Enemy enemy = new Enemy(x,y,100);
@@ -101,10 +115,24 @@ public class GameData implements Serializable {
         return 1;
     }
 
+//    public int addFinish(int x, int y){
+//        if(y < 0)return 0;
+//        Platform2D finish = new Platform2D(enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
+//        if(checkIfCollidesWithAnything(enemyPlatform))return 0;
+//        enemies.add(enemy);
+//        return 1;
+//    }
+
     private long last_enemy_shot = 0;
     public void refreshAll(long now){
         hero.updateStates(getPlatforms());
         hero.tryMove(getPlatforms());
+        if(Geometry.outOfBounds(hero.getPlatform(),playgroundWidth,getPlaygroundHeight())){
+            lives--;
+            if(lives > 0)hero.reincarnate();
+            else loose = true;
+            return;
+        }
         boolean enemies_shoot_now = false;
         if(now - last_enemy_shot >= 1000000000) {
             last_enemy_shot = now;
@@ -145,7 +173,10 @@ public class GameData implements Serializable {
                     bulletIterator.remove();
                     System.out.println("hero hp" + " " + hero.getHP());
                     if (hero.getHP() <= 0){
-                        System.out.println("U died");
+                        lives--;
+                        if(lives > 0)hero.reincarnate();
+                        else loose = true;
+                        return;
                     }
                 }
             }
