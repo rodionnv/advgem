@@ -58,8 +58,11 @@ public class LevelManager {
     public static List<String> getLevels(){
         String dirPath = "./Levels/";
         File directory = new File(dirPath);
+        if(directory.list() == null){
+            new File("./Levels").mkdirs();
+        }
         String[] levelList = directory.list();
-        assert levelList != null; //TODO handle this error properly
+        assert levelList != null;
         return Arrays.stream(levelList).toList();
     }
 }
