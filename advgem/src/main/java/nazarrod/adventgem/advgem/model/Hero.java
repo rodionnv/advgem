@@ -25,7 +25,6 @@ public class Hero extends Sprite implements Serializable{
     }
 
     public void push(int xDelta,int yDelta,boolean isJump){
-        System.out.println(current_jumps+" "+yDelta);
         setxSpeed(getxSpeed()+xDelta);
         setySpeed(getySpeed()+yDelta);
         Timer pushTimer = new Timer();

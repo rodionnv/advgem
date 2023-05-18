@@ -154,7 +154,7 @@ public class Sprite implements Serializable {
     public void tryMove() {
         int dX = getxSpeed();
         int dY = getySpeed();
-        if (!falling) dY = min(0, getySpeed());//if standing
+        if (!falling) dY = min(0, getySpeed());
         if (hittingTop)dY = max(0, getySpeed());
         if (hittingLetf) dX = max(0, getxSpeed());
         if (hittingRight) dX = min(0, getxSpeed());
@@ -164,6 +164,7 @@ public class Sprite implements Serializable {
 
     public void updateStates(List<Platform2D> platforms) {
         updateFallingState(platforms);
+        if(!falling)drop(platforms);
         updateHittingLeftState(platforms);
         updateHittingRightState(platforms);
         updateHittingTopState(platforms);
@@ -217,6 +218,19 @@ public class Sprite implements Serializable {
             if(Geometry.checkBelongs(xPos+width,yPos-max(yAcc,abs(ySpeed)),platform)){hittingTop = true;return;}
         }
         hittingTop = false;
+    }
+
+    private void drop(List<Platform2D> platforms){
+        boolean ok = true;
+        while(ok) {
+            for (Platform2D platform : platforms) {
+                if (Geometry.checkBelongs(xPos, yPos + height + 1, platform) ||
+                        Geometry.checkBelongs(xPos + width, yPos + height + 1, platform)) {
+                    ok = false;
+                }
+            }
+            if(ok)changePos(xPos,yPos+1);
+        }
     }
 
 }
