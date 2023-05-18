@@ -159,9 +159,8 @@ public class Editor extends Application {
     private void finishMouseClick(MouseEvent mouseEvent) {
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;
-//        boolean f = gameData.addPlatform(x,y);
-        boolean f = true;
-        if(f){
+        int f = gameData.addFinish(x,y);
+        if(f == 1){
             graphicsController.drawFinish(x, y);
             System.err.println("Finish added");
         }

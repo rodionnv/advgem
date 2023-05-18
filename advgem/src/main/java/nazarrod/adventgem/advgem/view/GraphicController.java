@@ -46,6 +46,7 @@ public class GraphicController {
         for(Platform2D platform2D : platforms){
             drawPlatform(platform2D);
         }
+        drawFinish(gameData.getFinish().getX(),gameData.getFinish().getY());
         drawHero(gameData.getHero());
         drawBullets(gameData.getBullets());
         drawEnemies(gameData.getEnemies());

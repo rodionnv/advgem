@@ -15,6 +15,7 @@ public class GameData implements Serializable {
     private int playgroundWidth = 1920;
     private int PlaygroundHeight = 1080;
     private List<Platform2D> platforms = new ArrayList<>();
+    private Platform2D finish;
     private Hero hero = null;
     private int lives = 3;
     private boolean loose = false;
@@ -115,13 +116,21 @@ public class GameData implements Serializable {
         return 1;
     }
 
-//    public int addFinish(int x, int y){
-//        if(y < 0)return 0;
-//        Platform2D finish = new Platform2D(enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
-//        if(checkIfCollidesWithAnything(enemyPlatform))return 0;
-//        enemies.add(enemy);
-//        return 1;
-//    }
+    public Platform2D getFinish() {
+        return finish;
+    }
+
+    public void setFinish(Platform2D finish) {
+        this.finish = finish;
+    }
+
+    public int addFinish(int x, int y){
+        if(y < 0 || finish != null)return 0;
+        Platform2D platform = new Platform2D(x,y,79,79);
+        if(checkIfCollidesWithAnything(platform))return 0;
+        finish = platform;
+        return 1;
+    }
 
     private long last_enemy_shot = 0;
     public void refreshAll(long now){
@@ -186,6 +195,8 @@ public class GameData implements Serializable {
     private boolean checkIfCollidesWithAnything(Platform2D platform2D){
         for(Platform2D platform : platforms)
             if(Geometry.checkCollision(platform2D,platform))return true;
+
+        if( (finish != null) && Geometry.checkCollision(platform2D,finish) )return true;
 
         if( (hero != null) && Geometry.checkCollision(platform2D,hero.getPlatform()) )return true;
 
