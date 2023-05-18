@@ -53,6 +53,10 @@ public class GameWindow{
                     gameData.refreshAll(now);
                     graphicsController.drawLevel();
                     lastUpdate = now;
+                    if(gameData.isWin()){
+                        stop();
+                        winLevel();
+                    }
                     if(gameData.isLoose()){
                         stop();
                         looseLevel();
@@ -116,6 +120,10 @@ public class GameWindow{
         invStage.initModality(Modality.APPLICATION_MODAL);
         invStage.setOnCloseRequest(windowEvent -> gameLoopTimer.start());
         invStage.show();
+    }
+
+    public void winLevel(){
+        looseLevel();
     }
 
     public void looseLevel(){

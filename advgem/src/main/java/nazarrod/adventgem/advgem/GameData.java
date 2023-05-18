@@ -19,6 +19,7 @@ public class GameData implements Serializable {
     private Hero hero = null;
     private int lives = 3;
     private boolean loose = false;
+    private boolean win = false;
     private Queue<Bullet> bullets = new LinkedList<>();
     private List<Enemy> enemies = new ArrayList<>();
 
@@ -107,6 +108,10 @@ public class GameData implements Serializable {
         return loose;
     }
 
+    public boolean isWin() {
+        return win;
+    }
+
     public int addEnemy(int x, int y){
         if(y < 0)return 0;
         Enemy enemy = new Enemy(x,y,100);
@@ -126,7 +131,7 @@ public class GameData implements Serializable {
 
     public int addFinish(int x, int y){
         if(y < 0 || finish != null)return 0;
-        Platform2D platform = new Platform2D(x,y,79,79);
+        Platform2D platform = new Platform2D(x+30,y+30,20,20);
         if(checkIfCollidesWithAnything(platform))return 0;
         finish = platform;
         return 1;
@@ -136,6 +141,10 @@ public class GameData implements Serializable {
     public void refreshAll(long now){
         hero.updateStates(getPlatforms());
         hero.tryMove(getPlatforms());
+        if(Geometry.checkCollision(hero.getPlatform(),finish)){
+            win = true;
+            return;
+        }
         if(Geometry.outOfBounds(hero.getPlatform(),playgroundWidth,getPlaygroundHeight())){
             lives--;
             if(lives > 0)hero.reincarnate();

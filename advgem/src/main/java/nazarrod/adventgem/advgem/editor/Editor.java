@@ -161,7 +161,7 @@ public class Editor extends Application {
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;
         int f = gameData.addFinish(x,y);
         if(f == 1){
-            graphicsController.drawFinish(x, y);
+            graphicsController.drawFinish(x+30, y+30);
             System.err.println("Finish added");
         }
     }

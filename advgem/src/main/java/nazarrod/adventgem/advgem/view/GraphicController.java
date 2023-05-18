@@ -67,7 +67,7 @@ public class GraphicController {
     }
 
     public void drawFinish(int x,int y){
-        gc.drawImage(finishImage,x,y,80,80);
+        gc.drawImage(finishImage,x-30,y-30,80,80);
     }
 
     public void drawHero(Hero hero) {
