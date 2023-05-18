@@ -24,7 +24,7 @@ public class Sprite implements Serializable {
     protected int jumpSpeed = 0;
     protected int HP;
     protected int startHP;
-    protected int current_jumps = 0;
+    public int current_jumps = 0;
     protected boolean falling = false;
     protected boolean hittingHead = false;
     protected boolean hittingRight = false;
@@ -157,6 +157,15 @@ public class Sprite implements Serializable {
         int dY = getySpeed();
         if (!falling) dY = min(0, getySpeed()); //TODO analodue with other states
 
+        for(Platform2D platform : platforms){
+            if(Geometry.checkBelongs(xPos,yPos+height,platform)){
+                System.out.println("bad");
+            }
+            if(Geometry.checkBelongs(xPos+width,yPos+height,platform)){
+                System.out.println("bad");
+            }
+        }
+
         changePos(getxPos() + getxSpeed(), getyPos() + getySpeed());
     }
 
@@ -168,10 +177,9 @@ public class Sprite implements Serializable {
     }
 
     public boolean isStanding(List<Platform2D> platforms){
-        for(int i = xPos;i <= xPos+width;i++){
-            for(Platform2D platform : platforms){
-                if(Geometry.checkBelongs(i,yPos+height+1,platform)){current_jumps = 0;return true;}
-            }
+        for(Platform2D platform : platforms){
+            if(Geometry.checkBelongs(xPos,yPos+height+yAcc,platform)){current_jumps = 0;return true;}
+            if(Geometry.checkBelongs(xPos+width,yPos+height+yAcc,platform)){current_jumps = 0;return true;}
         }
         return false;
     }
@@ -186,5 +194,6 @@ public class Sprite implements Serializable {
             falling = true;
         }
     }
+
 
 }
