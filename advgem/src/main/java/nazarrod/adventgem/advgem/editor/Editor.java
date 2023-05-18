@@ -68,22 +68,18 @@ public class Editor extends Application {
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll("Platform","Hero","Enemy","Finish");
         choiceBox.setValue("Platform");
-        Button specButton = new Button("Set manually");
-        specButton.setOnAction(actionEvent -> {
-            PlatformSetupDialog platformSetupDialog = new PlatformSetupDialog(gameData);
-            platformSetupDialog.showAndWait();
-            graphicsController.drawLevel();
-        });
-        specButton.setPrefWidth(150);
-        specButton.setDisable(false);
         choiceBox.setPrefWidth(150);
         Button invButton = new Button("Inventory");
         invButton.setPrefWidth(150);
         Button saveButton = new Button("Save");
         saveButton.setPrefWidth(150);
         saveButton.setOnAction(actionEvent -> {
-            LevelManager.createNewLevel(gameData);
-            start(stage);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Can't save level");
+            alert.setHeaderText(null);
+            alert.setContentText("There isn't any hero or finish on the level");
+
+            alert.showAndWait();
         });
         Button exitButton = new Button("Exit");
         exitButton.setPrefWidth(150);
@@ -91,12 +87,11 @@ public class Editor extends Application {
 
         VBox buttonBox = new VBox();
         buttonBox.setSpacing(4);
-        buttonBox.getChildren().addAll(new Label("Add new element"),choiceBox,specButton,new Label("Configure inventory"),
+        buttonBox.getChildren().addAll(new Label("Choose new element to add"),choiceBox,new Label("Configure inventory"),
                 invButton,new Label("Save Level"),saveButton,exitButton);
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, s, chosen) -> {
             System.out.println(choiceBox.getValue());
-            specButton.setDisable(!choiceBox.getValue().equals("Platform"));
         });
         canvas.setOnMouseClicked(mouseEvent -> {
             if(choiceBox.getValue().equals("Platform"))
@@ -107,6 +102,13 @@ public class Editor extends Application {
                 enemyMouseClick(mouseEvent);
             if(choiceBox.getValue().equals("Finish"))
                 finishMouseClick(mouseEvent);
+            if(gameData.getHero() != null &&
+                gameData.getFinish() != null){
+                saveButton.setOnAction(actionEvent -> {
+                    LevelManager.createNewLevel(gameData);
+                    start(stage);
+                });
+            }
         });
         gridPane.add(canvas,0,0);
         gridPane.add(buttonBox,1,0);
