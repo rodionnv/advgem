@@ -26,7 +26,7 @@ public class Sprite implements Serializable {
     protected int startHP;
     public int current_jumps = 0;
     protected boolean falling = false;
-    protected boolean hittingHead = false;
+    protected boolean hittingTop = false;
     protected boolean hittingLetf = false;
     protected boolean hittingRight = false;
     private boolean orientation = true; //True - faced to the right, False - to the left
@@ -151,22 +151,22 @@ public class Sprite implements Serializable {
         return new Platform2D(getxPos(),getyPos(),getWidth(),getHeight());
     }
 
-    public void tryMove(List<Platform2D> platforms) {
-        Platform2D newBox = new Platform2D(xPos + getxSpeed(), yPos + getySpeed(), width, height);
+    public void tryMove() {
         int dX = getxSpeed();
         int dY = getySpeed();
-        if (!falling) dY = min(0, getySpeed());
+        if (!falling) dY = min(0, getySpeed());//if standing
+        if (hittingTop)dY = max(0, getySpeed());
         if (hittingLetf) dX = max(0, getxSpeed());
         if (hittingRight) dX = min(0, getxSpeed());
 
-        changePos(getxPos() + dX, getyPos() + getySpeed());
+        changePos(getxPos() + dX, getyPos() + dY);
     }
 
     public void updateStates(List<Platform2D> platforms) {
         updateFallingState(platforms);
         updateHittingLeftState(platforms);
         updateHittingRightState(platforms);
-        //updateHittingHeadState(platforms); //TODO !!!
+        updateHittingTopState(platforms);
     }
 
     public boolean isStanding(List<Platform2D> platforms){
@@ -209,6 +209,14 @@ public class Sprite implements Serializable {
             if(Geometry.checkBelongs(xPos+width+xAcc,yPos+height,platform)){hittingRight = true;return;}
         }
         hittingRight = false;
+    }
+
+    public void updateHittingTopState(List<Platform2D> platforms){
+        for(Platform2D platform : platforms){
+            if(Geometry.checkBelongs(xPos,yPos-max(yAcc,abs(ySpeed)),platform)){hittingTop = true;return;}
+            if(Geometry.checkBelongs(xPos+width,yPos-max(yAcc,abs(ySpeed)),platform)){hittingTop = true;return;}
+        }
+        hittingTop = false;
     }
 
 }

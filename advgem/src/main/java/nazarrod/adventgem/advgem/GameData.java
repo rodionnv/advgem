@@ -140,7 +140,7 @@ public class GameData implements Serializable {
     private long last_enemy_shot = 0;
     public void refreshAll(long now){
         hero.updateStates(getPlatforms());
-        hero.tryMove(getPlatforms());
+        hero.tryMove();
         hero.updJumps(getPlatforms());
         if(Geometry.checkCollision(hero.getPlatform(),finish)){
             win = true;
@@ -161,7 +161,7 @@ public class GameData implements Serializable {
         for (Enemy value : enemies) {
             enemy = value;
             enemy.updateStates(getPlatforms());
-            enemy.tryMove(getPlatforms());
+            enemy.tryMove();
             if(enemies_shoot_now){
                 Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,enemy.getOrientation(), "bullet_red.png",false);
                 addBullet(new_bullet);
