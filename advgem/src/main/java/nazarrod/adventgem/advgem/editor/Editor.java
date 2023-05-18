@@ -47,9 +47,6 @@ public class Editor extends Application {
         stage.show();
     }
 
-    /**
-     * Function builds Platform level
-     * */
     private void buildPlatformerLevel(){
         SetupDialog setupDialog = new SetupDialog(gameData);
         setupDialog.showAndWait();
