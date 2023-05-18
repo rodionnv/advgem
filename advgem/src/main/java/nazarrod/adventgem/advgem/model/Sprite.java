@@ -27,8 +27,8 @@ public class Sprite implements Serializable {
     public int current_jumps = 0;
     protected boolean falling = false;
     protected boolean hittingHead = false;
-    protected boolean hittingRight = false;
     protected boolean hittingLetf = false;
+    protected boolean hittingRight = false;
     private boolean orientation = true; //True - faced to the right, False - to the left
 
     public Sprite(int xPos, int yPos, int HP,String gfName) {
@@ -155,25 +155,18 @@ public class Sprite implements Serializable {
         Platform2D newBox = new Platform2D(xPos + getxSpeed(), yPos + getySpeed(), width, height);
         int dX = getxSpeed();
         int dY = getySpeed();
-        if (!falling) dY = min(0, getySpeed()); //TODO analodue with other states
+        if (!falling) dY = min(0, getySpeed());
+        if (hittingLetf) dX = max(0, getxSpeed());
+        if (hittingRight) dX = min(0, getxSpeed());
 
-        for(Platform2D platform : platforms){
-            if(Geometry.checkBelongs(xPos,yPos+height,platform)){
-                System.out.println("bad");
-            }
-            if(Geometry.checkBelongs(xPos+width,yPos+height,platform)){
-                System.out.println("bad");
-            }
-        }
-
-        changePos(getxPos() + getxSpeed(), getyPos() + getySpeed());
+        changePos(getxPos() + dX, getyPos() + getySpeed());
     }
 
     public void updateStates(List<Platform2D> platforms) {
         updateFallingState(platforms);
+        updateHittingLeftState(platforms);
+        updateHittingRightState(platforms);
         //updateHittingHeadState(platforms); //TODO !!!
-        //updateHittingRightState(platforms);
-        //updateHittingLeftState(platforms);
     }
 
     public boolean isStanding(List<Platform2D> platforms){
@@ -195,5 +188,20 @@ public class Sprite implements Serializable {
         }
     }
 
+    public void updateHittingLeftState(List<Platform2D> platforms){
+        for(Platform2D platform : platforms){
+            if(Geometry.checkBelongs(xPos-xAcc,yPos,platform)){hittingLetf = true;return;}
+            if(Geometry.checkBelongs(xPos-xAcc,yPos+height,platform)){hittingLetf = true;return;}
+        }
+        hittingLetf = false;
+    }
+
+    public void updateHittingRightState(List<Platform2D> platforms){
+        for(Platform2D platform : platforms){
+            if(Geometry.checkBelongs(xPos+width+xAcc,yPos,platform)){hittingRight = true;return;}
+            if(Geometry.checkBelongs(xPos+width+xAcc,yPos+height,platform)){hittingRight = true;return;}
+        }
+        hittingRight = false;
+    }
 
 }
