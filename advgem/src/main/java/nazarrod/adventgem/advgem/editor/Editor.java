@@ -87,9 +87,7 @@ public class Editor extends Application {
         buttonBox.getChildren().addAll(new Label("Choose new element to add"),choiceBox,new Label("Configure inventory"),
                 invButton,new Label("Save Level"),saveButton,exitButton);
 
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, s, chosen) -> {
-            System.out.println(choiceBox.getValue());
-        });
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, s, chosen) -> System.out.println(choiceBox.getValue()));
         canvas.setOnMouseClicked(mouseEvent -> {
             if(choiceBox.getValue().equals("Platform"))
                 platformMouseClick(mouseEvent);
@@ -137,7 +135,6 @@ public class Editor extends Application {
         }
         if(f == 0){
             System.err.println("Probably collision");
-            //TODO Pop-up collision warning
         }
     }
 
@@ -149,9 +146,8 @@ public class Editor extends Application {
             System.err.println("Enemy added");
             graphicsController.drawEnemies(gameData.getEnemies());
         }
-        if(f == 0){
+        else{
             System.err.println("Probably collision");
-            //TODO Pop-up collision warning
         }
     }
 

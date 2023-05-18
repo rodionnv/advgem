@@ -30,6 +30,9 @@ public class GraphicController {
     private final Image enemyImage = new Image("enemy.png");
     private final Image redBulletImage = new Image("bullet_red.png");
     private final Image blueBulletImage = new Image("bullet_blue.png");
+    private final Image liveImage = new Image("live.png");
+    private final Image hpImage = new Image("hp.png");
+    private final Image[] numImage = new Image[10];
 
     public GraphicController(Stage stage, Canvas canvas, GraphicsContext graphicsContext,GameData gameData) {
         this.stage = stage;
@@ -37,6 +40,11 @@ public class GraphicController {
         this.gc = graphicsContext;
         this.gameData = gameData;
         setBackground(Color.DARKCYAN);
+
+        for (int i = 0; i < numImage.length; i++) {
+            String imageName = i + ".png";
+            numImage[i] = new Image(imageName);
+        }
     }
 
     public void drawLevel(){
@@ -50,6 +58,7 @@ public class GraphicController {
         drawHero(gameData.getHero());
         drawBullets(gameData.getBullets());
         drawEnemies(gameData.getEnemies());
+        drawUI(gameData.getLives(),gameData.getHero().getHP());
         gc.restore();
     }
 
@@ -85,5 +94,14 @@ public class GraphicController {
         for(Enemy enemy : enemies){
             gc.drawImage(enemyImage,enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
         }
+    }
+
+    public void drawUI(int lives,int hp){
+        for(int i = 0;i < lives;i++)
+            gc.drawImage(liveImage, i * 50,0,50,50);
+        gc.drawImage(hpImage,0,55,50,50);
+        if(hp/100 != 0)gc.drawImage(numImage[hp/100],50,55,50,50);
+        gc.drawImage(numImage[(hp/10)%10],100,55,50,50);
+        gc.drawImage(numImage[hp%10],150,55,50,50);
     }
 }
