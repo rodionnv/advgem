@@ -171,10 +171,17 @@ public class Sprite implements Serializable {
 
     public boolean isStanding(List<Platform2D> platforms){
         for(Platform2D platform : platforms){
-            if(Geometry.checkBelongs(xPos,yPos+height+yAcc,platform)){current_jumps = 0;return true;}
-            if(Geometry.checkBelongs(xPos+width,yPos+height+yAcc,platform)){current_jumps = 0;return true;}
+            if(Geometry.checkBelongs(xPos,yPos+height+yAcc,platform)){return true;}
+            if(Geometry.checkBelongs(xPos+width,yPos+height+yAcc,platform)){return true;}
         }
         return false;
+    }
+
+    public void updJumps(List<Platform2D> platforms){
+        for(Platform2D platform : platforms){
+            if(Geometry.checkBelongs(xPos,yPos+height+yAcc,platform))current_jumps = 0;
+            if(Geometry.checkBelongs(xPos+width,yPos+height+yAcc,platform))current_jumps = 0;
+        }
     }
 
     private void updateFallingState(List<Platform2D> platforms){

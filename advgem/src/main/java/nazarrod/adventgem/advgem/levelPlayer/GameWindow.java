@@ -23,8 +23,9 @@ public class GameWindow{
     private final GraphicController graphicsController;
     private final GameData gameData;
     private final Hero hero;
-    boolean aKeyPressed = false;
-    boolean dKeyPressed = false;
+    private boolean aKeyPressed = false;
+    private boolean dKeyPressed = false;
+    private boolean wPressedConstantly = false;
 
     public GameWindow(GameData gameData) {
         this.stage = new Stage();
@@ -68,7 +69,10 @@ public class GameWindow{
         stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             KeyCode code = keyEvent.getCode();
             switch (code) {
-                case W -> hero.jump();
+                case W -> {
+                    if(!wPressedConstantly)hero.jump();
+                    wPressedConstantly = true;
+                }
                 case A -> {
                     hero.moveLeft();
                     aKeyPressed = true;
@@ -98,6 +102,9 @@ public class GameWindow{
         stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> {
             KeyCode code = keyEvent.getCode();
             switch (code) {
+                case W -> {
+                    wPressedConstantly = false;
+                }
                 case A -> {
                     aKeyPressed = false;
                     if(!dKeyPressed)hero.setxSpeed(0);

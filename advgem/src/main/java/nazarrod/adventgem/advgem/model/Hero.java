@@ -7,21 +7,25 @@ import java.time.Instant;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.Math.min;
+
 public class Hero extends Sprite implements Serializable{
 
     public Hero(int xPos, int yPos, int hp) {
         super(xPos, yPos, hp,"hero.png");
         this.xAcc = 3;
-        this.yAcc = 4;
-        this.jumpSpeed = 8;
+        this.yAcc = 8;
+        this.jumpSpeed = 16;
     }
 
     public void jump() {
         current_jumps++;
-        if(current_jumps < 2)push(0,-jumpSpeed,true);
+        if(current_jumps == 1)push(0,-jumpSpeed,true);
+        if(current_jumps == 2)push(0,-12,true);
     }
 
     public void push(int xDelta,int yDelta,boolean isJump){
+        System.out.println(current_jumps+" "+yDelta);
         setxSpeed(getxSpeed()+xDelta);
         setySpeed(getySpeed()+yDelta);
         Timer pushTimer = new Timer();
