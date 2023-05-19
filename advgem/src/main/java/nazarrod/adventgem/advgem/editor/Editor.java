@@ -80,7 +80,10 @@ public class Editor extends Application {
         });
         Button exitButton = new Button("Exit");
         exitButton.setPrefWidth(150);
-        exitButton.setOnAction(actionEvent -> start(stage));
+        exitButton.setOnAction(actionEvent -> {
+            start(stage);
+            gameData = new GameData();
+        });
 
         VBox buttonBox = new VBox();
         buttonBox.setSpacing(4);
