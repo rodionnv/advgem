@@ -233,4 +233,9 @@ public class Sprite implements Serializable {
         }
     }
 
+    public boolean outOfLevel(int x,int y){
+        if(yPos < 0)return false;
+        return Geometry.outOfBounds(getPlatform(),x,y);
+    }
+
 }

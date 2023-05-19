@@ -146,7 +146,7 @@ public class GameData implements Serializable {
             win = true;
             return;
         }
-        if(Geometry.outOfBounds(hero.getPlatform(),playgroundWidth,getPlaygroundHeight())){
+        if(hero.outOfLevel(getPlaygroundWidth(),getPlaygroundHeight())){
             lives--;
             if(lives > 0)hero.reincarnate();
             else loose = true;
