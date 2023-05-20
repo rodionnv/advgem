@@ -15,14 +15,14 @@ import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Hero;
+import nazarrod.adventgem.advgem.utils.LevelManager;
 import nazarrod.adventgem.advgem.view.GraphicController;
 
 public class GameWindow{
     private final Stage stage;
     private final Canvas canvas;
     private final GraphicController graphicsController;
-    private final GameData gameData;
-    private final Hero hero;
+    private GameData gameData;
     private boolean aKeyPressed = false;
     private boolean dKeyPressed = false;
     private boolean wPressedConstantly = false;
@@ -32,7 +32,6 @@ public class GameWindow{
         this.gameData = gameData;
         canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
         graphicsController = new GraphicController(canvas,canvas.getGraphicsContext2D(),gameData);
-        this.hero = gameData.getHero();
     }
 
     public void start(){
@@ -70,38 +69,38 @@ public class GameWindow{
             KeyCode code = keyEvent.getCode();
             switch (code) {
                 case W -> {
-                    if(!wPressedConstantly)hero.jump();
+                    if(!wPressedConstantly)gameData.getHero().jump();
                     wPressedConstantly = true;
                 }
                 case A -> {
-                    hero.moveLeft();
+                    gameData.getHero().moveLeft();
                     aKeyPressed = true;
                     if(!dKeyPressed)
-                        hero.moveLeft();
+                        gameData.getHero().moveLeft();
                 }
                 case D -> {
-                    hero.moveRight();
+                    gameData.getHero().moveRight();
                     dKeyPressed = true;
                     if(!aKeyPressed)
-                        hero.moveRight();
+                        gameData.getHero().moveRight();
                 }
                 case SPACE -> {
                     Bullet bullet;
-                    if(hero.getWeapon() == Hero.Weapon.BULLET) {
-                        bullet = new Bullet(hero.getxPos(), hero.getyPos() + 20, 20, hero.getOrientation(), false, true, 9999);
+                    if(gameData.getHero().getWeapon() == Hero.Weapon.BULLET) {
+                        bullet = new Bullet(gameData.getHero().getxPos(), gameData.getHero().getyPos() + 20, 20, gameData.getHero().getOrientation(), false, true, 9999);
                     }
                     else{
-                        bullet = new Bullet(hero.getxPos(), hero.getyPos() + 20, 20, hero.getOrientation(), true, true, 70);
+                        bullet = new Bullet(gameData.getHero().getxPos(), gameData.getHero().getyPos() + 20, 20, gameData.getHero().getOrientation(), true, true, 70);
                     }
                     gameData.addBullet(bullet);
                 }
                 case E -> {
                     aKeyPressed = false;
                     dKeyPressed = false;
-                    hero.setxSpeed(0);
-                    hero.setArmorQ(5);
-                    hero.setSpeedB(5);
-                    hero.setWeapon(Hero.Weapon.BULLET);
+                    gameData.getHero().setxSpeed(0);
+                    gameData.getHero().setArmorQ(5);
+                    gameData.getHero().setSpeedB(5);
+                    gameData.getHero().setWeapon(Hero.Weapon.BULLET);
 //                    openInventory(gameLoopTimer);
                 }
                 case P,ESCAPE -> pauseLevel(gameLoopTimer);
@@ -119,13 +118,13 @@ public class GameWindow{
                 }
                 case A -> {
                     aKeyPressed = false;
-                    if(!dKeyPressed)hero.setxSpeed(0);
-                    else hero.moveRight();
+                    if(!dKeyPressed)gameData.getHero().setxSpeed(0);
+                    else gameData.getHero().moveRight();
                 }
                 case D -> {
                     dKeyPressed = false;
-                    if(!aKeyPressed)hero.setxSpeed(0);
-                    else hero.moveLeft();
+                    if(!aKeyPressed)gameData.getHero().setxSpeed(0);
+                    else gameData.getHero().moveLeft();
                 }
             }
         });
@@ -189,18 +188,43 @@ public class GameWindow{
             pauseStage.close();
             new ChooseLevelWindow(stage).startLevel(gameData.getLevelName());
         });
+        Button loadButton = new Button("Load");
+        loadButton.setPrefWidth(200);
+        if(LevelManager.loadLevel("./Saves/gamedata.dat") == null)loadButton.setDisable(true);
+        loadButton.setOnAction(actionEvent -> {
+            gameData = LevelManager.loadLevel("./Saves/gamedata.dat");
+            graphicsController.setGameData(gameData);
+            pauseStage.close();
+            gameLoopTimer.start();
+        });
+        Button saveButton = new Button("Save");
+        saveButton.setPrefWidth(200);
+        saveButton.setOnAction(actionEvent -> {
+            aKeyPressed = false;
+            dKeyPressed = false;
+            gameData.getHero().setxSpeed(0);
+            LevelManager.makeNewSave(gameData);
+            loadButton.setDisable(false);
+        });
         Button exitLevelButton = new Button("Exit level");
         exitLevelButton.setPrefWidth(200);
         exitLevelButton.setOnAction(actionEvent -> {
             pauseStage.close();
             new ChooseLevelWindow(stage).start();
         });
+        Button saveExitButton = new Button("Save and Exit game");
+        saveExitButton.setPrefWidth(200);
+        saveExitButton.setOnAction(actionEvent -> {
+            pauseStage.close();
+            LevelManager.makeNewSave(gameData);
+            Platform.exit();
+        });
         Button exitButton = new Button("Exit game");
         exitButton.setPrefWidth(200);
         exitButton.setOnAction(actionEvent -> {
             Platform.exit();
         });
-        vBox.getChildren().addAll(continueButton,restartButton,exitLevelButton,exitButton);
+        vBox.getChildren().addAll(continueButton,restartButton,saveButton,loadButton,exitLevelButton,saveExitButton,exitButton);
         pauseStage.setScene(new Scene(vBox));
         pauseStage.centerOnScreen();
         pauseStage.initModality(Modality.APPLICATION_MODAL);

@@ -23,14 +23,13 @@ import static nazarrod.adventgem.advgem.view.GfIMG.*;
 public class GraphicController {
     private final Canvas canvas;
     private final GraphicsContext gc;
-    private final GameData gameData;
+    private GameData gameData;
     private final Image[] numImage = new Image[10];
 
     public GraphicController(Canvas canvas, GraphicsContext graphicsContext,GameData gameData) {
         this.canvas = canvas;
         this.gc = graphicsContext;
         this.gameData = gameData;
-        setBackground(Color.DARKCYAN);
 
         for (int i = 0; i < numImage.length; i++) {
             String imageName = i + ".png";
@@ -40,17 +39,21 @@ public class GraphicController {
 
     public void drawLevel(){
         // Draws only platforms, must load whole level (with heroes and enemies)
-        setBackground(Color.DARKCYAN);
+        setBackground(Color.CYAN);
         List<Platform2D> platforms = gameData.getPlatforms();
         for(Platform2D platform2D : platforms){
             drawPlatform(platform2D);
         }
-        drawFinish(gameData.getFinish().getX(),gameData.getFinish().getY());
-        drawHero(gameData.getHero());
+        if(gameData.getFinish() != null)drawFinish(gameData.getFinish().getX(),gameData.getFinish().getY());
+        if(gameData.getHero() != null)drawHero(gameData.getHero());
         drawBullets(gameData.getBullets());
         drawEnemies(gameData.getEnemies());
-        drawUI(gameData.getLives(),gameData.getHero().getHP());
+        if(gameData.getHero() != null)drawUI(gameData.getLives(),gameData.getHero().getHP());
         gc.restore();
+    }
+
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
     }
 
     public void setBackground(Color color){

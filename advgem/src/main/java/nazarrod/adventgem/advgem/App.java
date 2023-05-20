@@ -29,6 +29,16 @@ public class App extends Application {
     }
 
     private void loginWindow(){
+
+        Button loadButton = new Button();
+        loadButton.setText("Load latest save");
+        loadButton.setPrefWidth(200);
+        if(LevelManager.loadLevel("./Saves/gamedata.dat") == null)loadButton.setDisable(true);
+        loadButton.setOnAction(actionEvent -> {
+            ChooseLevelWindow chooseLevelWindow = new ChooseLevelWindow(stage);
+            chooseLevelWindow.startLevel("./Saves/gamedata.dat");
+        });
+
         Button levelButton = new Button();
         levelButton.setText("Levels");
         levelButton.setPrefWidth(200);
@@ -52,7 +62,7 @@ public class App extends Application {
         });
 
         VBox loginMenu = new VBox();
-        loginMenu.getChildren().addAll(levelButton,NewLevelButton,exitButton);
+        loginMenu.getChildren().addAll(loadButton,levelButton,NewLevelButton,exitButton);
         loginMenu.setSpacing(8);
         loginMenu.setAlignment(Pos.CENTER);
         stage.setTitle("Adventurous GEM");

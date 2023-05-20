@@ -61,7 +61,8 @@ public class Editor extends Application {
         Canvas canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
         GraphicsContext gc = canvas.getGraphicsContext2D();
         graphicsController = new GraphicController(canvas,gc,gameData);
-        graphicsController.setBackground(Color.DARKCYAN);
+//        graphicsController.setBackground(Color.CYAN);
+        graphicsController.drawLevel();
         //Add control buttons
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll("Platform","Hero","Enemy","Finish");
@@ -120,7 +121,7 @@ public class Editor extends Application {
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;
         boolean f = gameData.addPlatform(x,y);
         if(f){
-            graphicsController.drawPlatform(x, y);
+            graphicsController.drawLevel();
             System.err.println("Platform added");
         }
     }
@@ -134,7 +135,7 @@ public class Editor extends Application {
         }
         if(f == 1){
             System.err.println("Hero added");
-            graphicsController.drawHero(gameData.getHero());
+            graphicsController.drawLevel();
         }
         if(f == 0){
             System.err.println("Probably collision");
@@ -147,7 +148,7 @@ public class Editor extends Application {
         int f = gameData.addEnemy(x,y);
         if(f == 1){
             System.err.println("Enemy added");
-            graphicsController.drawEnemies(gameData.getEnemies());
+            graphicsController.drawLevel();
         }
         else{
             System.err.println("Probably collision");
@@ -159,7 +160,7 @@ public class Editor extends Application {
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;
         int f = gameData.addFinish(x,y);
         if(f == 1){
-            graphicsController.drawFinish(x+30, y+30);
+            graphicsController.drawLevel();
             System.err.println("Finish added");
         }
     }

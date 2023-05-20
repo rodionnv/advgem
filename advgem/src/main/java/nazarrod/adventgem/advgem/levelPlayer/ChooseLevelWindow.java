@@ -39,8 +39,7 @@ public class ChooseLevelWindow {
         stage.centerOnScreen();
     }
 
-    public void startLevel(String levelName){
-        String levelPath = "./Levels/"+levelName+"/gamedata.dat";
+    public void startLevel(String levelPath){
         GameData gameData = LevelManager.loadLevel(levelPath);
         GameWindow gameWindow = new GameWindow(gameData);
         stage.hide();
@@ -51,7 +50,7 @@ public class ChooseLevelWindow {
         Button button = new Button();
         button.setText(levelName);
         button.setPrefWidth(200);
-        button.setOnAction(actionEvent -> startLevel(levelName));
+        button.setOnAction(actionEvent -> startLevel("./Levels/"+levelName+"/gamedata.dat"));
         return button;
     }
 }
