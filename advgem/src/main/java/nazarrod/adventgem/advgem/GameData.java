@@ -190,7 +190,7 @@ public class GameData implements Serializable {
             }
             else{
                 if (Geometry.checkCollision(bullet.getPlatform(), hero.getPlatform())) {
-                    hero.changeHP(-bullet.getDamage()/hero.getArmorQ());
+                    hero.changeHP(-(bullet.getDamage()+hero.getArmorQ()-1)/hero.getArmorQ());
                     bulletIterator.remove();
                     if (hero.getHP() <= 0){
                         lives--;

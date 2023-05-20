@@ -99,6 +99,8 @@ public class GameWindow{
                     aKeyPressed = false;
                     dKeyPressed = false;
                     hero.setxSpeed(0);
+                    hero.setArmorQ(5);
+                    hero.setSpeedB(5);
                     hero.setWeapon(Hero.Weapon.BULLET);
 //                    openInventory(gameLoopTimer);
                 }

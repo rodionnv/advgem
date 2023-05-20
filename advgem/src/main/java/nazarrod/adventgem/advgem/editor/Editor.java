@@ -48,6 +48,7 @@ public class Editor extends Application {
     }
 
     private void buildPlatformerLevel(){
+        gameData = new GameData();
         SetupDialog setupDialog = new SetupDialog(gameData);
         setupDialog.showAndWait();
 
@@ -82,7 +83,6 @@ public class Editor extends Application {
         exitButton.setPrefWidth(150);
         exitButton.setOnAction(actionEvent -> {
             start(stage);
-            gameData = new GameData();
         });
 
         VBox buttonBox = new VBox();
