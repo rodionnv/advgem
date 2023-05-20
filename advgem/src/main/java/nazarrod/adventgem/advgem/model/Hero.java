@@ -11,8 +11,13 @@ import static java.lang.Math.min;
 
 public class Hero extends Sprite implements Serializable{
 
+    public enum Weapon{
+        SWORD,BULLET;
+    }
+
     private boolean hasKey = false;
     private int armorQ = 1;
+    private Weapon weapon = Weapon.SWORD;
 
     public Hero(int xPos, int yPos, int hp) {
         super(xPos, yPos, hp,"hero.png");
@@ -27,6 +32,14 @@ public class Hero extends Sprite implements Serializable{
 
     public void setHasKey(boolean hasKey) {
         this.hasKey = hasKey;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
     public int getArmorQ() {

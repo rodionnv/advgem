@@ -9,6 +9,8 @@ import nazarrod.adventgem.advgem.utils.Geometry;
 import java.io.Serializable;
 import java.util.*;
 
+import static java.lang.Math.abs;
+
 public class GameData implements Serializable {
     private final Random rnd = new Random();
     private String levelName = "NewLevel" + rnd.nextInt(1000000007); // Add random string to avoid name duplication
@@ -163,7 +165,7 @@ public class GameData implements Serializable {
             enemy.updateOrientation(getPlatforms());
             enemy.tryMove();
             if(enemies_shoot_now){
-                Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,20,enemy.getOrientation(), "bullet_red.png",false);
+                Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,20,enemy.getOrientation(),false,false,9999);
                 addBullet(new_bullet);
             }
         }
@@ -172,7 +174,7 @@ public class GameData implements Serializable {
         while (bulletIterator.hasNext()){
             bullet = bulletIterator.next();
             bullet.move();
-            if(Geometry.outOfBounds(bullet.getPlatform(),playgroundWidth,getPlaygroundHeight()))
+            if(Geometry.outOfBounds(bullet.getPlatform(),playgroundWidth,getPlaygroundHeight()) || (abs(bullet.getxPos() - bullet.getxStart()) > bullet.getLiveDist() ) )
                 bulletIterator.remove();
 
             if(bullet.getShotByHero()) {

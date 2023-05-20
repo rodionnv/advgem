@@ -11,6 +11,7 @@ import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.model.Platform2D;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 import static nazarrod.adventgem.advgem.view.GfIMG.*;
@@ -76,7 +77,10 @@ public class GraphicController {
 
     public void drawBullets(Queue<Bullet>bullets){
         for(Bullet bullet : bullets){
-            if(bullet.getShotByHero())gc.drawImage(BLUE_BULLET.img,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+            if(bullet.getShotByHero()){
+                if(bullet.isSword())gc.drawImage(SWORD.img,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+                else gc.drawImage(BLUE_BULLET.img,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+            }
             else gc.drawImage(RED_BULLET.img,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
         }
     }

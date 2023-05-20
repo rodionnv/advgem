@@ -86,13 +86,20 @@ public class GameWindow{
                         hero.moveRight();
                 }
                 case SPACE -> {
-                    Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos()+20,20,hero.getOrientation(), "bullet_blue.png",true);
+                    Bullet bullet;
+                    if(hero.getWeapon() == Hero.Weapon.BULLET) {
+                        bullet = new Bullet(hero.getxPos(), hero.getyPos() + 20, 20, hero.getOrientation(), false, true, 9999);
+                    }
+                    else{
+                        bullet = new Bullet(hero.getxPos(), hero.getyPos() + 20, 20, hero.getOrientation(), true, true, 70);
+                    }
                     gameData.addBullet(bullet);
                 }
                 case E -> {
                     aKeyPressed = false;
                     dKeyPressed = false;
                     hero.setxSpeed(0);
+                    hero.setWeapon(Hero.Weapon.BULLET);
                     openInventory(gameLoopTimer);
                 }
                 case P,ESCAPE -> pauseLevel(gameLoopTimer);
