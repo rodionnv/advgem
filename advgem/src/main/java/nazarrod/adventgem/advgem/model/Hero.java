@@ -11,11 +11,21 @@ import static java.lang.Math.min;
 
 public class Hero extends Sprite implements Serializable{
 
+    private boolean hasKey = false;
+
     public Hero(int xPos, int yPos, int hp) {
         super(xPos, yPos, hp,"hero.png");
         this.xAcc = 3;
         this.yAcc = 8;
         this.jumpSpeed = 16;
+    }
+
+    public boolean isHasKey() {
+        return hasKey;
+    }
+
+    public void setHasKey(boolean hasKey) {
+        this.hasKey = hasKey;
     }
 
     public void jump() {

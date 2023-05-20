@@ -26,6 +26,7 @@ public class GraphicController {
     private GameData gameData;
     private final Image platformImage = new Image("platform.png");
     private final Image finishImage = new Image("finish.png");
+    private final Image closedFinishImage = new Image("closed_finish.png");
     private final Image heroImage = new Image("hero.png");
     private final Image enemyImage = new Image("enemy.png");
     private final Image redBulletImage = new Image("bullet_red.png");
@@ -76,7 +77,8 @@ public class GraphicController {
     }
 
     public void drawFinish(int x,int y){
-        gc.drawImage(finishImage,x-30,y-30,80,80);
+        if(gameData.getHero().isHasKey())gc.drawImage(finishImage,x-30,y-30,80,80);
+        else gc.drawImage(closedFinishImage,x-30,y-30,80,80);
     }
 
     public void drawHero(Hero hero) {

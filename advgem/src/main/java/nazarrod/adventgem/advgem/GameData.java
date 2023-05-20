@@ -142,7 +142,7 @@ public class GameData implements Serializable {
         hero.updateStates(getPlatforms());
         hero.tryMove();
         hero.updJumps(getPlatforms());
-        if(Geometry.checkCollision(hero.getPlatform(),finish)){
+        if(hero.isHasKey() && Geometry.checkCollision(hero.getPlatform(),finish)){
             win = true;
             return;
         }
