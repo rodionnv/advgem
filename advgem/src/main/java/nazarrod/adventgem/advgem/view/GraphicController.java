@@ -87,7 +87,7 @@ public class GraphicController {
 
     public void drawBullets(Queue<Bullet>bullets){
         for(Bullet bullet : bullets){
-            if(bullet.getShotBy())gc.drawImage(blueBulletImage,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+            if(bullet.getShotByHero())gc.drawImage(blueBulletImage,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
             else gc.drawImage(redBulletImage,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
         }
     }

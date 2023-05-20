@@ -9,16 +9,15 @@ public class Bullet implements Serializable {
     private int yPos = 0;
     private int xSpeed = 8;
     private final int damage;
-    private final boolean shotBy;
+    private final boolean shotByHero;
     private final int width = 24;
     private final int height = 24;
 
-    public Bullet(int xPos, int yPos, int damage, Sprite.ORIENTATION orientation, String gfName, boolean shotBy) {
-        //shot_by = 1? - hero's shot; shot_by = 0? enemy
+    public Bullet(int xPos, int yPos, int damage, Sprite.ORIENTATION orientation, String gfName, boolean shotByHero) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.gfName = gfName;
-        this.shotBy = shotBy;
+        this.shotByHero = shotByHero;
         this.damage = damage;
         if(orientation == Sprite.ORIENTATION.LEFT)xSpeed *= -1;
     }
@@ -55,8 +54,8 @@ public class Bullet implements Serializable {
         return damage;
     }
 
-    public boolean getShotBy() {
-        return shotBy;
+    public boolean getShotByHero() {
+        return shotByHero;
     }
 
     public Platform2D getPlatform() {

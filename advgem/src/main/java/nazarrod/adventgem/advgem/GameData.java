@@ -175,7 +175,7 @@ public class GameData implements Serializable {
             if(Geometry.outOfBounds(bullet.getPlatform(),playgroundWidth,getPlaygroundHeight()))
                 bulletIterator.remove();
 
-            if(bullet.getShotBy()) {
+            if(bullet.getShotByHero()) {
                 Iterator<Enemy> enemyIterator = enemies.iterator();
                 while (enemyIterator.hasNext()) {
                     enemy = enemyIterator.next();
