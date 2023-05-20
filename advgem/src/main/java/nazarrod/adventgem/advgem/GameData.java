@@ -160,7 +160,7 @@ public class GameData implements Serializable {
         Enemy enemy;
         for (Enemy value : enemies) {
             enemy = value;
-            enemy.updateStates(getPlatforms());
+            enemy.updateOrientation(getPlatforms());
             enemy.tryMove();
             if(enemies_shoot_now){
                 Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,enemy.getOrientation(), "bullet_red.png",false);
