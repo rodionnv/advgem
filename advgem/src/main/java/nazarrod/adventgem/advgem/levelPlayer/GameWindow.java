@@ -31,7 +31,7 @@ public class GameWindow{
         this.stage = new Stage();
         this.gameData = gameData;
         canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
-        graphicsController = new GraphicController(stage,canvas,canvas.getGraphicsContext2D(),gameData);
+        graphicsController = new GraphicController(canvas,canvas.getGraphicsContext2D(),gameData);
         this.hero = gameData.getHero();
     }
 

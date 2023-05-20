@@ -59,7 +59,7 @@ public class Editor extends Application {
         //Add canvas
         Canvas canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        graphicsController = new GraphicController(stage,canvas,gc,gameData);
+        graphicsController = new GraphicController(canvas,gc,gameData);
         graphicsController.setBackground(Color.DARKCYAN);
         //Add control buttons
         ChoiceBox<String> choiceBox = new ChoiceBox<>();

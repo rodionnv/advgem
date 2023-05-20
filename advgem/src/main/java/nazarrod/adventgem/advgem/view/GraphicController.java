@@ -4,8 +4,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Enemy;
@@ -15,28 +13,19 @@ import nazarrod.adventgem.advgem.model.Platform2D;
 import java.util.List;
 import java.util.Queue;
 
+import static nazarrod.adventgem.advgem.view.GfIMG.*;
+
 /**
  * GraphicController - class that is responsible for visual part
  * contains methods for loading the whole graphic context from GameData and methods for drawing individual components
  */
 public class GraphicController {
-    private Stage stage;
-    private Canvas canvas;
-    private GraphicsContext gc;
-    private GameData gameData;
-    private final Image platformImage = new Image("platform.png");
-    private final Image finishImage = new Image("finish.png");
-    private final Image closedFinishImage = new Image("closed_finish.png");
-    private final Image heroImage = new Image("hero.png");
-    private final Image enemyImage = new Image("enemy.png");
-    private final Image redBulletImage = new Image("bullet_red.png");
-    private final Image blueBulletImage = new Image("bullet_blue.png");
-    private final Image liveImage = new Image("live.png");
-    private final Image hpImage = new Image("hp.png");
+    private final Canvas canvas;
+    private final GraphicsContext gc;
+    private final GameData gameData;
     private final Image[] numImage = new Image[10];
 
-    public GraphicController(Stage stage, Canvas canvas, GraphicsContext graphicsContext,GameData gameData) {
-        this.stage = stage;
+    public GraphicController(Canvas canvas, GraphicsContext graphicsContext,GameData gameData) {
         this.canvas = canvas;
         this.gc = graphicsContext;
         this.gameData = gameData;
@@ -73,35 +62,35 @@ public class GraphicController {
     }
 
     public void drawPlatform(int x,int y){
-        gc.drawImage(platformImage,x,y,80,80);
+        gc.drawImage(PLATFORM.img,x,y,80,80);
     }
 
     public void drawFinish(int x,int y){
-        if(gameData.getHero().isHasKey())gc.drawImage(finishImage,x-30,y-30,80,80);
-        else gc.drawImage(closedFinishImage,x-30,y-30,80,80);
+        if(gameData.getHero() == null || !gameData.getHero().isHasKey())gc.drawImage(CLOSED_FINISH.img,x-30,y-30,80,80);
+        else gc.drawImage(FINISH.img,x-30,y-30,80,80);
     }
 
     public void drawHero(Hero hero) {
-        gc.drawImage(heroImage,hero.getxPos(),hero.getyPos(),hero.getWidth(),hero.getHeight());
+        gc.drawImage(HERO.img,hero.getxPos(),hero.getyPos(),hero.getWidth(),hero.getHeight());
     }
 
     public void drawBullets(Queue<Bullet>bullets){
         for(Bullet bullet : bullets){
-            if(bullet.getShotByHero())gc.drawImage(blueBulletImage,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
-            else gc.drawImage(redBulletImage,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+            if(bullet.getShotByHero())gc.drawImage(BLUE_BULLET.img,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
+            else gc.drawImage(RED_BULLET.img,bullet.getxPos(),bullet.getyPos(),bullet.getWidth(),bullet.getHeight());
         }
     }
 
     public void drawEnemies(List<Enemy>enemies){
         for(Enemy enemy : enemies){
-            gc.drawImage(enemyImage,enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
+            gc.drawImage(ENEMY.img,enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
         }
     }
 
     public void drawUI(int lives,int hp){
         for(int i = 0;i < lives;i++)
-            gc.drawImage(liveImage, i * 50,0,50,50);
-        gc.drawImage(hpImage,0,55,50,50);
+            gc.drawImage(LIVE.img, i * 50,0,50,50);
+        gc.drawImage(HP.img,0,55,50,50);
         if(hp/100 != 0)gc.drawImage(numImage[hp/100],50,55,50,50);
         gc.drawImage(numImage[(hp/10)%10],100,55,50,50);
         gc.drawImage(numImage[hp%10],150,55,50,50);
