@@ -100,7 +100,7 @@ public class GameWindow{
                     dKeyPressed = false;
                     hero.setxSpeed(0);
                     hero.setWeapon(Hero.Weapon.BULLET);
-                    openInventory(gameLoopTimer);
+//                    openInventory(gameLoopTimer);
                 }
                 case P,ESCAPE -> pauseLevel(gameLoopTimer);
                 case SHIFT -> {

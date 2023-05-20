@@ -27,6 +27,7 @@ public class Sprite implements Serializable {
     protected int yAcc = 0;
     protected int jumpSpeed = 0;
     protected int HP;
+    private int speedB = 0;
     protected int startHP;
     public int current_jumps = 0;
     protected boolean falling = false;
@@ -115,6 +116,12 @@ public class Sprite implements Serializable {
     public void setJumpSpeed(int jumpSpeed) {
         this.jumpSpeed = jumpSpeed;
     }
+    public int getSpeedB() {
+        return speedB;
+    }
+    public void setSpeedB(int speedB) {
+        this.speedB = speedB;
+    }
     public int getWidth() {
         return width;
     }
@@ -137,11 +144,11 @@ public class Sprite implements Serializable {
     }
 
     public void moveRight(){
-        setxSpeed(getxAcc());
+        setxSpeed(getxAcc()+speedB);
         setOrientation(ORIENTATION.RIGHT);
     }
     public void moveLeft(){
-        setxSpeed(-getxAcc());
+        setxSpeed(-(getxAcc()+speedB));
         setOrientation(ORIENTATION.LEFT);
     }
 
@@ -202,16 +209,16 @@ public class Sprite implements Serializable {
 
     public void updateHittingLeftState(List<Platform2D> platforms){
         for(Platform2D platform : platforms){
-            if(Geometry.checkBelongs(xPos-xAcc,yPos,platform)){hittingLetf = true;return;}
-            if(Geometry.checkBelongs(xPos-xAcc,yPos+height,platform)){hittingLetf = true;return;}
+            if(Geometry.checkBelongs(xPos-(xAcc+speedB),yPos,platform)){hittingLetf = true;return;}
+            if(Geometry.checkBelongs(xPos-(xAcc+speedB),yPos+height,platform)){hittingLetf = true;return;}
         }
         hittingLetf = false;
     }
 
     public void updateHittingRightState(List<Platform2D> platforms){
         for(Platform2D platform : platforms){
-            if(Geometry.checkBelongs(xPos+width+xAcc,yPos,platform)){hittingRight = true;return;}
-            if(Geometry.checkBelongs(xPos+width+xAcc,yPos+height,platform)){hittingRight = true;return;}
+            if(Geometry.checkBelongs(xPos+width+(xAcc+speedB),yPos,platform)){hittingRight = true;return;}
+            if(Geometry.checkBelongs(xPos+width+(xAcc+speedB),yPos+height,platform)){hittingRight = true;return;}
         }
         hittingRight = false;
     }

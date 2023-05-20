@@ -52,12 +52,11 @@ public class Hero extends Sprite implements Serializable{
 
     public void jump() {
         current_jumps++;
-        if(current_jumps == 1)push(0,-jumpSpeed,true);
-        if(current_jumps == 2)push(0,-12,true);
+        if(current_jumps == 1)push(-jumpSpeed,true);
+        if(current_jumps == 2)push(-12,true);
     }
 
-    public void push(int xDelta,int yDelta,boolean isJump){
-        setxSpeed(getxSpeed()+xDelta);
+    public void push(int yDelta,boolean isJump){
         setySpeed(getySpeed()+yDelta);
         Timer pushTimer = new Timer();
         pushTimer.schedule(new TimerTask() {
@@ -67,7 +66,6 @@ public class Hero extends Sprite implements Serializable{
                 if (startTime == null)startTime = Instant.now();
                 Duration elapsed = Duration.between(startTime, Instant.now());
                 if (elapsed.toMillis() >= 300) {
-                    setxSpeed(getxSpeed() - xDelta);
                     setySpeed(getySpeed() - yDelta);
                     pushTimer.cancel();
                 }
