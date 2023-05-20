@@ -33,12 +33,12 @@ public class Enemy extends Sprite implements Serializable {
             if(left && right)return;
         }
         if(!left){
-            if(!getOrientation())setxSpeed(xAcc);
-            setOrientation(true);
+            if(getOrientation() == ORIENTATION.LEFT)setxSpeed(xAcc);
+            setOrientation(ORIENTATION.RIGHT);
         }
         if(!right){
-            if(getOrientation())setxSpeed(-xAcc);
-            setOrientation(false);
+            if(getOrientation() == ORIENTATION.RIGHT)setxSpeed(-xAcc);
+            setOrientation(ORIENTATION.LEFT);
         }
     }
 }

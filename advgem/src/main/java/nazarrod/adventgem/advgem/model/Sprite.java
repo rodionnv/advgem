@@ -10,6 +10,10 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class Sprite implements Serializable {
+
+    public enum ORIENTATION{
+        LEFT,RIGHT
+    }
     protected final String gfName;
     protected int xPos;
     protected int yPos;
@@ -29,7 +33,7 @@ public class Sprite implements Serializable {
     protected boolean hittingTop = false;
     protected boolean hittingLetf = false;
     protected boolean hittingRight = false;
-    private boolean orientation = true; //True - faced to the right, False - to the left
+    private ORIENTATION orientation = ORIENTATION.RIGHT;
 
     public Sprite(int xPos, int yPos, int HP,String gfName) {
         this.xPos = xPos;
@@ -119,11 +123,11 @@ public class Sprite implements Serializable {
         return height;
     }
 
-    public boolean getOrientation() {
+    public ORIENTATION getOrientation() {
         return orientation;
     }
 
-    public void setOrientation(boolean orientation) {
+    public void setOrientation(ORIENTATION orientation) {
         this.orientation = orientation;
     }
 
@@ -132,13 +136,13 @@ public class Sprite implements Serializable {
         setyPos(y);
     }
 
-    public void moveRight(){ //TODO Make it better so sprite doesn't stop when A&D pressed at the same time
+    public void moveRight(){
         setxSpeed(getxAcc());
-        setOrientation(true);
+        setOrientation(ORIENTATION.RIGHT);
     }
     public void moveLeft(){
         setxSpeed(-getxAcc());
-        setOrientation(false);
+        setOrientation(ORIENTATION.LEFT);
     }
 
     public void reincarnate(){

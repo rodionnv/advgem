@@ -13,14 +13,14 @@ public class Bullet implements Serializable {
     private final int width = 24;
     private final int height = 24;
 
-    public Bullet(int xPos, int yPos,int damage,boolean orientation,String gfName,boolean shotBy) {
+    public Bullet(int xPos, int yPos, int damage, Sprite.ORIENTATION orientation, String gfName, boolean shotBy) {
         //shot_by = 1? - hero's shot; shot_by = 0? enemy
         this.xPos = xPos;
         this.yPos = yPos;
         this.gfName = gfName;
         this.shotBy = shotBy;
         this.damage = damage;
-        if(!orientation)xSpeed *= -1;
+        if(orientation == Sprite.ORIENTATION.LEFT)xSpeed *= -1;
     }
 
     public int getxPos() {
