@@ -12,6 +12,7 @@ import static java.lang.Math.min;
 public class Hero extends Sprite implements Serializable{
 
     private boolean hasKey = false;
+    private int armorQ = 1;
 
     public Hero(int xPos, int yPos, int hp) {
         super(xPos, yPos, hp,"hero.png");
@@ -26,6 +27,14 @@ public class Hero extends Sprite implements Serializable{
 
     public void setHasKey(boolean hasKey) {
         this.hasKey = hasKey;
+    }
+
+    public int getArmorQ() {
+        return armorQ;
+    }
+
+    public void setArmorQ(int armorQ) {
+        this.armorQ = armorQ;
     }
 
     public void jump() {

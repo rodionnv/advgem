@@ -86,10 +86,13 @@ public class GameWindow{
                         hero.moveRight();
                 }
                 case SPACE -> {
-                    Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos()+20,hero.getOrientation(), "bullet_blue.png",true);
+                    Bullet bullet = new Bullet(hero.getxPos(), hero.getyPos()+20,20,hero.getOrientation(), "bullet_blue.png",true);
                     gameData.addBullet(bullet);
                 }
                 case E -> {
+                    aKeyPressed = false;
+                    dKeyPressed = false;
+                    hero.setxSpeed(0);
                     openInventory(gameLoopTimer);
                 }
                 case P,ESCAPE -> pauseLevel(gameLoopTimer);

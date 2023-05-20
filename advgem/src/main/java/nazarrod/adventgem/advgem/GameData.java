@@ -163,7 +163,7 @@ public class GameData implements Serializable {
             enemy.updateOrientation(getPlatforms());
             enemy.tryMove();
             if(enemies_shoot_now){
-                Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,enemy.getOrientation(), "bullet_red.png",false);
+                Bullet new_bullet = new Bullet(enemy.getxPos(), enemy.getyPos()+20,20,enemy.getOrientation(), "bullet_red.png",false);
                 addBullet(new_bullet);
             }
         }
@@ -180,7 +180,7 @@ public class GameData implements Serializable {
                 while (enemyIterator.hasNext()) {
                     enemy = enemyIterator.next();
                     if (Geometry.checkCollision(bullet.getPlatform(), enemy.getPlatform())) {
-                        enemy.changeHP(-20);
+                        enemy.changeHP(-bullet.getDamage());
                         bulletIterator.remove();
                         if (enemy.getHP() <= 0) enemyIterator.remove();
                     }
@@ -188,9 +188,8 @@ public class GameData implements Serializable {
             }
             else{
                 if (Geometry.checkCollision(bullet.getPlatform(), hero.getPlatform())) {
-                    hero.changeHP(-20);
+                    hero.changeHP(-bullet.getDamage()/hero.getArmorQ());
                     bulletIterator.remove();
-                    System.out.println("hero hp" + " " + hero.getHP());
                     if (hero.getHP() <= 0){
                         lives--;
                         if(lives > 0)hero.reincarnate();
