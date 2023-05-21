@@ -11,9 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
@@ -101,6 +101,7 @@ public class GameWindow{
                         gameData.getHero().setBulletsCnt(max(gameData.getHero().getBulletsCnt()-1,0));
                     }
                     else{
+                        gameData.getHero().setWeapon(Hero.Weapon.SWORD);
                         bullet = new Bullet(gameData.getHero().getxPos(), gameData.getHero().getyPos() + 20, 20, gameData.getHero().getOrientation(), true, true, 70);
                     }
                     gameData.addBullet(bullet);
@@ -109,7 +110,6 @@ public class GameWindow{
                     aKeyPressed = false;
                     dKeyPressed = false;
                     gameData.getHero().setxSpeed(0);
-                    gameData.getHero().setWeapon(Hero.Weapon.BULLET);
                     openInventory(gameLoopTimer);
                 }
                 case H -> {
@@ -186,10 +186,31 @@ public class GameWindow{
         bullet.setGraphic(bulletImageView);
         bullet.setText(Integer.toString(gameData.getHero().getBulletsCnt()));
 
+        sword.setOnAction(actionEvent -> {
+            gameData.getHero().setWeapon(Hero.Weapon.SWORD);
+            updateWeaponButtons(sword,bullet);
+        });
+        bullet.setOnAction(actionEvent -> {
+            gameData.getHero().setWeapon(Hero.Weapon.BULLET);
+            updateWeaponButtons(sword,bullet);
+        });
+
+        updateWeaponButtons(sword,bullet);
+
+        ImageView applesImageView = new ImageView(GfIMG.APPLE.img);
+        applesImageView.setFitHeight(50);
+        applesImageView.setFitWidth(50);
+        Button apple = new Button();
+        apple.setPrefWidth(100);
+        apple.setPrefHeight(100);
+        apple.setGraphic(applesImageView);
+        apple.setText(Integer.toString(gameData.getHero().getApplesCnt()));
+
         gridPane.setGridLinesVisible( true );
         gridPane.getColumnConstraints().addAll(col1, col1, col1);
         gridPane.add(sword,0,1);
         gridPane.add(bullet,0,2);
+        gridPane.add(apple,3,1);
 
         List<Item>bootsList = gameData.getHero().getBootsList();
         List<Item>armorList = gameData.getHero().getArmorList();
@@ -229,6 +250,21 @@ public class GameWindow{
         invStage.setOnCloseRequest(windowEvent -> gameLoopTimer.start());
         invStage.setScene(new Scene(gridPane));
         invStage.show();
+    }
+
+    private void updateWeaponButtons(Button sword, Button bullet){
+        if(gameData.getHero().getWeapon() == Hero.Weapon.SWORD){
+            sword.setStyle("-fx-border-color: green; " +
+                    "-fx-border-width: 5px; " +
+                    "-fx-border-radius: 5px;");
+            bullet.setStyle("");
+        }
+        else{
+            bullet.setStyle("-fx-border-color: green; " +
+                    "-fx-border-width: 5px; " +
+                    "-fx-border-radius: 5px;");
+            sword.setStyle("");
+        }
     }
 
     public void winLevel(){
