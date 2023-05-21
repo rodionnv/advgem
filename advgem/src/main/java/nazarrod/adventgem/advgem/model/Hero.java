@@ -16,7 +16,7 @@ public class Hero extends Sprite implements Serializable{
     }
 
     private boolean hasKey = false;
-    private int armorQ = 1;
+    private double armorQ = 1.3;
     private Weapon weapon = Weapon.SWORD;
 
     public Hero(int xPos, int yPos, int hp) {
@@ -42,11 +42,11 @@ public class Hero extends Sprite implements Serializable{
         this.weapon = weapon;
     }
 
-    public int getArmorQ() {
+    public double getArmorQ() {
         return armorQ;
     }
 
-    public void setArmorQ(int armorQ) {
+    public void setArmorQ(double armorQ) {
         this.armorQ = armorQ;
     }
 
