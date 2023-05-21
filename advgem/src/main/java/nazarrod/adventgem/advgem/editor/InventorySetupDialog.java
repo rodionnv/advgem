@@ -40,6 +40,9 @@ public class InventorySetupDialog extends Dialog<Void> {
         TextField applesCnt = new TextField("5");
         gridPane.add(applesCnt,2,1);
 
+        CheckBox checkBox = new CheckBox("Key");
+        gridPane.add(checkBox,3,0);
+
         AtomicInteger cBoots = new AtomicInteger(3);
         gridPane.add(new ImageView(GfIMG.BOOTS.img),0,2);
         gridPane.add(new Label("Set speed bonus [1,10]"),1,2);
@@ -86,6 +89,8 @@ public class InventorySetupDialog extends Dialog<Void> {
             else chest.setApplesCnt(parseIntDefault(applesCnt.getText(),5,999));
             if(chest == null)gameData.getHero().setBulletsCnt(parseIntDefault(bulletCnt.getText(),30,999));
             else chest.setBulletsCnt(parseIntDefault(bulletCnt.getText(),30,999));
+            if(chest == null)gameData.getHero().setHasKey(checkBox.isSelected());
+            else chest.setContainsKey(checkBox.isSelected());
             actionEvent.consume();
         });
         Platform.runLater(bulletCnt::requestFocus);

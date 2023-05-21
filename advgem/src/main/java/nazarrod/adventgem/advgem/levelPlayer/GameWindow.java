@@ -124,7 +124,7 @@ public class GameWindow{
                     Chest chest;
                     while (chestIterator.hasNext()){
                         chest = chestIterator.next();
-                        if(Geometry.checkBelongs(gameData.getHero().getxPos()+gameData.getHero().getWidth(),gameData.getHero().getyPos()+gameData.getHero().getWidth()-1,chest.getPlatform())){
+                        if(Geometry.checkBelongs(gameData.getHero().getxPos()+gameData.getHero().getWidth()/2,gameData.getHero().getyPos()+gameData.getHero().getHeight()-1,chest.getPlatform())){
                             chest.giveItems(gameData.getHero());
                             chestIterator.remove();
                         }

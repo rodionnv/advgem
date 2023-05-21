@@ -11,7 +11,7 @@ public class Chest implements Serializable {
     private boolean opened = false;
     private int applesCnt;
     private int bulletsCnt;
-    private final boolean containsKey;
+    private boolean containsKey;
 
     public Chest(List<Item> contents,int xPos,int yPos,int applesCnt,int bulletsCnt,boolean containsKey) {
         this.xPos = xPos;
@@ -84,6 +84,10 @@ public class Chest implements Serializable {
 
     public int getBulletsCnt() {
         return bulletsCnt;
+    }
+
+    public void setContainsKey(boolean containsKey) {
+        this.containsKey = containsKey;
     }
 
     public boolean isContainsKey() {
