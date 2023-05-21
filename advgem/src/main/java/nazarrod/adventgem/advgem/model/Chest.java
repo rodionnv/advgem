@@ -23,8 +23,8 @@ public class Chest implements Serializable {
     }
 
     public void giveItems(Hero hero){
-        hero.setApplesCnt(getApplesCnt() + applesCnt);
-        hero.setBulletsCnt(getBulletsCnt() + bulletsCnt);
+        hero.setApplesCnt(hero.getApplesCnt() + applesCnt);
+        hero.setBulletsCnt(hero.getBulletsCnt() + bulletsCnt);
         hero.setHasKey(hero.isHasKey() | containsKey);
         for(Item item : contents){
             if(item.getType() == Item.Type.BOOTS)hero.addBoots(item);
