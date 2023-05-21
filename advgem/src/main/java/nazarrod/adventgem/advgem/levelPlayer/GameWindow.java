@@ -100,7 +100,7 @@ public class GameWindow{
                     dKeyPressed = false;
                     gameData.getHero().setxSpeed(0);
                     gameData.getHero().setWeapon(Hero.Weapon.BULLET);
-                    Item boots_and_armor = new Item("cool boots",5,5,15, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false);
+                    Item boots_and_armor = new Item("cool boots",5,5,15, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.BOOTS);
                     boots_and_armor.equip(gameData.getHero());
 //                    openInventory(gameLoopTimer);
                 }
