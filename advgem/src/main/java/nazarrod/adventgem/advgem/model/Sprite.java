@@ -28,6 +28,7 @@ public class Sprite implements Serializable {
     protected int jumpSpeed = 0;
     protected int HP;
     private int speedB = 0;
+    private double armorQ = 1.3;
     protected int startHP;
     public int current_jumps = 0;
     protected boolean falling = false;
@@ -121,6 +122,14 @@ public class Sprite implements Serializable {
     }
     public void setSpeedB(int speedB) {
         this.speedB = speedB;
+    }
+
+    public double getArmorQ() {
+        return armorQ;
+    }
+
+    public void setArmorQ(double armorQ) {
+        this.armorQ = armorQ;
     }
     public int getWidth() {
         return width;

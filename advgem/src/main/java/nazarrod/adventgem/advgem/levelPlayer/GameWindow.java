@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Hero;
+import nazarrod.adventgem.advgem.model.Item;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 import nazarrod.adventgem.advgem.view.GraphicController;
 
@@ -98,9 +99,9 @@ public class GameWindow{
                     aKeyPressed = false;
                     dKeyPressed = false;
                     gameData.getHero().setxSpeed(0);
-                    gameData.getHero().setArmorQ(5);
-                    gameData.getHero().setSpeedB(5);
                     gameData.getHero().setWeapon(Hero.Weapon.BULLET);
+                    Item boots_and_armor = new Item("cool boots",5,5,15, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false);
+                    boots_and_armor.equip(gameData.getHero());
 //                    openInventory(gameLoopTimer);
                 }
                 case P,ESCAPE -> pauseLevel(gameLoopTimer);
