@@ -217,12 +217,31 @@ public class GameWindow{
         apple.setPrefHeight(100);
         apple.setGraphic(applesImageView);
         apple.setText(Integer.toString(gameData.getHero().getApplesCnt()));
+        apple.setOnAction(actionEvent -> {
+            if(gameData.getHero().getApplesCnt() > 0) {
+                gameData.getHero().setApplesCnt(max(gameData.getHero().getApplesCnt() - 1, 0));
+                gameData.getHero().setHP(gameData.getHero().getHP() + 10);
+                apple.setText(Integer.toString(gameData.getHero().getApplesCnt()));
+                graphicsController.drawLevel();
+            }
+        });
+
+        ImageView keyImageView = new ImageView(GfIMG.KEY.img);
+        keyImageView.setFitHeight(50);
+        keyImageView.setFitWidth(50);
+        Button key = new Button();
+        key.setPrefWidth(100);
+        key.setPrefHeight(100);
+        key.setGraphic(keyImageView);
+        if(gameData.getHero().isHasKey())key.setText(Integer.toString(1));
+        else key.setText(Integer.toString(0));
 
         gridPane.setGridLinesVisible( true );
         gridPane.getColumnConstraints().addAll(col1, col1, col1);
         gridPane.add(sword,0,1);
         gridPane.add(bullet,0,2);
         gridPane.add(apple,3,1);
+        gridPane.add(key,3,2);
 
         List<Item>bootsList = gameData.getHero().getBootsList();
         List<Item>armorList = gameData.getHero().getArmorList();
