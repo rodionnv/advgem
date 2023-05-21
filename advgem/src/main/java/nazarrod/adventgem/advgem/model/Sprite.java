@@ -28,15 +28,13 @@ public class Sprite implements Serializable {
     protected int jumpSpeed = 0;
     protected int HP;
     private int speedB = 0;
-    private double armorQ = 1.3;
+    private double armorQ = 1;
     protected int startHP;
     public int current_jumps = 0;
     protected boolean falling = false;
     protected boolean hittingTop = false;
     protected boolean hittingLetf = false;
     protected boolean hittingRight = false;
-    protected Item boots = null;
-    protected Item armor = null;
     private ORIENTATION orientation = ORIENTATION.RIGHT;
 
     public Sprite(int xPos, int yPos, int HP,String gfName) {
@@ -128,22 +126,6 @@ public class Sprite implements Serializable {
 
     public double getArmorQ() {
         return armorQ;
-    }
-
-    public Item getBoots() {
-        return boots;
-    }
-
-    public void setBoots(Item boots) {
-        this.boots = boots;
-    }
-
-    public Item getArmor() {
-        return armor;
-    }
-
-    public void setArmor(Item armor) {
-        this.armor = armor;
     }
 
     public void setArmorQ(double armorQ) {

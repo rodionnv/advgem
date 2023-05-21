@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.Math.max;
+
 public class Hero extends Sprite implements Serializable{
 
     public enum Weapon{
@@ -19,6 +21,8 @@ public class Hero extends Sprite implements Serializable{
     private int applesCnt;
     private int bulletsCnt;
     private Weapon weapon = Weapon.SWORD;
+    protected Item boots = null;
+    protected Item armor = null;
     private List<Item> bootsList = new ArrayList<>();
     private List<Item> armorList = new ArrayList<>();
 
@@ -43,6 +47,21 @@ public class Hero extends Sprite implements Serializable{
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+    public Item getBoots() {
+        return boots;
+    }
+
+    public void setBoots(Item boots) {
+        this.boots = boots;
+    }
+
+    public Item getArmor() {
+        return armor;
+    }
+
+    public void setArmor(Item armor) {
+        this.armor = armor;
     }
 
     public List<Item> getBootsList() {
@@ -84,6 +103,28 @@ public class Hero extends Sprite implements Serializable{
 
     public void setBulletsCnt(int bulletsCnt) {
         this.bulletsCnt = bulletsCnt;
+    }
+
+    public void equip(Item item){
+        if(item.isEquipped())return;
+        if((item.getType() == Item.Type.BOOTS) && (getBoots() != null))
+            unequip(getBoots());
+        if((item.getType() == Item.Type.ARMOR) && (getArmor() != null))
+            unequip(getArmor());
+        setSpeedB(item.getSpeedB());
+        setArmorQ(item.getdArmorQ());
+        setHP(getHP()+item.getdHP());
+        setArmor(item);
+        item.setEquipped(true);
+    }
+
+    public void unequip(Item item){
+        item.setEquipped(false);
+        setSpeedB(0);
+        setArmorQ(1);
+        if(item.getHpBonusType() == Item.HpBonusType.ONLY_WHEN_EQUIPPED)setHP(max(1,getHP()-item.getdHP()));
+        if(item.getType() == Item.Type.BOOTS)setBoots(null);
+        if(item.getType() == Item.Type.ARMOR)setArmor(null);
     }
 
     public void jump() {

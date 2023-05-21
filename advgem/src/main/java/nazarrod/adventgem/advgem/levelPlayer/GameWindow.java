@@ -12,8 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
@@ -222,7 +220,10 @@ public class GameWindow{
             boots.setPrefWidth(100);
             boots.setPrefHeight(100);
             boots.setGraphic(bootsImageView);
-            boots.setText(Integer.toString(item.getSpeedQ()));
+            boots.setText(Integer.toString(item.getSpeedB()));
+            boots.setOnAction(actionEvent -> {
+                gameData.getHero().equip(item);
+            });
             gridPane.add(boots,1,cc++);
         }
         cc = 1;
@@ -233,6 +234,9 @@ public class GameWindow{
             armor.setPrefHeight(100);
             armor.setGraphic(armorImageView);
             armor.setText(Double.toString(item.getdArmorQ()));
+            armor.setOnAction(actionEvent -> {
+                gameData.getHero().equip(item);
+            });
             gridPane.add(armor,2,cc++);
         }
 
@@ -251,7 +255,6 @@ public class GameWindow{
         invStage.setScene(new Scene(gridPane));
         invStage.show();
     }
-
     private void updateWeaponButtons(Button sword, Button bullet){
         if(gameData.getHero().getWeapon() == Hero.Weapon.SWORD){
             sword.setStyle("-fx-border-color: green; " +
