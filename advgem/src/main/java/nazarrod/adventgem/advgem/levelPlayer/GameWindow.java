@@ -3,11 +3,15 @@ package nazarrod.adventgem.advgem.levelPlayer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -17,7 +21,12 @@ import nazarrod.adventgem.advgem.model.Bullet;
 import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.model.Item;
 import nazarrod.adventgem.advgem.utils.LevelManager;
+import nazarrod.adventgem.advgem.view.GfIMG;
 import nazarrod.adventgem.advgem.view.GraphicController;
+
+import java.util.List;
+
+import static java.lang.Math.max;
 
 public class GameWindow{
     private final Stage stage;
@@ -87,8 +96,9 @@ public class GameWindow{
                 }
                 case SPACE -> {
                     Bullet bullet;
-                    if(gameData.getHero().getWeapon() == Hero.Weapon.BULLET) {
+                    if((gameData.getHero().getWeapon() == Hero.Weapon.BULLET) && (gameData.getHero().getBulletsCnt() != 0) ){
                         bullet = new Bullet(gameData.getHero().getxPos(), gameData.getHero().getyPos() + 20, 20, gameData.getHero().getOrientation(), false, true, 9999);
+                        gameData.getHero().setBulletsCnt(max(gameData.getHero().getBulletsCnt()-1,0));
                     }
                     else{
                         bullet = new Bullet(gameData.getHero().getxPos(), gameData.getHero().getyPos() + 20, 20, gameData.getHero().getOrientation(), true, true, 70);
@@ -100,13 +110,19 @@ public class GameWindow{
                     dKeyPressed = false;
                     gameData.getHero().setxSpeed(0);
                     gameData.getHero().setWeapon(Hero.Weapon.BULLET);
-                    Item boots_and_armor = new Item("cool boots",5,5,15, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.BOOTS);
-                    boots_and_armor.equip(gameData.getHero());
-//                    openInventory(gameLoopTimer);
+                    openInventory(gameLoopTimer);
                 }
-                case P,ESCAPE -> pauseLevel(gameLoopTimer);
-                case SHIFT -> {
-                    System.out.println("Block!");
+                case H -> {
+                    if(gameData.getHero().getApplesCnt() != 0){
+                        gameData.getHero().setApplesCnt(max(gameData.getHero().getApplesCnt()-1,0));
+                        gameData.getHero().setHP(gameData.getHero().getHP()+10);
+                    }
+                }
+                case P,ESCAPE -> {
+                    aKeyPressed = false;
+                    dKeyPressed = false;
+                    gameData.getHero().setxSpeed(0);
+                    pauseLevel(gameLoopTimer);
                 }
             }
         });
@@ -134,10 +150,81 @@ public class GameWindow{
     public void openInventory(AnimationTimer gameLoopTimer) {
         gameLoopTimer.stop();
         Stage invStage = new Stage();
+        GridPane gridPane = new GridPane();
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPrefWidth(100);
 
+        gridPane.getColumnConstraints().addAll(col1);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(10));
+
+        Label label = new Label("Weapon");
+        label.setAlignment(Pos.CENTER);
+        gridPane.add(label,0,0);
+        label = new Label("Boots");
+        gridPane.add(label,1,0);
+        label = new Label("Armor");
+        gridPane.add(label,2,0);
+        label = new Label("Consumables");
+        gridPane.add(label,3,0);
+
+        ImageView swordImageView = new ImageView(GfIMG.SWORD.img);
+        swordImageView.setFitHeight(50);
+        swordImageView.setFitWidth(50);
+        Button sword = new Button();
+        sword.setPrefWidth(100);
+        sword.setPrefHeight(100);
+        sword.setGraphic(swordImageView);
+
+        ImageView bulletImageView = new ImageView(GfIMG.BLUE_BULLET.img);
+        bulletImageView.setFitHeight(50);
+        bulletImageView.setFitWidth(50);
+        Button bullet = new Button();
+        bullet.setPrefWidth(100);
+        bullet.setPrefHeight(100);
+        bullet.setGraphic(bulletImageView);
+
+        gridPane.setGridLinesVisible( true );
+        gridPane.getColumnConstraints().addAll(col1, col1, col1);
+        gridPane.add(sword,0,1);
+        gridPane.add(bullet,0,2);
+
+        List<Item>bootsList = gameData.getHero().getBootsList();
+        List<Item>armorList = gameData.getHero().getArmorList();
+
+        int cc = 1;
+        for(Item item : bootsList){
+            ImageView bootsImageView = new ImageView(GfIMG.BOOTS.img);
+            Button boots = new Button();
+            boots.setPrefWidth(100);
+            boots.setPrefHeight(100);
+            boots.setGraphic(bootsImageView);
+            gridPane.add(boots,1,cc++);
+        }
+        cc = 1;
+        for(Item item : armorList){
+            ImageView armorImageView = new ImageView(GfIMG.ARMOR.img);
+            Button boots = new Button();
+            boots.setPrefWidth(100);
+            boots.setPrefHeight(100);
+            boots.setGraphic(armorImageView);
+            gridPane.add(boots,2,cc++);
+        }
+
+        invStage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+            KeyCode code = keyEvent.getCode();
+            switch (code) {
+                case E,ESCAPE -> {
+                    invStage.close();
+                    gameLoopTimer.start();
+                }
+            }
+        });
         invStage.centerOnScreen();
         invStage.initModality(Modality.APPLICATION_MODAL);
         invStage.setOnCloseRequest(windowEvent -> gameLoopTimer.start());
+        invStage.setScene(new Scene(gridPane));
         invStage.show();
     }
 
@@ -154,7 +241,8 @@ public class GameWindow{
         restartButton.setPrefWidth(200);
         restartButton.setOnAction(actionEvent -> {
             looseStage.close();
-            new ChooseLevelWindow(stage).startLevel(gameData.getLevelName());
+            System.out.println(gameData.getLevelName());
+            new ChooseLevelWindow(stage).startLevel("./Levels/"+gameData.getLevelName()+"/gamedata.dat");
         });
         Button exitLevelButton = new Button("Exit level");
         exitLevelButton.setPrefWidth(200);
@@ -187,7 +275,8 @@ public class GameWindow{
         restartButton.setPrefWidth(200);
         restartButton.setOnAction(actionEvent -> {
             pauseStage.close();
-            new ChooseLevelWindow(stage).startLevel(gameData.getLevelName());
+            System.out.println(gameData.getLevelName());
+            new ChooseLevelWindow(stage).startLevel("./Levels/"+gameData.getLevelName()+"/gamedata.dat");
         });
         Button loadButton = new Button("Load");
         loadButton.setPrefWidth(200);
@@ -226,6 +315,16 @@ public class GameWindow{
             Platform.exit();
         });
         vBox.getChildren().addAll(continueButton,restartButton,saveButton,loadButton,exitLevelButton,saveExitButton,exitButton);
+
+        pauseStage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+            KeyCode code = keyEvent.getCode();
+            switch (code) {
+                case P,ESCAPE -> {
+                    pauseStage.close();
+                    gameLoopTimer.start();
+                }
+            }
+        });
         pauseStage.setScene(new Scene(vBox));
         pauseStage.centerOnScreen();
         pauseStage.initModality(Modality.APPLICATION_MODAL);

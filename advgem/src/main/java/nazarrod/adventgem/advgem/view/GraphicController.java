@@ -48,7 +48,7 @@ public class GraphicController {
         if(gameData.getHero() != null)drawHero(gameData.getHero());
         drawBullets(gameData.getBullets());
         drawEnemies(gameData.getEnemies());
-        if(gameData.getHero() != null)drawUI(gameData.getLives(),gameData.getHero().getHP());
+        if(gameData.getHero() != null)drawUI(gameData.getLives());
         gc.restore();
     }
 
@@ -94,12 +94,22 @@ public class GraphicController {
         }
     }
 
-    public void drawUI(int lives,int hp){
+    public void drawUI(int lives){
         for(int i = 0;i < lives;i++)
             gc.drawImage(LIVE.img, i * 50,0,50,50);
         gc.drawImage(HP.img,0,55,50,50);
-        if(hp/100 != 0)gc.drawImage(numImage[hp/100],50,55,50,50);
-        gc.drawImage(numImage[(hp/10)%10],100,55,50,50);
-        gc.drawImage(numImage[hp%10],150,55,50,50);
+        if(gameData.getHero().getHP()/100 != 0)gc.drawImage(numImage[gameData.getHero().getHP()/100],50,55,50,50);
+        gc.drawImage(numImage[(gameData.getHero().getHP()/10)%10],100,55,50,50);
+        gc.drawImage(numImage[gameData.getHero().getHP()%10],150,55,50,50);
+
+        gc.drawImage(BLUE_BULLET.img,250,0,50,50);
+        if(gameData.getHero().getBulletsCnt()/100 != 0)gc.drawImage(numImage[gameData.getHero().getBulletsCnt()/100],300,0,50,50);
+        gc.drawImage(numImage[(gameData.getHero().getBulletsCnt()/10)%10],350,0,50,50);
+        gc.drawImage(numImage[gameData.getHero().getBulletsCnt()%10],400,0,50,50);
+
+        gc.drawImage(APPLE.img,250,55,50,50);
+        if(gameData.getHero().getApplesCnt()/100 != 0)gc.drawImage(numImage[gameData.getHero().getApplesCnt()/100],300,55,50,50);
+        gc.drawImage(numImage[(gameData.getHero().getApplesCnt()/10)%10],350,55,50,50);
+        gc.drawImage(numImage[gameData.getHero().getApplesCnt()%10],400,55,50,50);
     }
 }

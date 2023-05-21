@@ -17,6 +17,8 @@ import nazarrod.adventgem.advgem.view.GraphicController;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 import nazarrod.adventgem.advgem.App;
 
+import java.util.Set;
+
 public class Editor extends Application {
     /**
     *  Level Editor Class that allows to create platformer levels
@@ -61,7 +63,6 @@ public class Editor extends Application {
         Canvas canvas = new Canvas(gameData.getPlaygroundWidth(),gameData.getPlaygroundHeight());
         GraphicsContext gc = canvas.getGraphicsContext2D();
         graphicsController = new GraphicController(canvas,gc,gameData);
-//        graphicsController.setBackground(Color.CYAN);
         graphicsController.drawLevel();
         //Add control buttons
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
@@ -70,6 +71,12 @@ public class Editor extends Application {
         choiceBox.setPrefWidth(150);
         Button invButton = new Button("Inventory");
         invButton.setPrefWidth(150);
+        invButton.setDisable(true);
+        invButton.setOnAction(actionEvent -> {
+            InventorySetupDialog inventorySetupDialog = new InventorySetupDialog(gameData);
+            inventorySetupDialog.showAndWait();
+
+        });
         Button saveButton = new Button("Save");
         saveButton.setPrefWidth(150);
         saveButton.setOnAction(actionEvent -> {
@@ -95,8 +102,10 @@ public class Editor extends Application {
         canvas.setOnMouseClicked(mouseEvent -> {
             if(choiceBox.getValue().equals("Platform"))
                 platformMouseClick(mouseEvent);
-            if(choiceBox.getValue().equals("Hero"))
+            if(choiceBox.getValue().equals("Hero")) {
                 heroMouseClick(mouseEvent);
+                if(gameData.getHero() != null)invButton.setDisable(false);
+            }
             if(choiceBox.getValue().equals("Enemy"))
                 enemyMouseClick(mouseEvent);
             if(choiceBox.getValue().equals("Finish"))

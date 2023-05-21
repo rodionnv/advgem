@@ -12,6 +12,9 @@ public enum GfIMG {
     BLUE_BULLET("bullet_blue.png"),
     SWORD("sword.png"),
     LIVE("live.png"),
+    BOOTS("boots.png"),
+    ARMOR("armor.png"),
+    APPLE("apple.png"),
     HP("hp.png");
 
     public final Image img;
