@@ -93,6 +93,8 @@ public class InventorySetupDialog extends Dialog<Void> {
         } catch (NumberFormatException e) {
             result = defaultValue;
         }
+        if(result > 999)result = 999;
+        if(result < 0)result = 0;
         return result;
     }
 
@@ -103,6 +105,8 @@ public class InventorySetupDialog extends Dialog<Void> {
         } catch (NumberFormatException e) {
             result = defaultValue;
         }
+        if(result > 2)result = 2;
+        if(result < 1)result = 1;
         return result;
     }
 }

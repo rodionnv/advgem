@@ -48,7 +48,7 @@ public class GraphicController {
         if(gameData.getHero() != null)drawHero(gameData.getHero());
         drawBullets(gameData.getBullets());
         drawEnemies(gameData.getEnemies());
-        if(gameData.getHero() != null)drawUI(gameData.getLives());
+        if(gameData.getHero() != null)drawUI();
         gc.restore();
     }
 
@@ -94,8 +94,8 @@ public class GraphicController {
         }
     }
 
-    public void drawUI(int lives){
-        for(int i = 0;i < lives;i++)
+    public void drawUI(){
+        for(int i = 0;i < gameData.getLives();i++)
             gc.drawImage(LIVE.img, i * 50,0,50,50);
         gc.drawImage(HP.img,0,55,50,50);
         if(gameData.getHero().getHP()/100 != 0)gc.drawImage(numImage[gameData.getHero().getHP()/100],50,55,50,50);

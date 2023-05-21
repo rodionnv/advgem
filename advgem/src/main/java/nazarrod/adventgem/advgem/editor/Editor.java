@@ -75,7 +75,7 @@ public class Editor extends Application {
         invButton.setOnAction(actionEvent -> {
             InventorySetupDialog inventorySetupDialog = new InventorySetupDialog(gameData);
             inventorySetupDialog.showAndWait();
-
+            graphicsController.drawLevel();
         });
         Button saveButton = new Button("Save");
         saveButton.setPrefWidth(150);
