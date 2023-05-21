@@ -9,8 +9,8 @@ public class Chest implements Serializable {
     private int yPos;
     private List<Item> contents;
     private boolean opened = false;
-    private final int applesCnt;
-    private final int bulletsCnt;
+    private int applesCnt;
+    private int bulletsCnt;
     private final boolean containsKey;
 
     public Chest(List<Item> contents,int xPos,int yPos,int applesCnt,int bulletsCnt,boolean containsKey) {
@@ -68,6 +68,14 @@ public class Chest implements Serializable {
 
     public void setOpened(boolean opened) {
         this.opened = opened;
+    }
+
+    public void setApplesCnt(int applesCnt) {
+        this.applesCnt = applesCnt;
+    }
+
+    public void setBulletsCnt(int bulletsCnt) {
+        this.bulletsCnt = bulletsCnt;
     }
 
     public int getApplesCnt() {

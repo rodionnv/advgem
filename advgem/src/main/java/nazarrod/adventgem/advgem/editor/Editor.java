@@ -76,7 +76,7 @@ public class Editor extends Application {
         invButton.setPrefWidth(150);
         invButton.setDisable(true);
         invButton.setOnAction(actionEvent -> {
-            InventorySetupDialog inventorySetupDialog = new InventorySetupDialog(gameData);
+            InventorySetupDialog inventorySetupDialog = new InventorySetupDialog(gameData,null);
             inventorySetupDialog.showAndWait();
             graphicsController.drawLevel();
         });
@@ -160,6 +160,7 @@ public class Editor extends Application {
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80 + 15;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80 + 19;
         int f = gameData.addEnemy(x,y);
+
         if(f == 1){
             System.err.println("Enemy added");
             graphicsController.drawLevel();
@@ -172,6 +173,8 @@ public class Editor extends Application {
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80 + 15;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80 + 29;
         Chest chest = new Chest(new ArrayList<Item>(),x,y,0,0,true);
+        InventorySetupDialog inventorySetupDialog = new InventorySetupDialog(gameData,chest);
+        inventorySetupDialog.showAndWait();
         gameData.addChest(chest);
         graphicsController.drawLevel();
     }

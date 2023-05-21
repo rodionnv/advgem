@@ -7,13 +7,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.model.Chest;
 import nazarrod.adventgem.advgem.model.Item;
 import nazarrod.adventgem.advgem.view.GfIMG;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InventorySetupDialog extends Dialog<Void> {
-    public InventorySetupDialog(GameData gameData) {
+    public InventorySetupDialog(GameData gameData, Chest chest) {
 
         setTitle("Configure Hero's inventory");
         setHeaderText(null);
@@ -48,8 +49,9 @@ public class InventorySetupDialog extends Dialog<Void> {
         gridPane.add(speedBField,3,2);
         Button addBootsButton = new Button("+");
         addBootsButton.setOnAction(actionEvent -> {
-            gameData.getHero().addBoots(
-                    new Item(bootsName.getText(),parseIntDefault(speedBField.getText(),5,10),0,0, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.BOOTS));
+            Item item = new Item(bootsName.getText(),parseIntDefault(speedBField.getText(),5,10),0,0, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.BOOTS);
+            if(chest == null)gameData.getHero().addBoots(item);
+            else chest.addItem(item);
             gridPane.add(new ImageView(GfIMG.BOOTS.img),0, cBoots.get());
             gridPane.add(new Label("Speed bonus "+parseIntDefault(speedBField.getText(),5,10)),1,cBoots.get());
             cBoots.getAndIncrement();
@@ -66,8 +68,9 @@ public class InventorySetupDialog extends Dialog<Void> {
         gridPane.add(armorQField,8,2);
         Button addArmorButton = new Button("+");
         addArmorButton.setOnAction(actionEvent -> {
-            gameData.getHero().addArmor(
-                    new Item(armorName.getText(),0,parseDoubleDefault(armorQField.getText(),1.3),0, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.ARMOR));
+            Item item = new Item(armorName.getText(),0,parseDoubleDefault(armorQField.getText(),1.3),0, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.ARMOR);
+            if(chest == null)gameData.getHero().addArmor(item);
+            else chest.addItem(item);
             gridPane.add(new ImageView(GfIMG.ARMOR.img),5, cArmor.get());
             gridPane.add(new Label("Armor coefficient "+parseDoubleDefault(armorQField.getText(),1.3)),6,cArmor.get());
             cArmor.getAndIncrement();
@@ -79,8 +82,10 @@ public class InventorySetupDialog extends Dialog<Void> {
         dialogPane.getScene().getWindow().sizeToScene();
         Button okButton = (Button)dialogPane.lookupButton(ButtonType.OK);
         okButton.setOnAction(actionEvent -> {
-            gameData.getHero().setApplesCnt(parseIntDefault(applesCnt.getText(),5,999));
-            gameData.getHero().setBulletsCnt(parseIntDefault(bulletCnt.getText(),30,999));
+            if(chest == null)gameData.getHero().setApplesCnt(parseIntDefault(applesCnt.getText(),5,999));
+            else chest.setApplesCnt(parseIntDefault(applesCnt.getText(),5,999));
+            if(chest == null)gameData.getHero().setBulletsCnt(parseIntDefault(bulletCnt.getText(),30,999));
+            else chest.setBulletsCnt(parseIntDefault(bulletCnt.getText(),30,999));
             actionEvent.consume();
         });
         Platform.runLater(bulletCnt::requestFocus);
