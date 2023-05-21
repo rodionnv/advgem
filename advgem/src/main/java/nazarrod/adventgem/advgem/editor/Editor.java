@@ -13,10 +13,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.model.Chest;
+import nazarrod.adventgem.advgem.model.Item;
 import nazarrod.adventgem.advgem.view.GraphicController;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 import nazarrod.adventgem.advgem.App;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Editor extends Application {
@@ -66,7 +69,7 @@ public class Editor extends Application {
         graphicsController.drawLevel();
         //Add control buttons
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Platform","Hero","Enemy","Finish");
+        choiceBox.getItems().addAll("Platform","Hero","Enemy","Chest","Finish");
         choiceBox.setValue("Platform");
         choiceBox.setPrefWidth(150);
         Button invButton = new Button("Inventory");
@@ -108,6 +111,8 @@ public class Editor extends Application {
             }
             if(choiceBox.getValue().equals("Enemy"))
                 enemyMouseClick(mouseEvent);
+            if(choiceBox.getValue().equals("Chest"))
+                chestMouseClick(mouseEvent);
             if(choiceBox.getValue().equals("Finish"))
                 finishMouseClick(mouseEvent);
             if(gameData.getHero() != null &&
@@ -163,7 +168,13 @@ public class Editor extends Application {
             System.err.println("Probably collision");
         }
     }
-
+    private void chestMouseClick(MouseEvent mouseEvent){
+        int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80 + 15;
+        int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80 + 29;
+        Chest chest = new Chest(new ArrayList<Item>(),x,y,0,0,true);
+        gameData.addChest(chest);
+        graphicsController.drawLevel();
+    }
     private void finishMouseClick(MouseEvent mouseEvent) {
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;

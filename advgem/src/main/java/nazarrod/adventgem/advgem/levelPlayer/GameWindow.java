@@ -16,12 +16,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.model.Bullet;
+import nazarrod.adventgem.advgem.model.Chest;
 import nazarrod.adventgem.advgem.model.Hero;
 import nazarrod.adventgem.advgem.model.Item;
+import nazarrod.adventgem.advgem.utils.Geometry;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 import nazarrod.adventgem.advgem.view.GfIMG;
 import nazarrod.adventgem.advgem.view.GraphicController;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static java.lang.Math.max;
@@ -114,6 +117,17 @@ public class GameWindow{
                     if(gameData.getHero().getApplesCnt() != 0){
                         gameData.getHero().setApplesCnt(max(gameData.getHero().getApplesCnt()-1,0));
                         gameData.getHero().setHP(gameData.getHero().getHP()+10);
+                    }
+                }
+                case F -> {
+                    Iterator<Chest> chestIterator = gameData.getChests().iterator();
+                    Chest chest;
+                    while (chestIterator.hasNext()){
+                        chest = chestIterator.next();
+                        if(Geometry.checkBelongs(gameData.getHero().getxPos()+gameData.getHero().getWidth(),gameData.getHero().getyPos()+gameData.getHero().getWidth()-1,chest.getPlatform())){
+                            chest.giveItems(gameData.getHero());
+                            chestIterator.remove();
+                        }
                     }
                 }
                 case P,ESCAPE -> {

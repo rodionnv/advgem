@@ -11,7 +11,7 @@ public class Item implements Serializable {
         ONE_TIME, ONLY_WHEN_EQUIPPED;
     }
     public enum Type{
-        BOOTS,ARMOR,OTHER;
+        BOOTS,ARMOR;
     }
     private final String name;
     private final int speedB;

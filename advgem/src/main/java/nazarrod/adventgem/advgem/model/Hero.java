@@ -72,7 +72,6 @@ public class Hero extends Sprite implements Serializable{
         this.bootsList = bootsList;
     }
 
-
     public void addBoots(Item boots){
         bootsList.add(boots);
     }

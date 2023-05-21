@@ -85,6 +85,14 @@ public class GameData implements Serializable {
         bullets.add(bullet);
     }
 
+    public List<Chest> getChests() {
+        return chests;
+    }
+
+    public void addChest(Chest chest){
+        chests.add(chest);
+    }
+
     public int addHero(int x, int y){
         if(hero != null)return 2;
         if(y < 0)return 0;

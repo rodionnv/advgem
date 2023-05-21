@@ -5,10 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import nazarrod.adventgem.advgem.GameData;
-import nazarrod.adventgem.advgem.model.Bullet;
-import nazarrod.adventgem.advgem.model.Enemy;
-import nazarrod.adventgem.advgem.model.Hero;
-import nazarrod.adventgem.advgem.model.Platform2D;
+import nazarrod.adventgem.advgem.model.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +45,7 @@ public class GraphicController {
         if(gameData.getHero() != null)drawHero(gameData.getHero());
         drawBullets(gameData.getBullets());
         drawEnemies(gameData.getEnemies());
+        drawChests(gameData.getChests());
         if(gameData.getHero() != null)drawUI();
         gc.restore();
     }
@@ -91,6 +89,12 @@ public class GraphicController {
     public void drawEnemies(List<Enemy>enemies){
         for(Enemy enemy : enemies){
             gc.drawImage(ENEMY.img,enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
+        }
+    }
+
+    public void drawChests(List<Chest>chests){
+        for(Chest chest : chests){
+            gc.drawImage(CHEST.img,chest.getxPos(),chest.getyPos(),50,50);
         }
     }
 
