@@ -15,6 +15,7 @@ public enum GfIMG {
     BOOTS("boots.png"),
     ARMOR("armor.png"),
     APPLE("apple.png"),
+    CHEST("chest.png"),
     HP("hp.png");
 
     public final Image img;

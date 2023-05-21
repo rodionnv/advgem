@@ -1,9 +1,6 @@
 package nazarrod.adventgem.advgem;
 
-import nazarrod.adventgem.advgem.model.Bullet;
-import nazarrod.adventgem.advgem.model.Enemy;
-import nazarrod.adventgem.advgem.model.Hero;
-import nazarrod.adventgem.advgem.model.Platform2D;
+import nazarrod.adventgem.advgem.model.*;
 import nazarrod.adventgem.advgem.utils.Geometry;
 
 import java.io.Serializable;
@@ -24,7 +21,7 @@ public class GameData implements Serializable {
     private boolean win = false;
     private Queue<Bullet> bullets = new LinkedList<>();
     private List<Enemy> enemies = new ArrayList<>();
-
+    private List<Chest> chests = new ArrayList<>();
     public String getLevelName() {
         return levelName;
     }
@@ -100,10 +97,6 @@ public class GameData implements Serializable {
 
     public int getLives() {
         return lives;
-    }
-
-    public void setLives(int lives) {
-        this.lives = lives;
     }
 
     public boolean isLoose() {
