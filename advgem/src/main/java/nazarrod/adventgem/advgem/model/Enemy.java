@@ -30,7 +30,19 @@ public class Enemy extends Sprite implements Serializable {
                 left = true;
             if (Geometry.checkBelongs(xPos + width, yPos + height + 1, platform))
                 right = true;
-            if(left && right)return;
+            if(left && right)break;
+        }
+        for(Platform2D platform : platforms) {
+            if (Geometry.checkBelongs(xPos+getWidth()+1, yPos, platform)) {
+                left = true;
+                right = false;
+                break;
+            }
+            if (Geometry.checkBelongs(xPos-1, yPos, platform)) {
+                right = true;
+                left = false;
+                break;
+            }
         }
         if(!left){
             if(getOrientation() == ORIENTATION.LEFT)setxSpeed(xAcc);
