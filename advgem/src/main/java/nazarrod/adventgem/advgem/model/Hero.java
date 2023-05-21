@@ -28,7 +28,7 @@ public class Hero extends Sprite implements Serializable{
 
     public Hero(int xPos, int yPos, int hp) {
         super(xPos, yPos, hp,"hero.png");
-        this.xAcc = 3;
+        this.xAcc = 4;
         this.yAcc = 8;
         this.jumpSpeed = 16;
     }
