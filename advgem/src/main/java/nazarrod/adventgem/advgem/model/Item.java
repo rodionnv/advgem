@@ -14,22 +14,34 @@ public class Item implements Serializable {
         BOOTS,ARMOR,OTHER;
     }
     private final String name;
-    private final int dxSpeed;
+    private final int speedQ;
     private final int dHP;
     private final double dArmorQ;
     private final HpBonusType hpBonusType;
-    private boolean consumable;
+    private final boolean consumable;
     private boolean equipped = false;
     private Type type;
 
-    public Item(String name,int dxSpeed,double dArmorQ, int dHP,HpBonusType hpBonusType,boolean consumable,Type type) {
+    public Item(String name, int speedQ, double dArmorQ, int dHP, HpBonusType hpBonusType, boolean consumable, Type type) {
         this.name = name;
-        this.dxSpeed = dxSpeed;
+        this.speedQ = speedQ;
         this.dArmorQ = dArmorQ;
         this.dHP = dHP;
         this.hpBonusType = hpBonusType;
         this.consumable = consumable;
         this.type = type;
+    }
+
+    public int getSpeedQ() {
+        return speedQ;
+    }
+
+    public int getdHP() {
+        return dHP;
+    }
+
+    public double getdArmorQ() {
+        return dArmorQ;
     }
 
     public void equip(Sprite sprite){
@@ -38,7 +50,7 @@ public class Item implements Serializable {
             sprite.getBoots().unequip(sprite);
         if((type == Type.ARMOR) && (sprite.getArmor() != null))
             sprite.getArmor().unequip(sprite);
-        sprite.setSpeedB(dxSpeed);
+        sprite.setSpeedB(speedQ);
         sprite.setArmorQ(dArmorQ);
         sprite.setHP(sprite.getHP()+dHP);
         sprite.setBoots(this);

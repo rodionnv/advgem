@@ -49,9 +49,9 @@ public class InventorySetupDialog extends Dialog<Void> {
         Button addBootsButton = new Button("+");
         addBootsButton.setOnAction(actionEvent -> {
             gameData.getHero().addBoots(
-                    new Item(bootsName.getText(),parseIntDefault(speedBField.getText(),5),0,0, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.BOOTS));
+                    new Item(bootsName.getText(),parseIntDefault(speedBField.getText(),5,10),0,0, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.BOOTS));
             gridPane.add(new ImageView(GfIMG.BOOTS.img),0, cBoots.get());
-            gridPane.add(new Label("Speed bonus "+parseIntDefault(speedBField.getText(),5)),1,cBoots.get());
+            gridPane.add(new Label("Speed bonus "+parseIntDefault(speedBField.getText(),5,10)),1,cBoots.get());
             cBoots.getAndIncrement();
             dialogPane.getScene().getWindow().sizeToScene();
         });
@@ -79,21 +79,21 @@ public class InventorySetupDialog extends Dialog<Void> {
         dialogPane.getScene().getWindow().sizeToScene();
         Button okButton = (Button)dialogPane.lookupButton(ButtonType.OK);
         okButton.setOnAction(actionEvent -> {
-            gameData.getHero().setApplesCnt(parseIntDefault(applesCnt.getText(),5));
-            gameData.getHero().setBulletsCnt(parseIntDefault(bulletCnt.getText(),30));
+            gameData.getHero().setApplesCnt(parseIntDefault(applesCnt.getText(),5,999));
+            gameData.getHero().setBulletsCnt(parseIntDefault(bulletCnt.getText(),30,999));
             actionEvent.consume();
         });
         Platform.runLater(bulletCnt::requestFocus);
     }
 
-    private int parseIntDefault(String str, int defaultValue) {
+    private int parseIntDefault(String str, int defaultValue,int maxV) {
         int result;
         try {
             result = Integer.parseInt(str);
         } catch (NumberFormatException e) {
             result = defaultValue;
         }
-        if(result > 999)result = 999;
+        if(result > maxV)result = maxV;
         if(result < 0)result = 0;
         return result;
     }

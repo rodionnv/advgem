@@ -184,6 +184,7 @@ public class GameWindow{
         bullet.setPrefWidth(100);
         bullet.setPrefHeight(100);
         bullet.setGraphic(bulletImageView);
+        bullet.setText(Integer.toString(gameData.getHero().getBulletsCnt()));
 
         gridPane.setGridLinesVisible( true );
         gridPane.getColumnConstraints().addAll(col1, col1, col1);
@@ -200,16 +201,18 @@ public class GameWindow{
             boots.setPrefWidth(100);
             boots.setPrefHeight(100);
             boots.setGraphic(bootsImageView);
+            boots.setText(Integer.toString(item.getSpeedQ()));
             gridPane.add(boots,1,cc++);
         }
         cc = 1;
         for(Item item : armorList){
             ImageView armorImageView = new ImageView(GfIMG.ARMOR.img);
-            Button boots = new Button();
-            boots.setPrefWidth(100);
-            boots.setPrefHeight(100);
-            boots.setGraphic(armorImageView);
-            gridPane.add(boots,2,cc++);
+            Button armor = new Button();
+            armor.setPrefWidth(100);
+            armor.setPrefHeight(100);
+            armor.setGraphic(armorImageView);
+            armor.setText(Double.toString(item.getdArmorQ()));
+            gridPane.add(armor,2,cc++);
         }
 
         invStage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
