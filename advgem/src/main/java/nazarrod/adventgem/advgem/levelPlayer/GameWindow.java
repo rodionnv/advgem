@@ -255,7 +255,6 @@ public class GameWindow{
             boots.setPrefHeight(100);
             boots.setGraphic(bootsImageView);
             boots.setText(Integer.toString(item.getSpeedB()));
-            System.out.println(item.isEquipped());
             if(!item.isEquipped())
                 boots.setStyle("");
             else {
@@ -345,7 +344,6 @@ public class GameWindow{
         restartButton.setPrefWidth(200);
         restartButton.setOnAction(actionEvent -> {
             looseStage.close();
-            System.out.println(gameData.getLevelName());
             new ChooseLevelWindow(stage).startLevel("./Levels/"+gameData.getLevelName()+"/gamedata.dat");
         });
         Button exitLevelButton = new Button("Exit level");
@@ -379,7 +377,6 @@ public class GameWindow{
         restartButton.setPrefWidth(200);
         restartButton.setOnAction(actionEvent -> {
             pauseStage.close();
-            System.out.println(gameData.getLevelName());
             new ChooseLevelWindow(stage).startLevel("./Levels/"+gameData.getLevelName()+"/gamedata.dat");
         });
         Button loadButton = new Button("Load");
