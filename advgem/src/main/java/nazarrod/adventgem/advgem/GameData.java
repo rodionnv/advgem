@@ -2,7 +2,6 @@ package nazarrod.adventgem.advgem;
 
 import nazarrod.adventgem.advgem.model.*;
 import nazarrod.adventgem.advgem.utils.Geometry;
-import nazarrod.adventgem.advgem.utils.LevelManager;
 
 import java.io.File;
 import java.io.IOException;

@@ -10,11 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.levelPlayer.ChooseLevelWindow;
-import nazarrod.adventgem.advgem.levelPlayer.GameWindow;
 import nazarrod.adventgem.advgem.utils.LevelManager;
-
-import java.io.File;
-import java.util.List;
 
 public class App extends Application {
 

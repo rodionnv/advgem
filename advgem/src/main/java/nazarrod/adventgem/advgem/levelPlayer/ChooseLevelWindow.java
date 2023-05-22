@@ -7,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.App;
 import nazarrod.adventgem.advgem.GameData;
-import nazarrod.adventgem.advgem.editor.Editor;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 
 import java.io.File;

@@ -1,7 +1,6 @@
 package nazarrod.adventgem.advgem.editor;
 
 import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;

@@ -5,9 +5,6 @@ import nazarrod.adventgem.advgem.utils.Geometry;
 import java.io.Serializable;
 import java.util.List;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 public class Enemy extends Sprite implements Serializable {
     private int hp;
 

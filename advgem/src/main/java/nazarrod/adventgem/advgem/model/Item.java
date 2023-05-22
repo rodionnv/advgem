@@ -2,9 +2,6 @@ package nazarrod.adventgem.advgem.model;
 
 import java.io.Serializable;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 public class Item implements Serializable {
 
     public enum HpBonusType{

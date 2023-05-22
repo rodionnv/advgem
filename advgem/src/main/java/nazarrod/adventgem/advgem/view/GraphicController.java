@@ -8,7 +8,6 @@ import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.model.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Queue;
 
 import static nazarrod.adventgem.advgem.view.GfIMG.*;

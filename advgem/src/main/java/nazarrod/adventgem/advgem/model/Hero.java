@@ -1,7 +1,5 @@
 package nazarrod.adventgem.advgem.model;
 
-import nazarrod.adventgem.advgem.editor.Editor;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
