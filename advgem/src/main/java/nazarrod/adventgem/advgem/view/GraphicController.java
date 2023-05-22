@@ -22,6 +22,11 @@ public class GraphicController {
     private GameData gameData;
     private final Image[] numImage = new Image[10];
 
+    /**
+     * @param canvas canvas to draw on
+     * @param graphicsContext graphicsContext of the canvas
+     * @param gameData game data
+     */
     public GraphicController(Canvas canvas, GraphicsContext graphicsContext,GameData gameData) {
         this.canvas = canvas;
         this.gc = graphicsContext;
@@ -33,6 +38,9 @@ public class GraphicController {
         }
     }
 
+    /**
+     * Draw all components of the level
+     */
     public void drawLevel(){
         // Draws only platforms, must load whole level (with heroes and enemies)
         setBackground(Color.CYAN);
@@ -49,32 +57,63 @@ public class GraphicController {
         gc.restore();
     }
 
+    /**
+     * set data of the current level
+     * @param gameData game data
+     */
     public void setGameData(GameData gameData) {
         this.gameData = gameData;
     }
 
+
+    /**
+     * Fill background
+     * @param color Color og the background
+     */
     public void setBackground(Color color){
         gc.setFill(color);
         gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
     }
 
+    /**
+     * Draw platform on the canvas
+     * @param platform
+     */
     public void drawPlatform(Platform2D platform){
         drawPlatform(platform.getX(),platform.getY());
     }
 
+    /**
+     * Draw platform on the canvas
+     * @param x
+     * @param y
+     */
     public void drawPlatform(int x,int y){
         gc.drawImage(PLATFORM.img,x,y,80,80);
     }
 
+    /**
+     * Draw finish on the canvas
+     * @param x
+     * @param y
+     */
     public void drawFinish(int x,int y){
         if(gameData.getHero() == null || !gameData.getHero().isHasKey())gc.drawImage(CLOSED_FINISH.img,x-30,y-30,80,80);
         else gc.drawImage(FINISH.img,x-30,y-30,80,80);
     }
 
+    /**
+     * Draw hero on the canvas
+     * @param hero
+     */
     public void drawHero(Hero hero) {
         gc.drawImage(HERO.img,hero.getxPos(),hero.getyPos(),hero.getWidth(),hero.getHeight());
     }
 
+    /**
+     * Draws all bullets on the canvas
+     * @param bullets list of the active bullets
+     */
     public void drawBullets(Queue<Bullet>bullets){
         for(Bullet bullet : bullets){
             if(bullet.getShotByHero()){
@@ -85,18 +124,31 @@ public class GraphicController {
         }
     }
 
+    /**
+     * Draws all enemies on the canvas
+     * @param enemies list of the alive enemies
+     */
     public void drawEnemies(List<Enemy>enemies){
         for(Enemy enemy : enemies){
             gc.drawImage(ENEMY.img,enemy.getxPos(),enemy.getyPos(),enemy.getWidth(),enemy.getHeight());
         }
     }
 
+
+    /**
+     * Draws all chests on the canvas
+     * @param chests List of the closed chests
+     */
     public void drawChests(List<Chest>chests){
         for(Chest chest : chests){
             gc.drawImage(CHEST.img,chest.getxPos(),chest.getyPos(),50,50);
         }
     }
 
+
+    /**
+     * Draw UI info about hero
+     */
     public void drawUI(){
         for(int i = 0;i < gameData.getLives();i++)
             gc.drawImage(LIVE.img, i * 50,0,50,50);

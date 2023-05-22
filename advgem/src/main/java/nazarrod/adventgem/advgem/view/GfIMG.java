@@ -2,6 +2,9 @@ package nazarrod.adventgem.advgem.view;
 
 import javafx.scene.image.Image;
 
+/**
+ * Enum object that contains Image instances for all graphic objects
+ */
 public enum GfIMG {
     PLATFORM("platform.png"),
     FINISH("finish.png"),
@@ -21,6 +24,10 @@ public enum GfIMG {
 
     public final Image img;
 
+    /**
+     * Get Image instance from the file
+     * @param gfName Image file name
+     */
     GfIMG(String gfName){
         this.img = new Image(gfName);
     }
