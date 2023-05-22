@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.GameData;
 import nazarrod.adventgem.advgem.model.Chest;
@@ -19,8 +18,13 @@ import nazarrod.adventgem.advgem.view.GraphicController;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 import nazarrod.adventgem.advgem.App;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Editor extends Application {
     /**
@@ -29,6 +33,23 @@ public class Editor extends Application {
     GameData gameData = new GameData();
     private Stage stage = null;
     private GraphicController graphicsController = null;
+    private final static Logger logger = Logger.getLogger(Editor.class.getName());
+    private static boolean alreadySet = false;
+    private static void setLogger(){
+        if(alreadySet)return;
+        alreadySet = true;
+        logger.setLevel(Level.ALL);
+        logger.setUseParentHandlers(false);
+        FileHandler fh;
+        boolean dirCreated = new File("./Logs/").mkdirs();
+        try {
+            fh = new FileHandler("./Logs/editor_logs.txt");
+        }catch (IOException e){
+            return;
+        }
+        fh.setFormatter(new SimpleFormatter());
+        logger.addHandler(fh);
+    }
 
     @Override
     public void start(Stage stage){
@@ -87,6 +108,7 @@ public class Editor extends Application {
             alert.setTitle("Can't save level");
             alert.setHeaderText(null);
             alert.setContentText("There isn't any hero or finish on the level");
+            logger.info("User tried to save level without hero or finish");
 
             alert.showAndWait();
         });
@@ -101,7 +123,7 @@ public class Editor extends Application {
         buttonBox.getChildren().addAll(new Label("Choose new element to add"),choiceBox,new Label("Configure inventory"),
                 invButton,new Label("Save Level"),saveButton,exitButton);
 
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, s, chosen) -> System.out.println(choiceBox.getValue()));
+//        choiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, s, chosen) -> System.out.println(choiceBox.getValue()));
         canvas.setOnMouseClicked(mouseEvent -> {
             if(choiceBox.getValue().equals("Platform"))
                 platformMouseClick(mouseEvent);
@@ -131,12 +153,13 @@ public class Editor extends Application {
         stage.show();
     }
     private void platformMouseClick(MouseEvent mouseEvent) {
+        setLogger();
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;
         boolean f = gameData.addPlatform(x,y);
         if(f){
             graphicsController.drawLevel();
-            System.err.println("Platform added");
+            logger.info("Platform added on "+x+" "+y);
         }
     }
 
@@ -145,14 +168,14 @@ public class Editor extends Application {
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80 + 19;
         int f = gameData.addHero(x,y);
         if(f == 2){
-            System.err.println("Hero already exists");
+            logger.warning("Hero already exists");
         }
         if(f == 1){
-            System.err.println("Hero added");
+            logger.info("Hero added on "+x+" "+y);
             graphicsController.drawLevel();
         }
         if(f == 0){
-            System.err.println("Probably collision");
+            logger.warning("Collision");
         }
     }
 
@@ -162,11 +185,11 @@ public class Editor extends Application {
         int f = gameData.addEnemy(x,y);
 
         if(f == 1){
-            System.err.println("Enemy added");
+            logger.info("Enemy added on "+x+" "+y);
             graphicsController.drawLevel();
         }
         else{
-            System.err.println("Probably collision");
+            logger.warning("Collision");
         }
     }
     private void chestMouseClick(MouseEvent mouseEvent){
@@ -175,8 +198,14 @@ public class Editor extends Application {
         Chest chest = new Chest(new ArrayList<Item>(),x,y,0,0,true);
         InventorySetupDialog inventorySetupDialog = new InventorySetupDialog(gameData,chest);
         inventorySetupDialog.showAndWait();
-        gameData.addChest(chest);
-        graphicsController.drawLevel();
+        int f = gameData.addChest(chest);
+        if(f == 1) {
+            logger.info("Chest added on " + x + " " + y);
+            graphicsController.drawLevel();
+        }
+        else{
+            logger.warning("tile is already taken");
+        }
     }
     private void finishMouseClick(MouseEvent mouseEvent) {
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80;
@@ -184,7 +213,10 @@ public class Editor extends Application {
         int f = gameData.addFinish(x,y);
         if(f == 1){
             graphicsController.drawLevel();
-            System.err.println("Finish added");
+            logger.info("Finish added on "+x+" "+y);
+        }
+        else{
+            logger.warning("Finish already exists or tile is already taken");
         }
     }
 }

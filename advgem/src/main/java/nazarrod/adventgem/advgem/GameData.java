@@ -89,8 +89,11 @@ public class GameData implements Serializable {
         return chests;
     }
 
-    public void addChest(Chest chest){
+    public int addChest(Chest chest){
+        Platform2D chestPlatform = chest.getPlatform();
+        if(checkIfCollidesWithAnything(chestPlatform))return 0;
         chests.add(chest);
+        return 1;
     }
 
     public int addHero(int x, int y){
