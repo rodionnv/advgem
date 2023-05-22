@@ -14,11 +14,18 @@ import java.util.logging.SimpleFormatter;
 
 import static java.lang.Math.abs;
 
+/**
+ * Main class that contains information about the whle level
+ */
 public class GameData implements Serializable {
 
     private final static Logger logger = Logger.getLogger(GameData.class.getName());
     private static boolean alreadySet = false;
 
+
+    /**
+     * Sets logger for the class
+     */
     private static void setLogger(){
         if(alreadySet)return;
         alreadySet = true;
@@ -79,6 +86,12 @@ public class GameData implements Serializable {
         this.platforms = platforms;
     }
 
+    /**
+     * Add a platform with a given coordinates to a list of the platform list
+     * @param wpos
+     * @param hpos
+     * @return
+     */
     public boolean addPlatform(int wpos, int hpos){
         setLogger();
         Platform2D platform2D = new Platform2D(wpos,hpos,79,79);
@@ -108,6 +121,11 @@ public class GameData implements Serializable {
         return hero;
     }
 
+
+    /**
+     * Add one bullet in the level
+     * @param bullet
+     */
     public void addBullet(Bullet bullet){
         bullets.add(bullet);
     }
@@ -116,6 +134,11 @@ public class GameData implements Serializable {
         return chests;
     }
 
+    /**
+     * Add one chest in the level
+     * @param chest
+     * @return 1 - success 0 - Tile is already taken
+     */
     public int addChest(Chest chest){
         setLogger();
         Platform2D chestPlatform = chest.getPlatform();
@@ -125,6 +148,12 @@ public class GameData implements Serializable {
         return 1;
     }
 
+    /**
+     * Adds hero on the level
+     * @param x
+     * @param y
+     * @return 1 - success 0 - Tile is already taken 2 - hero already exists
+     */
     public int addHero(int x, int y){
         setLogger();
         if(hero != null)return 2;
@@ -152,6 +181,12 @@ public class GameData implements Serializable {
         return win;
     }
 
+    /**
+     * Adds enemy on the level
+     * @param x
+     * @param y
+     * @return 1 - success 0 - tile is already taken
+     */
     public int addEnemy(int x, int y){
         setLogger();
         if(y < 0)return 0;
@@ -171,6 +206,12 @@ public class GameData implements Serializable {
         this.finish = finish;
     }
 
+    /**
+     * Add finish on the level
+     * @param x
+     * @param y
+     * @return
+     */
     public int addFinish(int x, int y){
         setLogger();
         if(y < 0 || finish != null)return 0;
@@ -182,6 +223,12 @@ public class GameData implements Serializable {
     }
 
     private long last_enemy_shot = 0;
+
+    /**
+     * Method gets current state of the level:
+     * Moves Sprites, Bullets, checks if level is won or lost, changes properties of the objects
+     * @param now moment in time
+     */
     public void refreshAll(long now){
         setLogger();
         hero.updateStates(getPlatforms());
@@ -266,6 +313,11 @@ public class GameData implements Serializable {
         }
     }
 
+    /**
+     * Checks if platform collides with object of any type
+     * @param platform2D platform to be added
+     * @return
+     */
     private boolean checkIfCollidesWithAnything(Platform2D platform2D){
         for(Platform2D platform : platforms)
             if(Geometry.checkCollision(platform2D,platform))return true;

@@ -12,18 +12,30 @@ import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.levelPlayer.ChooseLevelWindow;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 
+
+/**
+ * Main class of the whole App
+ */
 public class App extends Application {
 
     private Stage stage;
     private final double screenWidth = Screen.getPrimary().getBounds().getWidth();
     private final double screenHeight = Screen.getPrimary().getBounds().getHeight();
 
+    /**
+     * Start the app
+     * @param stage stage to sen scene on
+     */
     @Override
     public void start(Stage stage) {
         this.stage = stage;
         loginWindow();
     }
 
+
+    /**
+     * Opens winow with main menu
+     */
     private void loginWindow(){
 
         Button loadButton = new Button();
