@@ -106,14 +106,15 @@ public class Hero extends Sprite implements Serializable{
 
     public void equip(Item item){
         if(item.isEquipped())return;
-        if((item.getType() == Item.Type.BOOTS) && (getBoots() != null))
-            unequip(getBoots());
-        if((item.getType() == Item.Type.ARMOR) && (getArmor() != null))
-            unequip(getArmor());
+        if((item.getType() == Item.Type.BOOTS) && (this.getBoots() != null))
+            unequip(this.getBoots());
+        if((item.getType() == Item.Type.ARMOR) && (this.getArmor() != null))
+            unequip(this.getArmor());
         setSpeedB(item.getSpeedB());
         setArmorQ(item.getdArmorQ());
         setHP(getHP()+item.getdHP());
-        setArmor(item);
+        if((item.getType() == Item.Type.BOOTS))setBoots(item);
+        else setArmor(item);
         item.setEquipped(true);
     }
 

@@ -247,6 +247,7 @@ public class GameWindow{
         List<Item>armorList = gameData.getHero().getArmorList();
 
         int cc = 1;
+        Button selectedButton = null;
         for(Item item : bootsList){
             ImageView bootsImageView = new ImageView(GfIMG.BOOTS.img);
             Button boots = new Button();
@@ -254,12 +255,27 @@ public class GameWindow{
             boots.setPrefHeight(100);
             boots.setGraphic(bootsImageView);
             boots.setText(Integer.toString(item.getSpeedB()));
+            System.out.println(item.isEquipped());
+            if(!item.isEquipped())
+                boots.setStyle("");
+            else {
+                selectedButton = boots;
+                boots.setStyle("-fx-border-color: green; " +
+                        "-fx-border-width: 5px; " +
+                        "-fx-border-radius: 5px;");
+            }
+            Button finalSelectedButton = selectedButton;
             boots.setOnAction(actionEvent -> {
                 gameData.getHero().equip(item);
+                boots.setStyle("-fx-border-color: green; " +
+                        "-fx-border-width: 5px; " +
+                        "-fx-border-radius: 5px;");
+                if(finalSelectedButton != null) finalSelectedButton.setStyle("");
             });
             gridPane.add(boots,1,cc++);
         }
         cc = 1;
+        selectedButton = null;
         for(Item item : armorList){
             ImageView armorImageView = new ImageView(GfIMG.ARMOR.img);
             Button armor = new Button();
@@ -267,8 +283,21 @@ public class GameWindow{
             armor.setPrefHeight(100);
             armor.setGraphic(armorImageView);
             armor.setText(Double.toString(item.getdArmorQ()));
+            if(!item.isEquipped())
+                armor.setStyle("");
+            else {
+                selectedButton = armor;
+                armor.setStyle("-fx-border-color: green; " +
+                        "-fx-border-width: 5px; " +
+                        "-fx-border-radius: 5px;");
+            }
+            Button finalSelectedButton = selectedButton;
             armor.setOnAction(actionEvent -> {
                 gameData.getHero().equip(item);
+                armor.setStyle("-fx-border-color: green; " +
+                        "-fx-border-width: 5px; " +
+                        "-fx-border-radius: 5px;");
+                if(finalSelectedButton != null) finalSelectedButton.setStyle("");
             });
             gridPane.add(armor,2,cc++);
         }
