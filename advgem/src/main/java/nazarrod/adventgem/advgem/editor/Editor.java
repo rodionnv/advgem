@@ -26,15 +26,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * The main class for the level editor application.
+ */
 public class Editor extends Application {
-    /**
-    *  Level Editor Class that allows to create platformer levels
-    * */
+
     GameData gameData = new GameData();
     private Stage stage = null;
     private GraphicController graphicsController = null;
     private final static Logger logger = Logger.getLogger(Editor.class.getName());
     private static boolean alreadySet = false;
+
+    /**
+     * Configures logger for editor
+     */
     private static void setLogger(){
         if(alreadySet)return;
         alreadySet = true;
@@ -73,6 +78,10 @@ public class Editor extends Application {
         stage.show();
     }
 
+
+    /**
+     * Draws GUI and contains all needed listeners to build platformer level
+     */
     private void buildPlatformerLevel(){
         gameData = new GameData();
         SetupDialog setupDialog = new SetupDialog(gameData);
@@ -152,6 +161,11 @@ public class Editor extends Application {
         stage.centerOnScreen();
         stage.show();
     }
+
+    /**
+     * Handles mouse click for for Platform adding mode
+     * @param mouseEvent
+     */
     private void platformMouseClick(MouseEvent mouseEvent) {
         setLogger();
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80;
@@ -162,7 +176,10 @@ public class Editor extends Application {
             logger.info("Platform added on "+x+" "+y);
         }
     }
-
+    /**
+     * Handles mouse click for for Hero adding mode
+     * @param mouseEvent
+     */
     private void heroMouseClick(MouseEvent mouseEvent){
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80 + 15;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80 + 19;
@@ -179,6 +196,10 @@ public class Editor extends Application {
         }
     }
 
+    /**
+     * Handles mouse click for for Enemy adding mode
+     * @param mouseEvent
+     */
     private void enemyMouseClick(MouseEvent mouseEvent){
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80 + 15;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80 + 19;
@@ -192,6 +213,11 @@ public class Editor extends Application {
             logger.warning("Collision");
         }
     }
+
+    /**
+     * Handles mouse click for for chest adding mode
+     * @param mouseEvent
+     */
     private void chestMouseClick(MouseEvent mouseEvent){
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80 + 15;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80 + 29;
@@ -207,6 +233,11 @@ public class Editor extends Application {
             logger.warning("tile is already taken");
         }
     }
+
+    /**
+     * Handles mouse click for for Finish adding mode
+     * @param mouseEvent
+     */
     private void finishMouseClick(MouseEvent mouseEvent) {
         int x = (int)mouseEvent.getX()-(int)mouseEvent.getX() % 80;
         int y = (int)mouseEvent.getY()-(int)mouseEvent.getY() % 80;

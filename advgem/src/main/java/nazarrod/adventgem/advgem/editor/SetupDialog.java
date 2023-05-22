@@ -11,6 +11,12 @@ public class SetupDialog extends Dialog<Void> {
     private final TextField levelName = new TextField();
     private final TextField playgroundWidth = new TextField();
     private final TextField playgroundHeight = new TextField();
+
+    /**
+     * Creates a setup dialog for configuring platformer level settings.
+     *
+     * @param gameData the GameData instance that has to be configurated
+     */
     public SetupDialog(GameData gameData) {
 
         setTitle("Platformer level setup");
@@ -49,12 +55,24 @@ public class SetupDialog extends Dialog<Void> {
         Platform.runLater(levelName::requestFocus);
     }
 
+    /**
+     * Handles the button press event when the OK button is clicked.
+     *
+     * @param gameData the GameData instance that has to be configurated
+     */
     private void okButtonPressed(GameData gameData) {
         gameData.setLevelName(levelName.getText());
         gameData.setPlaygroundWidth(parseIntDefault(playgroundWidth.getText(), gameData.getPlaygroundWidth()));
         gameData.setPlaygroundHeight(parseIntDefault(playgroundHeight.getText(), gameData.getPlaygroundHeight()));
     }
 
+    /**
+     * Returns parsed integer from the string, in case of error, returns default value or maxV if parsed integer is too big
+     * @param str input string
+     * @param defaultValue default value
+     * @param maxV maximum value to constrain the parsed result
+     * @return integer in range [0,maxV]
+     */
     private int parseIntDefault(String str, int defaultValue) {
         int result;
         try {

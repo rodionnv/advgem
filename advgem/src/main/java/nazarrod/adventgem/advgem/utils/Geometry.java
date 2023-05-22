@@ -6,7 +6,14 @@ import nazarrod.adventgem.advgem.model.Platform2D;
  * Class that provides methods for getting relative position of figures
  */
 public class Geometry {
-    /**Check if dot [x,y] is inside a platofrm*/
+
+    /**
+     * Check if dot [x,y] is inside a platofrm
+     * @param x
+     * @param y
+     * @param p
+     * @return
+     */
     public static boolean checkBelongs(int x, int y, Platform2D p){
         int xp1 = p.getX();
         int yp1 = p.getY();
@@ -15,18 +22,37 @@ public class Geometry {
         return xp1 <= x && x <= xp2 && yp1 <= y && y <= yp2;
     }
 
-    /**Check is platform is inside x,y bounds*/
+
+    /**
+     * Check is platform is inside x,y bounds
+     * @param p
+     * @param x
+     * @param y
+     * @return
+     */
     public static boolean outOfBounds(Platform2D p,int x,int y){
         Platform2D o = new Platform2D(0,0,x,y);
         return !(checkIndCollision(p,o) || checkIndCollision(o,p));
     }
 
-    /**Check collisions between platforms p and o*/
+
+    /**
+     * Check collisions between platforms p and o
+     * @param p
+     * @param o
+     * @return
+     */
     public static boolean checkCollision(Platform2D p,Platform2D o){
         return (checkIndCollision(p,o) || checkIndCollision(o,p) );
     }
 
-    /**Check individual collision between platforms p and o*/
+
+    /**
+     * Check individual collision between platforms p and o
+     * @param p
+     * @param o
+     * @return
+     */
     private static boolean checkIndCollision(Platform2D p,Platform2D o){
         int x,y;
         x = p.getX();

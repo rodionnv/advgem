@@ -5,20 +5,37 @@ import nazarrod.adventgem.advgem.utils.Geometry;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Enemy class extends Sprite with another move methods
+ */
 public class Enemy extends Sprite implements Serializable {
     private int hp;
 
+    /**
+     * @param xPos x starting position in the game
+     * @param yPos y starting position in the game
+     * @param hp health points
+     */
     public Enemy(int xPos, int yPos, int hp) {
         super(xPos, yPos, hp,"enemy.png");
         this.xAcc = 3;
         this.yAcc = 4;
         this.xSpeed = 3;
     }
+
+    /**
+     * Move enemy with it's speed
+     */
     @Override
     public void tryMove() {
         changePos(getxPos() + getxSpeed(), getyPos() + getySpeed());
     }
 
+
+    /**
+     * Updates direction in which enemy moves
+     * @param platforms list of platforms in the level
+     */
     public void updateOrientation(List<Platform2D> platforms){
         boolean left = false;
         boolean right = false;

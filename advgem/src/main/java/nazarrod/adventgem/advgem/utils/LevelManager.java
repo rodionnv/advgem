@@ -10,10 +10,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+
+/**
+ * Class that contains methods for saving/loading levels
+ */
 public class LevelManager {
     private final static Logger logger = Logger.getLogger(LevelManager.class.getName());
     private static boolean alreadySet = false;
-
+    /**
+     * Configures logger for class
+     */
     private static void setLogger(){
         if(alreadySet)return;
         alreadySet = true;
@@ -29,6 +35,13 @@ public class LevelManager {
         fh.setFormatter(new SimpleFormatter());
         logger.addHandler(fh);
     }
+
+    /**
+     * Save level in the given filepath
+     * @param gameData level data
+     * @param filePath file path
+     * @throws IOException
+     */
     private static void save(GameData gameData,String filePath) throws IOException {
         setLogger();
         try (OutputStream outputStream = new FileOutputStream(filePath);
@@ -39,6 +52,11 @@ public class LevelManager {
             logger.info("Error occurred while saving "+filePath);
         }
     }
+
+    /**
+     * Creates new level config file and saves it int the given path
+     * @param gameData level data
+     */
     public static void createNewLevel(GameData gameData){
         setLogger();
         logger.info("Try to save new leve level file ./Levels/"+gameData.getLevelName());
@@ -59,6 +77,10 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Creates new save of the given GameData
+     * @param gameData game data
+     */
     public static void makeNewSave(GameData gameData){
         setLogger();
         logger.info("Try to create new save for "+gameData.getLevelName());
@@ -75,6 +97,11 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Loads level from the file path
+     * @param filePath file path
+     * @return GameData instance of the level
+     */
     public static GameData loadLevel(String filePath){
         setLogger();
         GameData gameData = null;
@@ -89,6 +116,10 @@ public class LevelManager {
         return gameData;
     }
 
+    /**
+     * Gets list of the levels
+     * @return List of saved levels
+     */
     public static List<String> getLevels(){
         setLogger();
         String dirPath = "./Levels/";

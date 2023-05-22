@@ -29,6 +29,9 @@ import java.util.List;
 
 import static java.lang.Math.max;
 
+/**
+ * Class that is responsible for the gameplay
+ */
 public class GameWindow{
     private final Stage stage;
     private final Canvas canvas;
@@ -38,6 +41,9 @@ public class GameWindow{
     private boolean dKeyPressed = false;
     private boolean wPressedConstantly = false;
 
+    /**
+     * @param gameData - data of the level that is played
+     */
     public GameWindow(GameData gameData) {
         this.stage = new Stage();
         this.gameData = gameData;
@@ -45,6 +51,9 @@ public class GameWindow{
         graphicsController = new GraphicController(canvas,canvas.getGraphicsContext2D(),gameData);
     }
 
+    /**
+     * Method starts animation timer, updates current game state and has all button handlers
+     */
     public void start(){
         GridPane gridPane = new GridPane();
         gridPane.add(canvas,0,0);
@@ -159,6 +168,11 @@ public class GameWindow{
         });
     }
 
+
+    /**
+     * Puts the game on pause and opens Inventory window
+     * @param gameLoopTimer Game loop animation timer
+     */
     public void openInventory(AnimationTimer gameLoopTimer) {
         gameLoopTimer.stop();
         Stage invStage = new Stage();
@@ -316,6 +330,13 @@ public class GameWindow{
         invStage.setScene(new Scene(gridPane));
         invStage.show();
     }
+
+
+    /**
+     * Shows frame around button of the currently equipped weapon
+     * @param sword sword button
+     * @param bullet bullet button
+     */
     private void updateWeaponButtons(Button sword, Button bullet){
         if(gameData.getHero().getWeapon() == Hero.Weapon.SWORD){
             sword.setStyle("-fx-border-color: green; " +
@@ -331,10 +352,16 @@ public class GameWindow{
         }
     }
 
+    /**
+     *  Win level and show win menu
+     */
     public void winLevel(){
         looseLevel();
     }
 
+    /**
+     *  Loose level and show loose menu
+     */
     public void looseLevel(){
         Stage looseStage = new Stage();
         VBox vBox = new VBox();
@@ -361,6 +388,11 @@ public class GameWindow{
         looseStage.show();
     }
 
+
+    /**
+     * Puts game on pause
+     * @param gameLoopTimer game loop animation timer
+     */
     public void pauseLevel(AnimationTimer gameLoopTimer){
         gameLoopTimer.stop();
         Stage pauseStage = new Stage();

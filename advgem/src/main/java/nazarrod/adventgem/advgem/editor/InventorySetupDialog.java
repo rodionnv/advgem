@@ -12,7 +12,18 @@ import nazarrod.adventgem.advgem.view.GfIMG;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * The class for the inventory and chest setting
+ */
 public class InventorySetupDialog extends Dialog<Void> {
+
+
+    /**
+     * Draws GUI and contains all needed handlers to configure inventory or chest
+     * if chest == null, method configures hero's inventory, otherwise - chest
+     * @param gameData level gameData
+     * @param chest chest to configure
+     */
     public InventorySetupDialog(GameData gameData, Chest chest) {
 
         setTitle("Configure Hero's inventory");
@@ -95,6 +106,13 @@ public class InventorySetupDialog extends Dialog<Void> {
         Platform.runLater(bulletCnt::requestFocus);
     }
 
+    /**
+     * Returns parsed integer from the string, in case of error, returns default value or maxV if parsed integer is too big
+     * @param str input string
+     * @param defaultValue default value
+     * @param maxV maximum value to constrain the parsed result
+     * @return integer in range [0,maxV]
+     */
     private int parseIntDefault(String str, int defaultValue,int maxV) {
         int result;
         try {
@@ -107,6 +125,12 @@ public class InventorySetupDialog extends Dialog<Void> {
         return result;
     }
 
+    /**
+     * Returns parsed double from the string, in case of error, returns default value
+     * @param str input string
+     * @param defaultValue default value
+     * @return double in range [1,2]
+     */
     private double parseDoubleDefault(String str, double defaultValue) {
         double result;
         try {

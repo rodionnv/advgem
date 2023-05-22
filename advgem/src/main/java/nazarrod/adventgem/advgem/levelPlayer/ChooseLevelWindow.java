@@ -17,11 +17,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+
+/**
+ * Creates Window with levels to choose and starts chosen level
+ */
 public class ChooseLevelWindow {
     private Stage stage;
 
     private final static Logger logger = Logger.getLogger(ChooseLevelWindow.class.getName());
     private static boolean alreadySet = false;
+
+    /**
+     * Configures logger for class
+     */
     private static void setLogger(){
         if(alreadySet)return;
         alreadySet = true;
@@ -38,10 +46,16 @@ public class ChooseLevelWindow {
         logger.addHandler(fh);
     }
 
+    /**
+     * @param stage stage on which show scene
+     */
     public ChooseLevelWindow(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * Draw window with list of buttons to start levels
+     */
     public void start(){
         setLogger();
         GridPane gridPane = new GridPane();
@@ -64,6 +78,10 @@ public class ChooseLevelWindow {
         stage.centerOnScreen();
     }
 
+    /**
+     * Starts chosen level
+     * @param levelPath path of the level gamedata.dat
+     */
     public void startLevel(String levelPath){
         GameData gameData = LevelManager.loadLevel(levelPath);
         GameWindow gameWindow = new GameWindow(gameData);
@@ -71,6 +89,11 @@ public class ChooseLevelWindow {
         gameWindow.start();
     }
 
+    /**
+     * Creates button that starts the corresponding level
+     * @param levelName name of the level
+     * @return
+     */
     private Button createButton(String levelName){
         Button button = new Button();
         button.setText(levelName);

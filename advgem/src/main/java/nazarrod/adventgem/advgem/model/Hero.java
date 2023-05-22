@@ -17,8 +17,14 @@ import java.util.logging.SimpleFormatter;
 
 import static java.lang.Math.max;
 
+/**
+ * Main character class extends Sprite with all necessary methods
+ */
 public class Hero extends Sprite implements Serializable{
 
+    /**
+     * represents weapon type sword/bullets
+     */
     public enum Weapon{
         SWORD,BULLET;
     }
@@ -34,6 +40,9 @@ public class Hero extends Sprite implements Serializable{
 
     private final static Logger logger = Logger.getLogger(Hero.class.getName());
     private static boolean alreadySet = false;
+    /**
+     * Configures logger for class
+     */
     private static void setLogger(){
         if(alreadySet)return;
         alreadySet = true;
@@ -50,6 +59,11 @@ public class Hero extends Sprite implements Serializable{
         logger.addHandler(fh);
     }
 
+    /**
+     * @param xPos starting x position in the game
+     * @param yPos starting y position in the game
+     * @param hp health points
+     */
     public Hero(int xPos, int yPos, int hp) {
         super(xPos, yPos, hp,"hero.png");
         this.xAcc = 4;
@@ -96,6 +110,9 @@ public class Hero extends Sprite implements Serializable{
         this.bootsList = bootsList;
     }
 
+    /**
+     * @param boots Add Boots item to the hero's inventory
+     */
     public void addBoots(Item boots){
         bootsList.add(boots);
     }
@@ -108,6 +125,9 @@ public class Hero extends Sprite implements Serializable{
         this.armorList = armorList;
     }
 
+    /**
+     * @param armor Add Armor item to the hero's inventory
+     */
     public void addArmor(Item armor){
         armorList.add(armor);
     }
@@ -128,6 +148,11 @@ public class Hero extends Sprite implements Serializable{
         this.bulletsCnt = bulletsCnt;
     }
 
+
+    /**
+     * Equips given item on the corresponding slot and unequips old item on that slot
+     * @param item item to equip
+     */
     public void equip(Item item){
         setLogger();
         if(item.isEquipped())return;
@@ -144,6 +169,11 @@ public class Hero extends Sprite implements Serializable{
         logger.info("Hero equipped "+item);
     }
 
+
+    /**
+     * Unequipps item from the corresponding slot
+     * @param item item to unequip
+     */
     public void unequip(Item item){
         item.setEquipped(false);
         setSpeedB(0);
@@ -154,12 +184,21 @@ public class Hero extends Sprite implements Serializable{
         logger.info("Hero unequipped "+item);
     }
 
+
+    /**
+     * Pushes hero up, to create jump
+     */
     public void jump() {
         current_jumps++;
         if(current_jumps == 1)push(-jumpSpeed,true);
         if(current_jumps == 2)push(-12,true);
     }
 
+    /**
+     * Pushes hero in given direction
+     * @param yDelta where to push
+     * @param isJump is it a jump
+     */
     public void push(int yDelta,boolean isJump){
         setySpeed(getySpeed()+yDelta);
         Timer pushTimer = new Timer();

@@ -9,6 +9,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * Model of the chest that contains items
+ */
 public class Chest implements Serializable {
 
     private int xPos;
@@ -21,6 +24,9 @@ public class Chest implements Serializable {
 
     private final static Logger logger = Logger.getLogger(Chest.class.getName());
     private static boolean alreadySet = false;
+    /**
+     * Configures logger for class
+     */
     private static void setLogger(){
         if(alreadySet)return;
         alreadySet = true;
@@ -37,6 +43,14 @@ public class Chest implements Serializable {
         logger.addHandler(fh);
     }
 
+    /**
+     * @param contents List of items that are in this chest
+     * @param xPos x position in the game
+     * @param yPos y position in the game
+     * @param applesCnt how many apples it contains
+     * @param bulletsCnt how many bullets it contains
+     * @param containsKey is this chest contains key to the finish
+     */
     public Chest(List<Item> contents,int xPos,int yPos,int applesCnt,int bulletsCnt,boolean containsKey) {
         this.xPos = xPos;
         this.yPos = yPos;
@@ -46,6 +60,10 @@ public class Chest implements Serializable {
         this.containsKey = containsKey;
     }
 
+    /**
+     * Give chest content to the sprite
+     * @param hero sprite which will get all the chest contents
+     */
     public void giveItems(Hero hero){
         setLogger();
         hero.setApplesCnt(hero.getApplesCnt() + applesCnt);
@@ -59,6 +77,9 @@ public class Chest implements Serializable {
         logger.info("Chest "+ this + " was opened");
     }
 
+    /**
+     * @return platform instance of this object
+     */
     public Platform2D getPlatform(){
         Platform2D platform = new Platform2D(xPos,yPos,50,50);
         return platform;

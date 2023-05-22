@@ -15,9 +15,16 @@ import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+
+/**
+ * Movable object with health and abilities to shoot
+ */
 public class Sprite implements Serializable {
     private final static Logger logger = Logger.getLogger(Sprite.class.getName());
     private static boolean alreadySet = false;
+    /**
+     * Configures logger for class
+     */
     private static void setLogger(){
         if(alreadySet)return;
         alreadySet = true;
@@ -33,6 +40,10 @@ public class Sprite implements Serializable {
         fh.setFormatter(new SimpleFormatter());
         logger.addHandler(fh);
     }
+
+    /**
+     * Direction to move
+     */
     public enum ORIENTATION{
         LEFT,RIGHT
     }
@@ -59,6 +70,12 @@ public class Sprite implements Serializable {
     protected boolean hittingRight = false;
     private ORIENTATION orientation = ORIENTATION.RIGHT;
 
+    /**
+     * @param xPos x position in the game
+     * @param yPos x position in the game
+     * @param HP health points
+     * @param gfName name of the graphic file
+     */
     public Sprite(int xPos, int yPos, int HP,String gfName) {
         this.xPos = xPos;
         this.yPos = yPos;
@@ -189,10 +206,18 @@ public class Sprite implements Serializable {
         setHP(startHP);
     }
 
+
+    /**
+     * @return Platform2D instance of this Sprite
+     */
     public Platform2D getPlatform() {
         return new Platform2D(getxPos(),getyPos(),getWidth(),getHeight());
     }
 
+
+    /**
+     * Calls an update ot the current sprite state and moves if it is possible
+     */
     public void tryMove() {
         int dX = getxSpeed();
         int dY = getySpeed();
@@ -204,6 +229,11 @@ public class Sprite implements Serializable {
         changePos(getxPos() + dX, getyPos() + dY);
     }
 
+
+    /**
+     * Updates sprite state (standing, facing the wall or hitting head)
+     * @param platforms platform list on the level
+     */
     public void updateStates(List<Platform2D> platforms) {
         updateFallingState(platforms);
         if(!falling)drop(platforms);
@@ -220,6 +250,10 @@ public class Sprite implements Serializable {
         return false;
     }
 
+    /**
+     * Updates counter of the consequtive jumps when hero is standing
+     * @param platforms list of the platforms on the level
+     */
     public void updJumps(List<Platform2D> platforms){
         for(Platform2D platform : platforms){
             if(Geometry.checkBelongs(xPos,yPos+height+yAcc,platform))current_jumps = 0;
@@ -227,6 +261,11 @@ public class Sprite implements Serializable {
         }
     }
 
+
+    /**
+     * Updates falling state
+     * @param platforms list of the platforms on the level
+     */
     private void updateFallingState(List<Platform2D> platforms){
         if(isStanding(platforms)){
             if(falling)setySpeed(getySpeed() - yAcc);
@@ -238,6 +277,10 @@ public class Sprite implements Serializable {
         }
     }
 
+    /**
+     * Updates hitting wall on the left state
+     * @param platforms list of the platforms on the level
+     */
     public void updateHittingLeftState(List<Platform2D> platforms){
         for(Platform2D platform : platforms){
             if(Geometry.checkBelongs(xPos-(xAcc+speedB),yPos,platform)){hittingLetf = true;return;}
@@ -246,6 +289,10 @@ public class Sprite implements Serializable {
         hittingLetf = false;
     }
 
+    /**
+     * Updates hitting wall on the right state
+     * @param platforms list of the platforms on the level
+     */
     public void updateHittingRightState(List<Platform2D> platforms){
         for(Platform2D platform : platforms){
             if(Geometry.checkBelongs(xPos+width+(xAcc+speedB),yPos,platform)){hittingRight = true;return;}
@@ -254,6 +301,10 @@ public class Sprite implements Serializable {
         hittingRight = false;
     }
 
+    /**
+     * Updates hitting wall on the top state
+     * @param platforms list of the platforms on the level
+     */
     public void updateHittingTopState(List<Platform2D> platforms){
         for(Platform2D platform : platforms){
             if(Geometry.checkBelongs(xPos,yPos-max(yAcc,abs(ySpeed)),platform)){hittingTop = true;return;}
@@ -262,6 +313,10 @@ public class Sprite implements Serializable {
         hittingTop = false;
     }
 
+    /**
+     * Puts sprite to the ground if it is floating in the air
+     * @param platforms list of the platforms on the level
+     */
     private void drop(List<Platform2D> platforms){
         boolean ok = true;
         while(ok) {
@@ -275,6 +330,13 @@ public class Sprite implements Serializable {
         }
     }
 
+
+    /**
+     * Checks if hero is out of bounds
+     * @param x width of the allowed area
+     * @param y height of the allowrd area
+     * @return
+     */
     public boolean outOfLevel(int x,int y){
         setLogger();
         if(yPos < 0)return false;

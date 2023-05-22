@@ -2,16 +2,21 @@ package nazarrod.adventgem.advgem.model;
 
 import java.io.Serializable;
 
+/**
+ * Platform class that is used to compute all logics and collisions of the game
+ */
 public class Platform2D implements Serializable {
-    /*
-    * 2D Platform
-    * wpos,hpos - coords of the bottom left corner
-     */
     private int xPos;
     private int yPos;
     private int width;
     private int height;
 
+    /**
+     * @param xPos x position in the game
+     * @param yPos y position in the game
+     * @param width
+     * @param height
+     */
     public Platform2D(int xPos, int yPos, int width, int height) {
         this.xPos = xPos;
         this.yPos = yPos;
