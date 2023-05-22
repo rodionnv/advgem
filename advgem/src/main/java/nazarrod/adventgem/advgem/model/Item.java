@@ -72,25 +72,4 @@ public class Item implements Serializable {
         this.type = type;
     }
 
-    //    public void equip(Sprite sprite){
-//        if(this.equipped)return;
-//        if((type == Type.BOOTS) && (sprite.getBoots() != null))
-//            sprite.getBoots().unequip(sprite);
-//        if((type == Type.ARMOR) && (sprite.getArmor() != null))
-//            sprite.getArmor().unequip(sprite);
-//        sprite.setSpeedB(speedQ);
-//        sprite.setArmorQ(dArmorQ);
-//        sprite.setHP(sprite.getHP()+dHP);
-//        sprite.setBoots(this);
-//        this.equipped = true;
-//    }
-//
-//    public void unequip(Sprite sprite){
-//        this.equipped = false;
-//        sprite.setSpeedB(0);
-//        sprite.setArmorQ(1);
-//        if(hpBonusType == HpBonusType.ONLY_WHEN_EQUIPPED)sprite.setHP(max(1,sprite.getHP()-dHP));
-//        if(type == Type.BOOTS)sprite.setBoots(null);
-//        if(type == Type.ARMOR)sprite.setArmor(null);
-//    }
 }

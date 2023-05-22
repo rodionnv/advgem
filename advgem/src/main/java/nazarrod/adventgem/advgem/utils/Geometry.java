@@ -57,8 +57,6 @@ public class Geometry {
         if( (o.getX() <= p.getX() && p.getX()+p.getWidth() <= o.getX()+o.getWidth()) &&
                 (p.getY() <= o.getY() && o.getY()+o.getHeight() <= p.getY()+p.getHeight()) )return true;
 
-
-        //TODO It is not complete
         return false;
     }
 }

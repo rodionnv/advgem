@@ -1,5 +1,9 @@
 package nazarrod.adventgem.advgem.model;
 
+import nazarrod.adventgem.advgem.editor.Editor;
+
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 import java.io.Serializable;
@@ -8,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import static java.lang.Math.max;
 
@@ -25,6 +33,24 @@ public class Hero extends Sprite implements Serializable{
     protected Item armor = null;
     private List<Item> bootsList = new ArrayList<>();
     private List<Item> armorList = new ArrayList<>();
+
+    private final static Logger logger = Logger.getLogger(Hero.class.getName());
+    private static boolean alreadySet = false;
+    private static void setLogger(){
+        if(alreadySet)return;
+        alreadySet = true;
+        logger.setLevel(Level.ALL);
+        logger.setUseParentHandlers(false);
+        FileHandler fh;
+        boolean dirCreated = new File("./Logs/").mkdirs();
+        try {
+            fh = new FileHandler("./Logs/hero_logs.txt");
+        }catch (IOException e){
+            return;
+        }
+        fh.setFormatter(new SimpleFormatter());
+        logger.addHandler(fh);
+    }
 
     public Hero(int xPos, int yPos, int hp) {
         super(xPos, yPos, hp,"hero.png");
@@ -105,6 +131,7 @@ public class Hero extends Sprite implements Serializable{
     }
 
     public void equip(Item item){
+        setLogger();
         if(item.isEquipped())return;
         if((item.getType() == Item.Type.BOOTS) && (this.getBoots() != null))
             unequip(this.getBoots());
@@ -116,6 +143,7 @@ public class Hero extends Sprite implements Serializable{
         if((item.getType() == Item.Type.BOOTS))setBoots(item);
         else setArmor(item);
         item.setEquipped(true);
+        logger.info("Hero equipped "+item);
     }
 
     public void unequip(Item item){
@@ -125,6 +153,7 @@ public class Hero extends Sprite implements Serializable{
         if(item.getHpBonusType() == Item.HpBonusType.ONLY_WHEN_EQUIPPED)setHP(max(1,getHP()-item.getdHP()));
         if(item.getType() == Item.Type.BOOTS)setBoots(null);
         if(item.getType() == Item.Type.ARMOR)setArmor(null);
+        logger.info("Hero unequipped "+item);
     }
 
     public void jump() {

@@ -7,27 +7,53 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import nazarrod.adventgem.advgem.App;
 import nazarrod.adventgem.advgem.GameData;
+import nazarrod.adventgem.advgem.editor.Editor;
 import nazarrod.adventgem.advgem.utils.LevelManager;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class ChooseLevelWindow {
     private Stage stage;
+
+    private final static Logger logger = Logger.getLogger(ChooseLevelWindow.class.getName());
+    private static boolean alreadySet = false;
+    private static void setLogger(){
+        if(alreadySet)return;
+        alreadySet = true;
+        logger.setLevel(Level.ALL);
+        logger.setUseParentHandlers(false);
+        FileHandler fh;
+        boolean dirCreated = new File("./Logs/").mkdirs();
+        try {
+            fh = new FileHandler("./Logs/choose_level_logs.txt");
+        }catch (IOException e){
+            return;
+        }
+        fh.setFormatter(new SimpleFormatter());
+        logger.addHandler(fh);
+    }
 
     public ChooseLevelWindow(Stage stage) {
         this.stage = stage;
     }
 
     public void start(){
+        setLogger();
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(10));
-        Button levelButton = null;
+        Button levelButton;
         List<String> list = LevelManager.getLevels();
         int button_num = 0;
         for (String filename : list){
-            System.out.println(filename);
+            logger.info("Found level "+filename);
             levelButton = createButton(filename);
             gridPane.add(levelButton,0,++button_num);
         }

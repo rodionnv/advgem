@@ -2,15 +2,37 @@ package nazarrod.adventgem.advgem.model;
 
 import nazarrod.adventgem.advgem.utils.Geometry;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class Sprite implements Serializable {
-
+    private final static Logger logger = Logger.getLogger(Sprite.class.getName());
+    private static boolean alreadySet = false;
+    private static void setLogger(){
+        if(alreadySet)return;
+        alreadySet = true;
+        logger.setLevel(Level.ALL);
+        logger.setUseParentHandlers(false);
+        FileHandler fh;
+        boolean dirCreated = new File("./Logs/").mkdirs();
+        try {
+            fh = new FileHandler("./Logs/sprite_logs.txt");
+        }catch (IOException e){
+            return;
+        }
+        fh.setFormatter(new SimpleFormatter());
+        logger.addHandler(fh);
+    }
     public enum ORIENTATION{
         LEFT,RIGHT
     }
@@ -254,8 +276,13 @@ public class Sprite implements Serializable {
     }
 
     public boolean outOfLevel(int x,int y){
+        setLogger();
         if(yPos < 0)return false;
-        return Geometry.outOfBounds(getPlatform(),x,y);
+        if(Geometry.outOfBounds(getPlatform(),x,y)) {
+            logger.info("Sprite " + this + " fell out of level");
+            return true;
+        }
+        return false;
     }
 
 }

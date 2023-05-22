@@ -1,7 +1,15 @@
 package nazarrod.adventgem.advgem.model;
 
+import nazarrod.adventgem.advgem.editor.Editor;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Chest implements Serializable {
 
@@ -13,6 +21,24 @@ public class Chest implements Serializable {
     private int bulletsCnt;
     private boolean containsKey;
 
+    private final static Logger logger = Logger.getLogger(Chest.class.getName());
+    private static boolean alreadySet = false;
+    private static void setLogger(){
+        if(alreadySet)return;
+        alreadySet = true;
+        logger.setLevel(Level.ALL);
+        logger.setUseParentHandlers(false);
+        FileHandler fh;
+        boolean dirCreated = new File("./Logs/").mkdirs();
+        try {
+            fh = new FileHandler("./Logs/chest_logs.txt");
+        }catch (IOException e){
+            return;
+        }
+        fh.setFormatter(new SimpleFormatter());
+        logger.addHandler(fh);
+    }
+
     public Chest(List<Item> contents,int xPos,int yPos,int applesCnt,int bulletsCnt,boolean containsKey) {
         this.xPos = xPos;
         this.yPos = yPos;
@@ -23,6 +49,7 @@ public class Chest implements Serializable {
     }
 
     public void giveItems(Hero hero){
+        setLogger();
         hero.setApplesCnt(hero.getApplesCnt() + applesCnt);
         hero.setBulletsCnt(hero.getBulletsCnt() + bulletsCnt);
         hero.setHasKey(hero.isHasKey() | containsKey);
@@ -31,6 +58,7 @@ public class Chest implements Serializable {
             else hero.addArmor(item);
         }
         opened = true;
+        logger.info("Chest "+ this + " was opened");
     }
 
     public Platform2D getPlatform(){

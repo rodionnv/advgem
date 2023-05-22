@@ -46,7 +46,7 @@ public class SetupDialog extends Dialog<Void> {
             event.consume();
         });
 
-        Platform.runLater(() -> levelName.requestFocus());
+        Platform.runLater(levelName::requestFocus);
     }
 
     private void okButtonPressed(GameData gameData) {
