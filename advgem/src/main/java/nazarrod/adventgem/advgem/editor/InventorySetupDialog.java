@@ -62,7 +62,7 @@ public class InventorySetupDialog extends Dialog<Void> {
         gridPane.add(speedBField,3,2);
         Button addBootsButton = new Button("+");
         addBootsButton.setOnAction(actionEvent -> {
-            Item item = new Item(bootsName.getText(),parseIntDefault(speedBField.getText(),5,10),0,0, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.BOOTS);
+            Item item = new Item(bootsName.getText(),parseIntDefault(speedBField.getText(),5,10),1,0, Item.HpBonusType.ONLY_WHEN_EQUIPPED,false, Item.Type.BOOTS);
             if(chest == null)gameData.getHero().addBoots(item);
             else chest.addItem(item);
             gridPane.add(new ImageView(GfIMG.BOOTS.img),0, cBoots.get());

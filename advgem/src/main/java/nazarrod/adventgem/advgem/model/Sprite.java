@@ -115,7 +115,7 @@ public class Sprite implements Serializable {
     }
 
     public void changeHP(int x){
-        setHP(getHP() + x);
+        setHP(max(0,getHP() + x));
     }
 
     public int getxSpeed() {
